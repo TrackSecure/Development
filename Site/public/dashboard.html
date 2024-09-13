@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br   ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dasboard.css">
+</head>
+
+<body>
+    <div class="pagina">
+        <header>
+            <div class="perfil">
+                <div class="foto">
+                    <div class="bolaFoto">
+                        <img src="imgs/Persona's.png" alt="Imagem Perfil">
+                    </div>
+                </div>
+                <div class="texto">
+                    <span>Alexandre</span>
+                    <p>Gerente de monitoramento de Servidor</p>
+                </div>
+            </div>
+            <div class="botao">
+                <div class="container">
+                    <button onclick="sair()">Sair</button>
+                </div>
+            </div>
+        </header>
+        <div class="paginaDash">
+            <div class="menu">
+                <div class="container">
+                    <h2>Dashboard</h2>
+                    <p class="agora">→Monitoramento Geral</p>
+                </div>
+                <div class="logo">
+                    <img src="imgs/logo.png" alt="logo" class="logo-img">
+                    <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+                </div>
+            </div>
+            <div class="caixaGrafico">
+                <div class="container">
+                    <button onclick="redirecionar()">Clique aqui para observar seus gráficos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function sair() {
+        window.location = "index.html"
+    }
+
+    function redirecionar() {
+        window.open("https://docs.google.com/spreadsheets/d/1xra2N7Dxio58w6zL2HhtFXe-KsL82vFBTmH4DI5PodE/edit?gid=1622649005#gid=1622649005")
+    }
+</script>

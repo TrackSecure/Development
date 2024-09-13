@@ -1,0 +1,588 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: .2s linear;
+}
+
+html {
+    font-size: 45.5%;
+    overflow-x: hidden;
+    scroll-padding-top: 9rem;
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: .8rem;
+}
+
+html::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+    background: #cfdbd5;
+    border-radius: 5rem;
+}
+
+body {
+    background-color: #242423;
+}
+
+section {
+    padding: 20px 7%;
+}
+
+.span_cor {
+    background: linear-gradient(45deg, #83baf1, #318ce7, #5aa3ec, #D3D3D3);
+    background-size: 400% 100%;
+    animation: Animacao 4s ease infinite alternate;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.saiba_mais {
+    text-decoration: none;
+    font-weight: 800;
+    color: white;
+}
+
+span {
+    color: #83baf1;
+}
+
+.btn {
+    width: 40%;
+    text-align: center;
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 17px;
+    color: black;
+    border-radius: 40px;
+    background: #83baf1;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #e8eddf;
+    letter-spacing: 1px;
+    animation-name: botao;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.2px 7%;
+    border-bottom: .10px solid #83baf1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.header .logo img {
+    height: 110px;
+}
+
+.header .navbar a {
+    margin: 0 10px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.header .navbar a:hover {
+    color: #f5cb5c;
+    border-bottom: 1px solid #f5cb5c;
+    padding-bottom: 5px;
+}
+
+.inicio {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: url(../imgs/imagemfundo.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.inicio .conteudo {
+    max-width: 600px;
+}
+
+.inicio .conteudo h2 {
+    font-size: 80px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.inicio .conteudo p {
+    font-size: 20px;
+    font-weight: lighter;
+    line-height: 1.8;
+    padding: 10px 0;
+    color: #eee;
+}
+
+.sobre {
+    min-height: 80vh;
+    background: linear-gradient(-60deg, #83baf1, #318ce7, #5aa3ec, #D3D3D3);
+    background-size: 600% 600%;
+    animation: Animacao 10s ease infinite alternate;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sobre .sobre1 {
+    max-width: 800px;
+}
+
+.sobre .sobre1 h3 {
+    font-size: 60px;
+    text-transform: uppercase;
+    color: black;
+}
+
+.sobre .sobre1 p {
+    font-size: 20px;
+    line-height: 1.4;
+    padding: 1rem 0;
+    color: black;
+}
+
+.sobre .imagem {
+    width: 30vw;
+}
+
+.sobre .imagem img {
+    margin-left: 400px;
+    width: 100%;
+}
+
+.como {
+    min-height: 80vh;
+    background-color: #242423;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.como1 {
+    padding: 300px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.como .imagem2 {
+    width: 35vw;
+}
+
+.como .como1 {
+    max-width: 1000px;
+}
+
+.como .imagem2 img {
+    width: 40vw;
+}
+
+.como .como1 h2 {
+    font-size: 60px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.como .como1 p {
+    font-size: 20px;
+    line-height: 1.8;
+    padding: 1rem 0;
+    color: white;
+}
+
+/* FIM COMO  */
+
+.cards {
+    background-color: #e8eddf;
+    text-align: center;
+    padding: 2%;
+}
+
+.cards h1 {
+    color: #242423;
+    font-size: 60px;
+    margin-bottom: 80px;
+}
+
+.servicos {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.imagemcard {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+/* Forma absoluta que usa o "Body para se mover" */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    color: #e8eddf;
+}
+
+.imagemcard:hover .overlay {
+    opacity: 1;
+}
+
+.overlay p {
+    padding: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.overlay .cima {
+    font-size: 30px;
+}
+
+#img1 {
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.contato {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 10px;
+}
+
+.contato .contato1 h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.contato .contato1 p {
+    font-size: 15px;
+}
+
+.contato .contato1 .div_p {
+    font-size: 20px;
+    line-height: 1.8;
+    color: white;
+    padding: 1rem 0;
+}
+
+.area1,
+.area2,
+.area3,
+.area4 .btn {
+    visibility: hidden;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    html {
+        font-size: 40%;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 60px;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2 {
+        font-size: 50px;
+    }
+
+    .container {
+        max-width: 90%;
+    }
+
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .header .navbar a {
+        font-size: 14px;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 50px;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2 {
+        font-size: 40px;
+    }
+
+    .btn {
+        width: 50%;
+    }
+
+    .header {
+        padding: 10px;
+    }
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header .logo img {
+        height: 90px;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 40px;
+    }
+
+    .sobre .imagem img,
+    .como .imagem2 img {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2 {
+        font-size: 35px;
+    }
+
+    .btn {
+        width: 60%;
+    }
+
+    .cards h1 {
+        font-size: 40px;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .header .logo img {
+        height: 70px;
+    }
+
+    .header .navbar a {
+        font-size: 12px;
+        margin: 0 5px;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 30px;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2,
+    .cards h1 {
+        font-size: 30px;
+    }
+
+    .btn {
+        width: 70%;
+    }
+
+    .header .navbar {
+        flex-direction: column;
+    }
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 35%;
+    }
+
+    .container {
+        padding: 10px;
+    }
+    
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+/* Adicionado para celulares */
+@media (max-width: 375px) {
+    .header .logo img {
+        height: 60px;
+    }
+
+    .header .navbar a {
+        font-size: 10px;
+        margin: 0 3px;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 25px;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2,
+    .cards h1 {
+        font-size: 25px;
+    }
+
+    .btn {
+        width: 80%;
+    }
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 320px) {
+    .header .logo img {
+        height: 50px;
+    }
+
+    .header .navbar a {
+        font-size: 9px;
+        margin: 0 2px;
+    }
+
+    .inicio .conteudo h2 {
+        font-size: 20px;
+    }
+
+    .sobre .sobre1 h3,
+    .como .como1 h2,
+    .cards h1 {
+        font-size: 20px;
+    }
+
+    .btn {
+        width: 90%;
+    }
+
+    .imagem {
+        display: none;
+    }
+
+    .imagem2 {
+        display: none;
+    }
+
+    .como1 {
+        padding: 20px;
+    }
+   
+    .servicos {
+        display: none;
+    }
+}

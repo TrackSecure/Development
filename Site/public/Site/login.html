@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TrackSecure | Login</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="stylesheet" href="./css/cadastro.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <header class="header">
+
+        <a href="index.html" class="logo1">
+            <img src="imgs/logo1.png" alt="">
+        </a>
+
+        <nav class="navbar">
+            <a href="login.html">LOGIN</a>
+            <a href="cadastro.html">CADASTRO</a>
+        </nav>
+
+    </header>
+
+
+    <div class="login">
+        <div class="login-esquerda">
+            <img src="imgs/login-animacao.svg" class="imagem-dash" style="width: 650px;">
+        </div>
+        <div class="login-direita">
+            <div class="card-login">
+                <h1>Login</h1>
+                <div class="textos">
+                    <label for="usuario">E-mail:</label>
+                    <input id="email_input" type="text" name="usuario" placeholder="tracksecure@sptech.school">
+                </div>
+                <div class="textos">
+                    <label for="senha">Senha:</label>
+                    <input id="senha_input" type="password" name="senha" placeholder="senha">
+                </div>
+                <button class="btn" onclick="entrar()">Login</button>
+                <div class="alerta_erro">
+                    <div class="card_erro" id="cardErro">
+                      <span id="mensagem_erro"></span>
+                      <div id="div_erros_login"></div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

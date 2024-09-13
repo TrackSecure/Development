@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TrackSecure | Cadastro</title>
+
+  <script src="./js/sessao.js"></script>
+
+  <link rel="stylesheet" href="./css/cadastro.css" />
+  <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+
+<body>
+
+  <header class="header">
+
+    <div class="logo">
+      <img src="imgs/logo.png" alt="logo" class="logo-img">
+      <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+    </div>
+
+    <nav class="navbar">
+      <a href="login.html">Login</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+
+  </header>
+
+
+  <div class="login">
+    <div class="login-esquerda">
+      <img src="imgs/cadastro-animacao.svg" class="imagem-dash" style="width: 630px;">
+    </div>
+    <div class="login-direita">
+      <div class="card-login">
+        <h1>Cadastro</h1>
+        <div class="textos">
+          <label for="usuario">Usuário:</label>
+          <input id="nome_input" type="text" name="usuario" value="Alexandre" placeholder="Nome de usuario">
+        </div>
+        <div class="textos">
+          <label for="usuario">Email:</label>
+          <input id="email_input" type="email" name="email" value="ale@gmail.com" placeholder="exemplo@email.com">
+        </div>
+        <div class="textos">
+          <label for="usuario">CPF:</label>
+          <input id="cpf_input" type="number" name="cpf" value="12345678910" placeholder="000.000.000-00">
+        </div>
+        <div class="textos">
+          <label for="senha">Senha:</label>
+          <input id="senha_input" type="password" value="SPTech#2024" name="senha" placeholder="********">
+        </div>
+        <div class="textos">
+          <label for="senha">Confirmar Senha:</label>
+          <input id="confirmarSenha_input" type="password" value="SPTech#2024" name="senha1" placeholder="********">
+        </div>
+        <button class="btn" onclick="cadastrar()">Cadastrar</button>
+        <div class="alerta_erro">
+          <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+            <div id="div_erros_login" style="color: white;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script>
+function cadastrar() {
+
+  var nomeVar = nome_input.value;
+  var emailVar = email_input.value;
+  var cpfVar = cpf_input.value;
+  var senhaVar = senha_input.value;
+  var confirmarSenhaVar = confirmarSenha_input.value;
+
+  var tamNome = nomeVar.length;
+  var arrobas = emailVar.indexOf('@');
+  var ponto = emailVar.indexOf('.');
+  var cpfSemCaracteres = cpfVar.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
+  var qtdCaracteresCPF = Number(cpfSemCaracteres);
+  var tamCPF = cpfSemCaracteres.length;
+
+  var tamSenha = senhaVar.length;
+  var hashtag = senhaVar.indexOf('#');
+  var arrobaSenha = senhaVar.indexOf('@');
+  var underline = senhaVar.indexOf('_');
+  var cifroes = senhaVar.indexOf('$');
+  var porcentagens = senhaVar.indexOf('%');
+  var confirmacaoSenha = confirmarSenha_input.value;
+  var verificarSenha = confirmacaoSenha;
+
+  if (nomeVar == '' ||
+    cpfVar == '' ||
+    emailVar == '' ||
+    senhaVar == '') {
+    div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
+  } else if (tamNome <= 1) {
+    div_erros_login.innerHTML = 'O nome inserido é inválido.';
+  } else if (isNaN(qtdCaracteresCPF)) {
+    div_erros_login.innerHTML = 'O CPF ou CNPJ inserido deve ser válido para a conclusão do cadastro. Lembre-se de não utilizar letras neste campo.';
+  } else if (tamCPF != 11 && tamCPF != 14 && tamCPF != 18) {
+    div_erros_login.innerHTML = 'O CPF ou CNPJ inserido deve ser válido para a conclusão do cadastro.'
+  } else if (arrobas < 0 || ponto < 0) {
+    div_erros_login.innerHTML = 'O e-mail inserido deve ser válido para a conclusão do cadastro.';
+  } else if (tamSenha < 8) {
+    div_erros_login.innerHTML = 'A senha deve possuir ao menos 8 caracteres.';
+  } else if (hashtag < 0 && arrobaSenha < 0 && underline < 0 && cifrao < 0 && porcentagem < 0) {
+    div_erros_login.innerHTML = 'Por segurança, a senha deve possuir ao menos um caractere especial!';
+  } else if (senhaVar != verificarSenha) {
+    div_erros_login.innerHTML = 'A verificação da senha falhou.';
+  } else div_erros_login.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
+
+  
+  fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        cpfServer: cpfSemCaracteres,
+        senhaServer: senhaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+    
+        } else {
+            console.log('Houve um erro ao tentar realizar o cadastro');
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+      return false;
+    
+
+      }
+
+</script>

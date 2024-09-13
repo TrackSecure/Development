@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TrackSecure | Login</title>
+
+    <script src="./js/sessao.js"></script>
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/cadastro.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <header class="header">
+
+        <div class="logo">
+          <img src="imgs/logo.png" alt="logo" class="logo-img">
+          <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+        </div>
+
+        <nav class="navbar">
+            <a href="login.html">Login</a>
+            <a href="cadastro.html">Cadastro</a>
+        </nav>
+
+    </header>
+
+
+    <div class="login">
+        <div class="login-esquerda">
+            <img src="imgs/login-animacao.svg" class="imagem-dash" style="width: 650px;">
+        </div>
+        <div class="login-direita">
+            <div class="card-login">
+                <h1>Login</h1>
+                <div class="textos">
+                    <label for="usuario">E-mail:</label>
+                    <input id="email_input" type="text" value="ale@gmail.com" name="usuario" placeholder="exemplo@email.com">
+                </div>
+                <div class="textos">
+                    <label for="senha">Senha:</label>
+                    <input id="senha_input" type="password" value="SPTech#2024" name="senha" placeholder="********">
+                </div>
+                <button class="btn" onclick="entrar()">Login</button>
+                <div class="alerta_erro">
+                    <div class="card_erro" id="cardErro">
+                      <span id="mensagem_erro"></span>
+                      <div id="div_erros_login" style="color: white;"></div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function entrar() {
+    
+      var emailVar = email_input.value;
+      var senhaVar = senha_input.value;
+    
+      var arrobas = emailVar.indexOf('@');
+      var ponto = emailVar.indexOf('.');
+    
+      var tamSenha = senhaVar.length;
+      var hashtag = senhaVar.indexOf('#');
+      var arrobaSenha = senhaVar.indexOf('@');
+      var underline = senhaVar.indexOf('_');
+      var cifroes = senhaVar.indexOf('$');
+      var porcentagens = senhaVar.indexOf('%');
+    
+      if (emailVar == '' || senhaVar == '') {
+        div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
+      } else if (arrobas < 0 || ponto < 0) {
+        div_erros_login.innerHTML = 'O e-mail inserido deve ser válido para a conclusão do cadastro.';
+      } else if (tamSenha < 8) {
+        div_erros_login.innerHTML = 'A senha deve possuir ao menos 8 caracteres.';
+      } else if (hashtag < 0 && arrobaSenha < 0 && underline < 0 && cifrao < 0 && porcentagem < 0) {
+        div_erros_login.innerHTML = 'Por segurança, a senha deve possuir ao menos um caractere especial!';
+      } else div_erros_login.innerHTML = 'Usuário logado com sucesso! Redirecionando para tela de dashboard.';
+    
+      
+      fetch("/usuarios/autenticar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+    
+            if (resposta.ok) {
+              setTimeout(() => {
+                window.location = "dashboard.html";
+              }, "2000");
+    
+        
+            } else {
+                console.log('Houve um erro ao tentar realizar o cadastro');
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+          return false;
+        
+    
+          }
+    
+    </script>
