@@ -76,13 +76,14 @@ span {
     align-items: center;
     justify-content: space-between;
     padding: 20px;
-    background-color: #dddddd;
+    background-color: #091e38;
     box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    border-bottom: 5px solid #061a31;
 }
 
 .header .logo {
@@ -101,7 +102,7 @@ span {
 }
 
 .logo-txt {
-    color: #091e38;
+    color: #dddddd;
     font-size: 2.5rem;
 }
 
@@ -112,7 +113,8 @@ span {
 .header .navbar a {
     margin: 0 10px;
     font-size: 1.9rem;
-    color: #091f39;
+    color: #dddddd;
+    font-weight: bold;
 }
 
 .header .navbar a:hover {
@@ -466,6 +468,7 @@ footer {
     flex-direction: column; 
     align-items: center;
     justify-content: center; 
+    border-top: 5px solid #061a31;
 }
 
 .content {
