@@ -41,23 +41,39 @@
         <h1>Cadastro</h1>
         <div class="textos">
           <label for="usuario">Usuário:</label>
-          <input id="nome_input" type="text" name="usuario" value="Alexandre" placeholder="Nome de usuario">
+          <input id="nome_input" type="text" name="usuario"  placeholder="Nome de usuario">
         </div>
         <div class="textos">
           <label for="usuario">Email:</label>
-          <input id="email_input" type="email" name="email" value="ale@gmail.com" placeholder="exemplo@email.com">
+          <input id="email_input" type="email" name="email"  placeholder="exemplo@email.com">
         </div>
         <div class="textos">
           <label for="usuario">CPF:</label>
-          <input id="cpf_input" type="number" name="cpf" value="12345678910" placeholder="000.000.000-00">
+          <input id="cpf_input" type="number" name="cpf"  placeholder="000.000.000-00">
+        </div>
+        <div class="textos">
+          <label for="usuario">Telefone:</label>
+          <input id="telefone_input" type="number" name="cpf"  placeholder="11959530000">
+        </div>
+        <div class="textos">
+          <label for="usuario">Cargo:</label>
+          <select id="cargo_select">
+            <option value="0">Selecione uma opção:</option>
+            <option value="Gerente de Monitoramento de Servidores">Gerente</option>
+            <option value="Analista de Sistemas ">Analista</option>
+          </select>
+        </div>
+        <div class="textos">
+          <label for="usuario">Código da Empresa:</label>
+          <input id="codigo_input" type="number" name="cpf"  placeholder="Digite o código:">
         </div>
         <div class="textos">
           <label for="senha">Senha:</label>
-          <input id="senha_input" type="password" value="SPTech#2024" name="senha" placeholder="********">
+          <input id="senha_input" type="password" name="senha" placeholder="********">
         </div>
         <div class="textos">
           <label for="senha">Confirmar Senha:</label>
-          <input id="confirmarSenha_input" type="password" value="SPTech#2024" name="senha1" placeholder="********">
+          <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
         </div>
         <button class="btn" onclick="cadastrar()">Cadastrar</button>
         <div class="alerta_erro">
@@ -79,15 +95,19 @@ function cadastrar() {
   var nomeVar = nome_input.value;
   var emailVar = email_input.value;
   var cpfVar = cpf_input.value;
+  var telefoneVar = telefone_input.value;
+  var cargoVar = cargo_select.value;
+  var codigoVar = codigo_input.value;
   var senhaVar = senha_input.value;
   var confirmarSenhaVar = confirmarSenha_input.value;
+  
 
   var tamNome = nomeVar.length;
+  var tamCodigo = codigoVar.length;
+  var tamTelefone = telefoneVar.length;
   var arrobas = emailVar.indexOf('@');
   var ponto = emailVar.indexOf('.');
-  var cpfSemCaracteres = cpfVar.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
-  var qtdCaracteresCPF = Number(cpfSemCaracteres);
-  var tamCPF = cpfSemCaracteres.length;
+  var tamCPF = cpfVar.length;
 
   var tamSenha = senhaVar.length;
   var hashtag = senhaVar.indexOf('#');
@@ -105,15 +125,19 @@ function cadastrar() {
     div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
   } else if (tamNome <= 1) {
     div_erros_login.innerHTML = 'O nome inserido é inválido.';
-  } else if (isNaN(qtdCaracteresCPF)) {
-    div_erros_login.innerHTML = 'O CPF ou CNPJ inserido deve ser válido para a conclusão do cadastro. Lembre-se de não utilizar letras neste campo.';
-  } else if (tamCPF != 11 && tamCPF != 14 && tamCPF != 18) {
-    div_erros_login.innerHTML = 'O CPF ou CNPJ inserido deve ser válido para a conclusão do cadastro.'
+  } else if (tamCPF != 11 ) {
+    div_erros_login.innerHTML = 'O CPF ou inserido deve ser válido para a conclusão do cadastro.'
   } else if (arrobas < 0 || ponto < 0) {
     div_erros_login.innerHTML = 'O e-mail inserido deve ser válido para a conclusão do cadastro.';
+  } else if (tamTelefone != 11){
+    div_erros_login.innerHTML = 'Telefone inválido';
+  } else if (cargoVar == "0") {
+    div_erros_login.innerHTML = 'Selecione um cargo';
+  } else if (tamCodigo < 1) {
+    div_erros_login.innerHTML = 'Código inválido';
   } else if (tamSenha < 8) {
     div_erros_login.innerHTML = 'A senha deve possuir ao menos 8 caracteres.';
-  } else if (hashtag < 0 && arrobaSenha < 0 && underline < 0 && cifrao < 0 && porcentagem < 0) {
+  } else if (hashtag < 0 && arrobaSenha < 0 && underline < 0 && cifroes < 0 && porcentagem < 0) {
     div_erros_login.innerHTML = 'Por segurança, a senha deve possuir ao menos um caractere especial!';
   } else if (senhaVar != verificarSenha) {
     div_erros_login.innerHTML = 'A verificação da senha falhou.';
@@ -130,7 +154,10 @@ function cadastrar() {
         // Agora vá para o arquivo routes/usuario.js
         nomeServer: nomeVar,
         emailServer: emailVar,
-        cpfServer: cpfSemCaracteres,
+        cpfServer: cpfVar,
+        telefoneServer: telefoneVar,
+        cargoServer: cargoVar,
+        codigoServer: codigoVar,
         senhaServer: senhaVar,
       }),
     })
@@ -139,7 +166,7 @@ function cadastrar() {
 
         if (resposta.ok) {
           setTimeout(() => {
-            window.location = "login.html";
+             window.location.href = "login.html";
           }, "2000");
 
     
