@@ -118,6 +118,10 @@ body {
     margin: 10px 0px;
 }
 
+.textos div {
+    color: red;
+}
+
 .textos > input {
     width: 100%;
     border: none;
