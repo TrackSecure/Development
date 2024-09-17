@@ -38,52 +38,77 @@
       <img src="imgs/cadastro-animacao.svg" class="imagem-dash" style="width: 630px;">
     </div>
     <div class="login-direita">
-      <div class="card-login">
+      <div class="card-cadastro">
         <h1>Cadastro</h1>
-        <div class="textos">
-          <label for="usuario">Usuário:</label>
-          <input id="nome_input" type="text" name="usuario"  placeholder="Nome de usuario">
-          <div id="div_erros_usuario"></div>
+
+        <div style="display: flex; flex-direction: row;">
+
+          <div class="textos-cadastro">
+            <label for="usuario">Usuário:</label>
+            <input id="nome_input" type="text" name="usuario" placeholder="Nome de usuario">
+            <div id="div_erros_usuario"></div>
+          </div>
+          <div class="textos-cadastro">
+            <label for="usuario">Email:</label>
+            <input id="email_input" type="email" name="email" placeholder="exemplo@email.com">
+            <div id="div_erros_email"></div>
+          </div>
+
         </div>
-        <div class="textos">
-          <label for="usuario">Email:</label>
-          <input id="email_input" type="email" name="email"  placeholder="exemplo@email.com">
-          <div id="div_erros_email"></div>
+
+        <div style="display: flex; flex-direction: row;">
+
+          <div class="textos-cadastro">
+            <label for="usuario">CPF:</label>
+            <input id="cpf_input" type="number" name="cpf" placeholder="000.000.000-00">
+            <div id="div_erros_cpf"></div>
+          </div>
+          <div class="textos-cadastro">
+            <label for="usuario">Telefone:</label>
+            <input id="telefone_input" type="number" name="cpf" placeholder="11959530000">
+            <div id="div_erros_telefone"></div>
+          </div>
+
         </div>
-        <div class="textos">
-          <label for="usuario">CPF:</label>
-          <input id="cpf_input" type="number" name="cpf"  placeholder="000.000.000-00">
-          <div id="div_erros_cpf"></div>
+
+
+
+
+
+        <div style="display: flex; flex-direction: row;">
+
+          <div class="textos-cadastro">
+            <label for="usuario">Cargo:</label>
+            <select id="cargo_select">
+              <option value="0">Selecione uma opção:</option>
+              <option value="Gerente de Monitoramento de Servidores">Gerente</option>
+              <option value="Analista de Sistemas ">Analista</option>
+            </select>
+            <div id="div_erros_cargo"></div>
+          </div>
+          <div class="textos-cadastro">
+            <label for="usuario">Código da Empresa:</label>
+            <input id="codigo_input" type="number" name="cpf" placeholder="Digite o código:">
+            <div id="div_erros_codigo"></div>
+          </div>
+
         </div>
-        <div class="textos">
-          <label for="usuario">Telefone:</label>
-          <input id="telefone_input" type="number" name="cpf"  placeholder="11959530000">
-          <div id="div_erros_telefone"></div>
+
+        <div style="display: flex; flex-direction: row;">
+
+          <div class="textos-cadastro">
+            <label for="senha">Senha:</label>
+            <input id="senha_input" type="password" name="senha" placeholder="********">
+            <div id="div_erros_senha"></div>
+          </div>
+          <div class="textos-cadastro">
+            <label for="senha">Confirmar Senha:</label>
+            <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
+            <div id="div_erros_confirmacao"></div>
+          </div>
+
         </div>
-        <div class="textos">
-          <label for="usuario">Cargo:</label>
-          <select id="cargo_select">
-            <option value="0">Selecione uma opção:</option>
-            <option value="Gerente de Monitoramento de Servidores">Gerente</option>
-            <option value="Analista de Sistemas ">Analista</option>
-          </select>
-          <div id="div_erros_cargo"></div>
-        </div>
-        <div class="textos">
-          <label for="usuario">Código da Empresa:</label>
-          <input id="codigo_input" type="number" name="cpf"  placeholder="Digite o código:">
-          <div id="div_erros_codigo"></div>
-        </div>
-        <div class="textos">
-          <label for="senha">Senha:</label>
-          <input id="senha_input" type="password" name="senha" placeholder="********">
-          <div id="div_erros_senha"></div>
-        </div>
-        <div class="textos">
-          <label for="senha">Confirmar Senha:</label>
-          <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
-          <div id="div_erros_confirmacao"></div>
-        </div>
+
         <button class="btn" onclick="cadastrar()">Cadastrar</button>
         <div class="alerta_erro">
           <div class="card_erro" id="cardErro">
@@ -99,41 +124,41 @@
 </html>
 
 <script>
-function cadastrar() {
-  var validado = false;
+  function cadastrar() {
+    var validado = false;
 
-  var nomeVar = nome_input.value;
-  var emailVar = email_input.value;
-  var cpfVar = cpf_input.value;
-  var telefoneVar = telefone_input.value;
-  var cargoVar = cargo_select.value;
-  var codigoVar = codigo_input.value;
-  var senhaVar = senha_input.value;
-  var confirmarSenhaVar = confirmarSenha_input.value;
-  
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var cpfVar = cpf_input.value;
+    var telefoneVar = telefone_input.value;
+    var cargoVar = cargo_select.value;
+    var codigoVar = codigo_input.value;
+    var senhaVar = senha_input.value;
+    var confirmarSenhaVar = confirmarSenha_input.value;
 
-  var tamNome = nomeVar.length;
-  var tamCodigo = codigoVar.length;
-  var tamTelefone = telefoneVar.length;
-  var arrobas = emailVar.indexOf('@');
-  var ponto = emailVar.indexOf('.');
-  var tamCPF = cpfVar.length;
 
-  var tamSenha = senhaVar.length;
-  var hashtag = senhaVar.indexOf('#');
-  var arrobaSenha = senhaVar.indexOf('@');
-  var underline = senhaVar.indexOf('_');
-  var cifroes = senhaVar.indexOf('$');
-  var porcentagens = senhaVar.indexOf('%');
-  var confirmacaoSenha = confirmarSenha_input.value;
-  var verificarSenha = confirmacaoSenha;
+    var tamNome = nomeVar.length;
+    var tamCodigo = codigoVar.length;
+    var tamTelefone = telefoneVar.length;
+    var arrobas = emailVar.indexOf('@');
+    var ponto = emailVar.indexOf('.');
+    var tamCPF = cpfVar.length;
 
-  if (nomeVar == '' ||
-    cpfVar == '' ||
-    emailVar == '' ||
-    senhaVar == '') {
-    div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
-  } else {
+    var tamSenha = senhaVar.length;
+    var hashtag = senhaVar.indexOf('#');
+    var arrobaSenha = senhaVar.indexOf('@');
+    var underline = senhaVar.indexOf('_');
+    var cifroes = senhaVar.indexOf('$');
+    var porcentagens = senhaVar.indexOf('%');
+    var confirmacaoSenha = confirmarSenha_input.value;
+    var verificarSenha = confirmacaoSenha;
+
+    if (nomeVar == '' ||
+      cpfVar == '' ||
+      emailVar == '' ||
+      senhaVar == '') {
+      div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
+    } else {
       div_erros_login.innerHTML = "";
       if (tamNome <= 1) {
         div_erros_usuario.innerHTML = 'O nome inserido é inválido.';
@@ -142,7 +167,7 @@ function cadastrar() {
         div_erros_usuario.innerHTML = "";
         validado = true;
       }
-      if (tamCPF != 11 ) {
+      if (tamCPF != 11) {
         div_erros_cpf.innerHTML = 'O CPF ou inserido deve ser válido para a conclusão do cadastro.'
         validado = false;
       } else {
@@ -156,7 +181,7 @@ function cadastrar() {
         div_erros_email.innerHTML = "";
         validado = true;
       }
-      if (tamTelefone != 11){
+      if (tamTelefone != 11) {
         div_erros_telefone.innerHTML = 'Telefone inválido';
         validado = false;
       } else {
@@ -175,7 +200,7 @@ function cadastrar() {
         validado = false;
       } else {
         div_erros_codigo.innerHTML = "";
-        validado =  true;
+        validado = true;
       }
       if (tamSenha < 8) {
         div_erros_senha.innerHTML = 'A senha deve possuir ao menos 8 caracteres.';
@@ -202,41 +227,41 @@ function cadastrar() {
       if (validado) {
         div_erros_login.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
         fetch("/usuarios/cadastrar", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              // crie um atributo que recebe o valor recuperado aqui
-              // Agora vá para o arquivo routes/usuario.js
-              nomeServer: nomeVar,
-              emailServer: emailVar,
-              cpfServer: cpfVar,
-              telefoneServer: telefoneVar,
-              cargoServer: cargoVar,
-              codigoServer: codigoVar,
-              senhaServer: senhaVar,
-            }),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            cpfServer: cpfVar,
+            telefoneServer: telefoneVar,
+            cargoServer: cargoVar,
+            codigoServer: codigoVar,
+            senhaServer: senhaVar,
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+              setTimeout(() => {
+                window.location.href = "login.html";
+              }, "2000");
+
+
+            } else {
+              console.log('Houve um erro ao tentar realizar o cadastro');
+            }
           })
-            .then(function (resposta) {
-              console.log("resposta: ", resposta);
-      
-              if (resposta.ok) {
-                setTimeout(() => {
-                   window.location.href = "login.html";
-                }, "2000");
-      
-          
-              } else {
-                  console.log('Houve um erro ao tentar realizar o cadastro');
-              }
-            })
-            .catch(function (resposta) {
-              console.log(`#ERRO: ${resposta}`);
-            });
-            return false;
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+        return false;
       }
+    }
   }
-}
 
 </script>
