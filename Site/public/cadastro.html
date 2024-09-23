@@ -11,119 +11,190 @@
   <script src="./js/sessao.js"></script>
 
   <link rel="stylesheet" href="./css/cadastro.css" />
+  <link rel="stylesheet" href="./css/footer.css" />
   <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
 <body>
-
-  <header class="header">
-
-    <div class="logo">
-      <img src="imgs/logo.png" alt="logo" class="logo-img">
-      <a href="index.html" class="logo-txt"><span>TrackSecure</span></a>
+  <div>
+    <div class="header">
+  
+      <div class="logo">
+        <img src="imgs/logo.png" alt="logo" class="logo-img">
+        <a href="index.html" class="logo-txt"><span>TrackSecure</span></a>
+      </div>
+  
+      <div class="navbar">
+        <a href="login.html">Login</a>
+        <a href="">|</a>
+        <a href="cadastro.html"><span class="atual">Cadastro</span></a>
+      </div>
+  
     </div>
-
-    <nav class="navbar">
-      <a href="login.html">Login</a>
-      <a href="">|</a>
-      <a href="cadastro.html">Cadastro</a>
-    </nav>
-
-  </header>
-
-
-  <div class="login">
-    <div class="login-esquerda">
-      <img src="imgs/cadastro-animacao.svg" class="imagem-dash" style="width: 630px;">
-    </div>
-    <div class="login-direita">
-      <div class="card-cadastro">
-        <h1>Cadastro</h1>
-
-        <div style="display: flex; flex-direction: row;">
-
-          <div class="textos-cadastro">
-            <label for="usuario">Usuário:</label>
-            <input id="nome_input" type="text" name="usuario" placeholder="Nome de usuario">
-            <div id="div_erros_usuario"></div>
+  
+    <div class="login">
+      <div class="login-esquerda">
+        <img src="imgs/cadastro-animacao.svg" class="imagem-dash" style="width: 630px;">
+      </div>
+      <div class="login-direita">
+        <div class="card-cadastro">
+          <h1>Cadastro</h1>
+  
+          <div style="display: flex; flex-direction: row;">
+  
+            <div class="textos-cadastro">
+              <label for="usuario">Usuário:</label>
+              <input id="nome_input" type="text" name="usuario" placeholder="Nome de usuario">
+              <div id="div_erros_usuario"></div>
+            </div>
+            <div class="textos-cadastro">
+              <label for="usuario">Email:</label>
+              <input id="email_input" type="email" name="email" placeholder="exemplo@email.com">
+              <div id="div_erros_email"></div>
+            </div>
+  
           </div>
-          <div class="textos-cadastro">
-            <label for="usuario">Email:</label>
-            <input id="email_input" type="email" name="email" placeholder="exemplo@email.com">
-            <div id="div_erros_email"></div>
+  
+          <div style="display: flex; flex-direction: row;">
+  
+            <div class="textos-cadastro">
+              <label for="usuario">CPF:</label>
+              <input oninput="formatar_cpf()" id="cpf_input" type="text" name="cpf" placeholder="000.000.000-00" maxlength="14">
+              <div id="div_erros_cpf"></div>
+            </div>
+            <div class="textos-cadastro">
+              <label for="usuario">Telefone:</label>
+              <input oninput="formatar_telefone()" id="telefone_input" type="text" name="cpf" placeholder="(11)95953-0000" maxlength="14">
+              <div id="div_erros_telefone"></div>
+            </div>
+  
           </div>
-
-        </div>
-
-        <div style="display: flex; flex-direction: row;">
-
-          <div class="textos-cadastro">
-            <label for="usuario">CPF:</label>
-            <input id="cpf_input" type="number" name="cpf" placeholder="000.000.000-00">
-            <div id="div_erros_cpf"></div>
+  
+          <div style="display: flex; flex-direction: row;">
+  
+            <div class="textos-cadastro">
+              <label for="usuario">Cargo:</label>
+              <select id="cargo_select">
+                <option value="0">Selecione uma opção:</option>
+                <option value="Gerente de Monitoramento de Servidores">Gerente</option>
+                <option value="Analista de Sistemas ">Analista</option>
+              </select>
+              <div id="div_erros_cargo"></div>
+            </div>
+            <div class="textos-cadastro">
+              <label for="usuario">Código da Empresa:</label>
+              <input id="codigo_input" type="number" name="cpf" placeholder="Digite o código:">
+              <div id="div_erros_codigo"></div>
+            </div>
+  
           </div>
-          <div class="textos-cadastro">
-            <label for="usuario">Telefone:</label>
-            <input id="telefone_input" type="number" name="cpf" placeholder="11959530000">
-            <div id="div_erros_telefone"></div>
+  
+          <div style="display: flex; flex-direction: row;">
+  
+            <div class="textos-cadastro">
+              <label for="senha">Senha:</label>
+              <input id="senha_input" type="password" name="senha" placeholder="********">
+              <div id="div_erros_senha"></div>
+            </div>
+            <div class="textos-cadastro">
+              <label for="senha">Confirmar Senha:</label>
+              <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
+              <div id="div_erros_confirmacao"></div>
+            </div>
+  
           </div>
-
-        </div>
-
-
-
-
-
-        <div style="display: flex; flex-direction: row;">
-
-          <div class="textos-cadastro">
-            <label for="usuario">Cargo:</label>
-            <select id="cargo_select">
-              <option value="0">Selecione uma opção:</option>
-              <option value="Gerente de Monitoramento de Servidores">Gerente</option>
-              <option value="Analista de Sistemas ">Analista</option>
-            </select>
-            <div id="div_erros_cargo"></div>
-          </div>
-          <div class="textos-cadastro">
-            <label for="usuario">Código da Empresa:</label>
-            <input id="codigo_input" type="number" name="cpf" placeholder="Digite o código:">
-            <div id="div_erros_codigo"></div>
-          </div>
-
-        </div>
-
-        <div style="display: flex; flex-direction: row;">
-
-          <div class="textos-cadastro">
-            <label for="senha">Senha:</label>
-            <input id="senha_input" type="password" name="senha" placeholder="********">
-            <div id="div_erros_senha"></div>
-          </div>
-          <div class="textos-cadastro">
-            <label for="senha">Confirmar Senha:</label>
-            <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
-            <div id="div_erros_confirmacao"></div>
-          </div>
-
-        </div>
-
-        <button class="btn" onclick="cadastrar()">Cadastrar</button>
-        <div class="alerta_erro">
-          <div class="card_erro" id="cardErro">
-            <span id="mensagem_erro"></span>
-            <div id="div_erros_login" style="color: white;"></div>
+  
+          <button class="btn" onclick="cadastrar()">Cadastrar</button>
+          <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+              <span id="mensagem_erro"></span>
+              <div id="div_erros_login" style="color: white;"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <footer id="contato" class="footer-cont">
+            <div class="contato">
+
+
+                <div class="colunas">
+                    <div class="column-atendimento">
+                        <h3>Atendimento</h3>
+                        <p><i class='bx bxl-whatsapp'></i> (11) 99999-8888 <br> <i class='bx bx-envelope'></i>
+                            track@tracksecuree.atlassian.net</p>
+                    </div>
+                    <div class="column sac">
+                        <h3>SAC</h3>
+                        <p><i class='bx bx-phone'></i> (11) 88888-9999 <br> <i class='bx bx-envelope'></i>
+                            sac@tracksecure.com.br</p>
+                    </div>
+                    <div class="column ouvidoria">
+                        <h3>Ouvidoria</h3>
+                        <p><i class='bx bx-phone'></i> (11) 77777-8888 <br> <i class='bx bx-chat'></i>
+                            ouvidoria@tracksecure.com.br</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom">
+                &copy; 2024 TrackSecure site | Todos os direitos reservados.
+            </div>
+            </div>
+        </footer>
   </div>
+
 </body>
 
 </html>
 
 <script>
+  function formatar_cpf() {
+    var cpf = cpf_input.value;
+    var tamanho = cpf.length;
+    var formatado = "";
+    if (tamanho == 4 || tamanho == 8 || tamanho == 12) {
+      var ultimo_num = cpf[tamanho-1];
+      if (ultimo_num == "." || ultimo_num == "-") {
+        cpf_input.value[tamanho-1] = "";
+      } else {
+        for (var i = 0; i < tamanho - 1; i++) {
+          formatado += cpf[i];
+        }
+        if (tamanho == 12) {
+          cpf_input.value = formatado + "-" + ultimo_num;
+        } else {
+          cpf_input.value = formatado + "." + ultimo_num;
+        }
+      }
+    }
+  }
+
+  function formatar_telefone() {
+    var telefone = telefone_input.value;
+    var tamanho = telefone.length;
+    var formatado = "";
+    if (tamanho == 1 || tamanho == 4 || tamanho == 10) {
+      var ultimo_num = telefone[tamanho-1];
+      if (ultimo_num == "(" || ultimo_num == ")" || ultimo_num == "-") {
+        telefone_input.value[tamanho-1] = "";
+      } else {
+        for (var i = 0; i < tamanho - 1; i++) {
+          formatado += telefone[i];
+        }
+        if (tamanho == 1) {
+          telefone_input.value = formatado + "(" + ultimo_num;
+        } else if (tamanho == 4) {
+          telefone_input.value = formatado + ")" + ultimo_num;
+        } else {
+          telefone_input.value = formatado + "-" + ultimo_num;
+        }
+      }
+    }
+  }
+  
   function cadastrar() {
     var validado = false;
 

@@ -10,14 +10,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 1rem;
     background-color: #091e38;
     box-shadow: -1px 9px 8px -3px rgba(0, 0, 0, 0.1);
-    position: fixed;
+    /*position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 1000;*/
 }
 
 .header .logo {
@@ -26,7 +26,7 @@ body {
     color: #64adf5;
     font-size: 0.9rem;
     font-weight: 500;
-    margin-left: 10px;
+    margin-left: 1rem;
 }
 
 .header .logo-img {
@@ -61,11 +61,16 @@ body {
     padding-bottom: 5px;
 }
 
+.atual {
+    color: #589ce0;
+    font-weight: bolder;
+}
+
 .login {
-    width: 100vw;
+    width: auto;
     height: 100vh;
     background: linear-gradient(45deg, #5aa3ec, #318ce7, #83baf1);
-    background-size: 400% 400%;
+    /*background-size: 400% 400%;*/
     animation: Animacao 15s ease infinite;
     display: flex;
     justify-content: center;
@@ -81,7 +86,7 @@ body {
 }
 
 .imagem-dash {
-    width: 80%;
+    height: 40vw;
     max-width: 1000px;
 }
 
@@ -96,21 +101,20 @@ body {
 
 
 .card-cadastro {
-    margin-top: 100px;
-    width: 80%;
-    height: auto;
+    width: 40vw;
+    height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 30px 35px;
+    padding: 1.5rem 1rem;
     background: #212529;
     border-radius: 20px;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.77);
 }
 
 .card-cadastro > h1 {
-    font-size: 40px;
+    font-size: 2vw;
     color: #5aa3ec;
     font-weight: 800;
     margin: 0;
@@ -130,26 +134,26 @@ body {
 }
 
 .textos-cadastro input {
-    width: 100%;
+    width: 16vw;
     border: none;
     border-radius: 10px;
-    padding: 15px;
+    padding: 1vw;
     background: #ffffff;
     color: black;
-    font-size: 12pt;
+    font-size: 0.8rem;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
     outline: none;
     box-sizing: border-box;
 }
 
 .textos-cadastro select {
-    width: 100%;
+    width: 16vw;
     border: none;
     border-radius: 10px;
     padding: 15px;
     background: #ffffff;
     color: black;
-    font-size: 12pt;
+    font-size: 0.8rem;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
     outline: none;
     box-sizing: border-box;
@@ -158,6 +162,7 @@ body {
 .textos-cadastro > label {
     color: #e8eddf;
     margin-bottom: 10px;
+    font-size: 2.5vh;
 }
 
 .textos-cadastro > input::placeholder {
@@ -166,7 +171,7 @@ body {
 
 
 .card-login {
-    width: 80%;
+    width: 40vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -179,7 +184,7 @@ body {
 
 
 .card-login > h1 {
-    font-size: 40px;
+    font-size: 2vw;
     color: #5aa3ec;
     font-weight: 800;
     margin: 0;
@@ -199,7 +204,7 @@ body {
 }
 
 .textos > input {
-    width: 100%;
+    width: 40vw;
     border: none;
     border-radius: 10px;
     padding: 15px;
@@ -221,16 +226,15 @@ body {
 }
 
 .btn {
-    width: 100%;
-    padding: 16px 0px;
+    width: 12.5vw;
+    padding: 1rem;
     margin: 25px;
     border: none;
     border-radius: 8px;
     outline: none;
     text-transform: uppercase;
     font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 3px;
+    font-size: 1.5vw;
     color: #000029;
     background: #318ce7;
     cursor: pointer;
@@ -239,7 +243,6 @@ body {
 
 .btn:hover {
     background-color: #9fcbf7;
-    letter-spacing: 3px;
     animation-name: botao;
     animation-duration: 0.5s;
     animation-timing-function: ease-in-out;
