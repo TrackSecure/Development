@@ -194,3 +194,7 @@ header {
     border: none;
     border-bottom: solid 2px #2c90ea;
 }
+
+.caixaGrafico .container a {
+    color: whitesmoke;
+}

@@ -51,26 +51,6 @@ header {
 
 }
 
-.foto {
-    width: 15%;
-    height: 70%;
-    display: flex;
-    justify-content: center;
-}
-
-.bolaFoto {
-    width: 65%;
-    height: 100%;
-    border-radius: 50%;
-    border: 2.5px solid #ddd;
-}
-
-.bolaFoto img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
 .texto {
     color: white;
     width: 100%;
@@ -164,37 +144,27 @@ header {
 }
 
 .caixaGrafico {
-    width: 80%;
+    width: 100%;
     height: 100%;
     display: flex;
 }
 
-.caixaGrafico .container {
-    align-items: center;
+.right{
+    width: 45%;
+    height: 100%;
+}
+
+.left{
+    width: 55%;
+    height: 100%;
+    border-right: solid 3px black;
+}
+
+.left h2{
+    display: flex;
     justify-content: center;
-    height: 80%;
-    background-color: #091e38;
-    border-radius: 3%;
-
-    flex-direction: column;
+    margin-top: 2%;
 }
 
-.caixaGrafico .container h1{
-    color: white;
-    margin-bottom: 5%;
-}
 
-.caixaGrafico .container button {
-    color: whitesmoke;
-    background-color: transparent;
-    width: 30%;
-    height: 20%;
-    font-size: 5vh;
-    cursor: pointer;
-    border: none;
-    border-bottom: solid 2px #2c90ea;
-}
 
-.caixaGrafico .container a {
-    color: whitesmoke;
-}

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Analista | Inicial</title>
-    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/dashboard_inicial_analista.css">
+    <title>Dashboard 1º | Gerente</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="dash1_gerente_bruna.css">
 </head>
 
 <body>
@@ -14,12 +14,13 @@
         <header>
             <div class="perfil">
                 <div class="texto">
-                    <span>Olá, Sofia! (Analista de Sistemas)</span>
+                    <span>Olá, Alexandre! (Gerente de monitoramento de Servidor)</span>
                 </div>
             </div>
             <div class="botao">
                 <div class="container">
-                    <button style="background-color: #2c90ea;">Início</button>
+                    <button>Cadastros</button>
+                    <button onclick="inicio()">Início</button>
                     <button onclick="sair()">Sair</button>
                 </div>
             </div>
@@ -28,19 +29,19 @@
             <div class="menu">
                 <div class="container">
                     <h2>Dashboard</h2>
-                    <p class="agora">Monitoramento Geral</p>
+                    <p class="agora">Tela 1</p>
                 </div>
                 <div class="logo">
-                    <img src="imgs/logo.png" alt="logo" class="logo-img">
+                    <img src="logo.png" alt="logo" class="logo-img">
                     <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
                 </div>
             </div>
             <div class="caixaGrafico">
-                <div class="container">
-                    <h1>Selecione a Dashboard que Deseja Acessar!</h1>
-                    <button><a href="analista/dash1_analista.html">Dash 1</a></button>
-                    <button><a href="analista/dash2_analista.html">Dash 2</a></button>
-                    <button><a href="analista/dash3_analista.html">Dash 3</a></button>
+                <div class="left">
+                    <h2>Percentual de Uso RAM X CPU (Média por Semana)</h2>
+                </div>
+                <div class="right">
+
                 </div>
             </div>
         </div>
@@ -51,6 +52,10 @@
 <script>
     function sair() {
         window.location = "index.html"
+    }
+
+    function inicio() {
+        window.location = "../dashboard_inicial_gerente.html"
     }
 
 </script>
