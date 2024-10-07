@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br   ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dasboard.css">
+    <link rel="stylesheet" href="css/cadastro_interno.css">
+    <link rel="stylesheet" href="css/cadastro.css">
+</head>
+
+<body>
+    <div class="pagina">
+        <header>
+            <div class="perfil">
+                <div class="foto">
+                    <div class="bolaFoto">
+                        <img src="imgs/Persona's.png" alt="Imagem Perfil">
+                    </div>
+                </div>
+                <div class="texto">
+                    <span>Alexandre</span>
+                    <p>Gerente de monitoramento de Servidor</p>
+                </div>
+            </div>
+            <div class="botao">
+                <div class="container">
+                    <button onclick="sair()">Sair</button>
+                </div>
+            </div>
+        </header>
+        <div class="paginaDash">
+            <div class="menu">
+                <div class="logo">
+                    <img src="imgs/logo.png" alt="logo" class="logo-img">
+                    <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+                </div>
+            </div>
+            <div class="card_cadastro">
+                <span>Cadastro de servidor</span>
+                <div class="textos-cadastro", style="align-items: center;">
+                    <label for="nome">Nome:</label>
+                    <input id="nome_input" type="text" name="nome">
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="coluna">
+                        <div class="textos-cadastro">
+                            <label for="so">Sistema Operacional:</label>
+                            <input id="so_input" type="text" name="so">
+                        </div>
+                        <div class="textos-cadastro">
+                            <label for="disco">Disco Total:</label>
+                            <input id="disco_input" type="text" name="disco">
+                        </div>
+                    </div>
+                    <div class="coluna">
+                        <div class="textos-cadastro">
+                            <label for="memoria">Memória Total:</label>
+                            <input id="memoria_input" type="text" name="memoria">
+                        </div>
+                        <div class="textos-cadastro">
+                            <label for="cpu">Frequência Máx. CPU:</label>
+                            <input id="cpu_input" type="text" name="cpu">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn2">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    function cadastrar() {
+        
+    }
+</script>
