@@ -126,19 +126,25 @@
         })
           .then(function (resposta) {
 
-            var dados = resposta[0];
-            // console.log(dados.)
-
             console.log("resposta: ", resposta);
     
             if (resposta.ok) {
-              setTimeout(() => {
-                window.location = "dashboard_inicial.html";
-              }, "2000");
-    
-        
+              console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.ID_USUARIO = json.idFuncionario;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.ID_EMPRESA = json.fkEmpresa;
+
+                    setTimeout(function () {
+                      window.location = "cadastro_servidor.html";
+                    }, 2000);
+               });
             } else {
-                console.log('Houve um erro ao tentar realizar o cadastro');
+                console.log('Houve um erro ao tentar realizar o login');
             }
           })
           .catch(function (resposta) {

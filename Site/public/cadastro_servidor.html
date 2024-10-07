@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn2">Cadastrar</button>
+                <button onclick="cadastrar()" class="btn2">Cadastrar</button>
             </div>
         </div>
     </div>
@@ -75,11 +75,12 @@
 </html>
 <script>
     function cadastrar() {
-        var nome = input_nome.value;
+        var nome = nome_input.value;
         var so = so_input.value;
-        var disco = Number(input_disco.value);
-        var memoria = Number(input_memoria.value);
-        var cpu = Number(input_cpu.value);
+        var disco = Number(disco_input.value);
+        var memoria = Number(memoria_input.value);
+        var cpu = Number(cpu_input.value);
+        var idEmpresa = sessionStorage.ID_EMPRESA;
 
         if (nome != '' &&
             so != '' &&
@@ -87,41 +88,34 @@
             memoria != '' &&
             cpu != '' 
         ) {
-            fetch("/usuarios/cadastrar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
-            nomeServer: nomeVar,
-            emailServer: emailVar,
-            cpfServer: cpfVar,
-            telefoneServer: telefoneVar,
-            cargoServer: cargoVar,
-            codigoServer: codigoVar,
-            senhaServer: senhaVar,
-          }),
-        })
-          .then(function (resposta) {
-            
-            console.log("resposta: ", resposta);
+            fetch("/servidor/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                soServer: so,
+                discoServer: disco,
+                memoriaServer: memoria,
+                cpuServer: cpu,
+                fkEmpresaServer: idEmpresa 
+            }),
+            })
+            .then(function (resposta) {
+                
+                console.log("resposta: ", resposta);
 
-            if (resposta.ok) {
-              setTimeout(() => {
-                window.location.href = "login.html";
-              }, "2000");
-
-
-            } else {
-              console.log('Houve um erro ao tentar realizar o cadastro');
-            }
-          })
-          .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-          });
-        return false;
+                if (resposta.ok) {
+                    alert("Servidor cadastrado!");
+                } else {
+                console.log('Houve um erro ao tentar realizar o cadastro');
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+            return false;
         }
     }
 </script>

@@ -7,6 +7,7 @@ function cadastrar(req, res) {
     var disco = req.body.discoServer;
     var memoria = req.body.memoriaServer;
     var cpu = req.body.cpuServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -19,11 +20,13 @@ function cadastrar(req, res) {
         res.status(400).send("A memória está undefined!");
     } else if (cpu == undefined) {
         res.status(400).send("A frequência da cpu está undefined!")
+    } else if (fkEmpresa == undefined) {
+        res.status(400).send("A fkEmpresa está undefined!")
     }
     else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, so, disco, memoria, cpu)
+        usuarioModel.cadastrar(nome, so, disco, memoria, cpu, fkEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
