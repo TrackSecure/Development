@@ -52,17 +52,17 @@
                         </div>
                         <div class="textos-cadastro">
                             <label for="disco">Disco Total:</label>
-                            <input id="disco_input" type="text" name="disco">
+                            <input id="disco_input" type="number" name="disco">
                         </div>
                     </div>
                     <div class="coluna">
                         <div class="textos-cadastro">
                             <label for="memoria">Memória Total:</label>
-                            <input id="memoria_input" type="text" name="memoria">
+                            <input id="memoria_input" type="number" name="memoria">
                         </div>
                         <div class="textos-cadastro">
                             <label for="cpu">Frequência Máx. CPU:</label>
-                            <input id="cpu_input" type="text" name="cpu">
+                            <input id="cpu_input" type="number" name="cpu">
                         </div>
                     </div>
                 </div>
@@ -75,6 +75,53 @@
 </html>
 <script>
     function cadastrar() {
-        
+        var nome = input_nome.value;
+        var so = so_input.value;
+        var disco = Number(input_disco.value);
+        var memoria = Number(input_memoria.value);
+        var cpu = Number(input_cpu.value);
+
+        if (nome != '' &&
+            so != '' &&
+            disco != '' &&
+            memoria != '' &&
+            cpu != '' 
+        ) {
+            fetch("/usuarios/cadastrar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            cpfServer: cpfVar,
+            telefoneServer: telefoneVar,
+            cargoServer: cargoVar,
+            codigoServer: codigoVar,
+            senhaServer: senhaVar,
+          }),
+        })
+          .then(function (resposta) {
+            
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+              setTimeout(() => {
+                window.location.href = "login.html";
+              }, "2000");
+
+
+            } else {
+              console.log('Houve um erro ao tentar realizar o cadastro');
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+        return false;
+        }
     }
 </script>
