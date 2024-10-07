@@ -48,13 +48,13 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
 }
 
 .foto {
     width: 15%;
     height: 70%;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
@@ -73,20 +73,18 @@ header {
 
 .texto {
     color: white;
-    width: 30%;
+    width: 100%;
     height: 70%;
     text-align: left;
+    display: flex;
+    align-items: center;
 }
 
 .texto span {
     font-weight: 400;
-    font-size: 2vh;
+    font-size: 2.5vh;
 }
 
-.texto p {
-    font-weight: 200;
-    font-size: 1.5vh;
-}
 
 .botao .container {
     align-items: center;
@@ -103,6 +101,7 @@ header {
     background-color: white;
     color: rgb(7, 6, 6);
     font-size: 1.5vh;
+    margin-left: 5%;
 }
 
 .botao button:hover {
@@ -134,7 +133,6 @@ header {
 .menu .container h2 {
     margin-top: 10%;
     font-weight: 400;
-    margin-right: 20%;
 }
 
 .agora {
@@ -151,14 +149,14 @@ header {
 }
 
 .logo-img {
-    width: 15%;
+    width: 8%;
     height: auto;
     margin-right: 2%;
 }
 
 .logo-txt {
     color: #ddd;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .logo span {
@@ -167,23 +165,32 @@ header {
 
 .caixaGrafico {
     width: 80%;
-    height: 80%;
+    height: 100%;
     display: flex;
 }
 
 .caixaGrafico .container {
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: 80%;
+    background-color: #091e38;
+    border-radius: 3%;
+
+    flex-direction: column;
+}
+
+.caixaGrafico .container h1{
+    color: white;
+    margin-bottom: 5%;
 }
 
 .caixaGrafico .container button {
-    background-color: #091e38;
-    width: 70%;
-    height: 60%;
+    color: whitesmoke;
+    background-color: transparent;
+    width: 30%;
+    height: 20%;
     font-size: 5vh;
-    color: #ddd;
-    border-radius: 2vh;
-    border: 2px solid #2c90ea;
     cursor: pointer;
+    border: none;
+    border-bottom: solid 2px #2c90ea;
 }

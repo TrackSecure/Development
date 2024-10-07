@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+    text-decoration: none;
+    transition: .2s linear;
+}
+
+body {
+    background-color: #dddd;
+}
+
+.pagina {
+    width: 100vw;
+    height: 100vh;
+}
+
+.container {
+    width: 80%;
+    display: flex;
+    margin: auto;
+}
+
+header {
+    height: 12%;
+    width: 100%;
+    background-color: #091e38;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #2c90ea;
+}
+
+.perfil {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.botao {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.foto {
+    width: 15%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+.bolaFoto {
+    width: 65%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2.5px solid #ddd;
+}
+
+.bolaFoto img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.texto {
+    color: white;
+    width: 100%;
+    height: 70%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.texto span {
+    font-weight: 400;
+    font-size: 2.5vh;
+}
+
+
+.botao .container {
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.botao button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5vh;
+    width: 15%;
+    height: 30%;
+    background-color: white;
+    color: rgb(7, 6, 6);
+    font-size: 1.5vh;
+    margin-left: 5%;
+}
+
+.botao button:hover {
+    background-color: black;
+    color: white;
+    border: 2px solid #5c93d6;
+}
+
+.paginaDash {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu {
+    width: 20%;
+    height: 100%;
+    background-color: #091e38;
+}
+
+.menu .container {
+    flex-direction: column;
+    color: white;
+    height: 80%;
+    align-items: center;
+}
+
+.menu .container h2 {
+    margin-top: 10%;
+    font-weight: 400;
+}
+
+.agora {
+    color: #2c90ea;
+}
+
+
+.logo {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 8%;
+    height: auto;
+    margin-right: 2%;
+}
+
+.logo-txt {
+    color: #ddd;
+    font-size: 2rem;
+}
+
+.logo span {
+    color: #698cbe;
+}
+
+.caixaGrafico {
+    width: 80%;
+    height: 100%;
+    display: flex;
+}
+
+.caixaGrafico .container {
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    background-color: #091e38;
+    border-radius: 3%;
+
+    flex-direction: column;
+}
+
+.caixaGrafico .container h1{
+    color: white;
+    margin-bottom: 5%;
+}
+
+.caixaGrafico .container button {
+    color: whitesmoke;
+    background-color: transparent;
+    width: 30%;
+    height: 20%;
+    font-size: 5vh;
+    cursor: pointer;
+    border: none;
+    border-bottom: solid 2px #2c90ea;
+}

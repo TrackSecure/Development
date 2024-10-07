@@ -120,18 +120,20 @@
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
             emailServer: emailVar,
             senhaServer: senhaVar,
           }),
         })
           .then(function (resposta) {
+
+            var dados = resposta[0];
+            // console.log(dados.)
+
             console.log("resposta: ", resposta);
     
             if (resposta.ok) {
               setTimeout(() => {
-                window.location = "dashboard.html";
+                window.location = "dashboard_inicial.html";
               }, "2000");
     
         
