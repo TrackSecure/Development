@@ -10,6 +10,15 @@ function cadastrar(nome, so, disco, memoria, cpu, fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function listarServidores(fkEmpresa) {
+
+    var instrucaoSql = `SELECT idServidor, nome FROM Servidor WHERE fkEmpresa = ${fkEmpresa}`;
+  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+  }
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    listarServidores
 };

@@ -32,3 +32,20 @@
     font-size: 1.5vw;
     cursor: pointer;
 }
+
+.cadastros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.cadastros button {
+    font-size: 1.5vw;
+    font-weight: bolder;
+    width: 13vw;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 2rem;
+    cursor: pointer;
+}
