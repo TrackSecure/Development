@@ -1,7 +1,6 @@
-var usuarioModel = require("../models/servidorModel");
+var servidorModel = require("../models/servidorModel");
 
 function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
     var so = req.body.soServer;
     var disco = req.body.discoServer;
@@ -9,7 +8,6 @@ function cadastrar(req, res) {
     var cpu = req.body.cpuServer;
     var fkEmpresa = req.body.fkEmpresaServer;
 
-    // Faça as validações dos valores
     if (nome == undefined) {
         res.status(400).send("O nome do servidor está undefined!");
     } else if (so == undefined) {
@@ -24,9 +22,7 @@ function cadastrar(req, res) {
         res.status(400).send("A fkEmpresa está undefined!")
     }
     else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, so, disco, memoria, cpu, fkEmpresa)
+        servidorModel.cadastrar(nome, so, disco, memoria, cpu, fkEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);

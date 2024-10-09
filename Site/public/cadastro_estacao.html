@@ -53,12 +53,12 @@
                     </div>
                     <div class="coluna">
                         <div class="textos-cadastro">
-                            <label for="memoria">Estado:</label>
-                            <input id="memoria_input" type="text" name="memoria">
+                            <label for="estado">Estado:</label>
+                            <input id="estado_input" type="text" name="estado">
                         </div>
                         <div class="textos-cadastro">
-                            <label for="cpu">Servidor:</label>
-                            <select name="" id="">
+                            <label for="servidor">Servidor:</label>
+                            <select name="servidor" id="servidor_select">
                                 <option value="">Escolha um servidor</option>
                             </select>
                         </div>
@@ -73,6 +73,44 @@
 </html>
 <script>
     function cadastrar() {
-        
+        var nome = nome_input.value;
+        var bairro = bairro_input.value;
+        var estado = estado_input.value;
+        var servidor = servidor_select.value;
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+
+        if (nome != '' &&
+            bairro != '' &&
+            estado != '' &&
+            servidor != ''
+        ) {
+            fetch("/estacao/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nome,
+                bairroServer: bairro,
+                estadoServer: estado,
+                servidorServer: servidor,
+                fkEmpresaServer: fkEmpresa
+            }),
+            })
+            .then(function (resposta) {
+                
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    alert("Estação cadastrada!");
+                } else {
+                console.log('Houve um erro ao tentar realizar o cadastro');
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+            return false;
+        }
     }
 </script>

@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
 
-var servidorController = require("../controllers/servidorController");
+var estacaoController = require("../controllers/estacaoController");
 
 router.post("/cadastrar", function (req, res) {
-    servidorController.cadastrar(req, res);
+    estacaoController.cadastrar(req, res);
 })
 
 module.exports = router;
