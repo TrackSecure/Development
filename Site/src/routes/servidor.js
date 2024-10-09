@@ -7,7 +7,7 @@ router.post("/cadastrar", function (req, res) {
     servidorController.cadastrar(req, res);
 })
 
-router.get("/:fkEmpresa", function (req, res) {
+router.get("/listar/:fkEmpresa", function (req, res) {
     servidorController.listarServidores(req, res);
 })
 

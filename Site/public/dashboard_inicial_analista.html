@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="css/dashboard_inicial_analista.css">
 </head>
 
-<body>
+<body onload="mostrar_nome()">
     <div class="pagina">
         <header>
             <div class="perfil">
                 <div class="texto">
-                    <span>Olá, Sofia! (Analista de Sistemas)</span>
+                    <span id="user"></span>
                 </div>
             </div>
             <div class="botao">
@@ -51,6 +51,11 @@
 <script>
     function sair() {
         window.location = "index.html"
+    }
+
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}! (Analista de Sistemas)`;
     }
 
 </script>

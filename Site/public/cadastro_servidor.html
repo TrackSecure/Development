@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
-<body>
+<body onload="mostrar_nome()">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -21,8 +21,8 @@
                     </div>
                 </div>
                 <div class="texto">
-                    <span>Alexandre</span>
-                    <p>Gerente de monitoramento de Servidor</p>
+                    <span id="user"></span>
+                    <p>! Gerente de monitoramento de Servidor</p>
                 </div>
             </div>
             <div class="botao">
@@ -123,5 +123,10 @@
             });
             return false;
         }
+    }
+
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
     }
 </script>

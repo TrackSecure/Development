@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/cadastro.css">
 </head>
 
-<body onload="listarServidores()">
+<body onload="listarServidores(), mostrar_nome()">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -21,8 +21,8 @@
                     </div>
                 </div>
                 <div class="texto">
-                    <span>Alexandre</span>
-                    <p>Gerente de monitoramento de Servidor</p>
+                    <span id="user"></span>
+                    <p>! Gerente de monitoramento de Servidor</p>
                 </div>
             </div>
             <div class="botao">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn2">Cadastrar</button>
+                <button onclick="cadastrar()" class="btn2">Cadastrar</button>
             </div>
         </div>
     </div>
@@ -78,22 +78,23 @@
 
 </html>
 <script>
-    const fkEmpresa = sessionStorage.ID_EMPRESA;
-
     function listarServidores() {
-        fetch(`/servidor/listarServidores/${fkEmpresa}`, {
-            method: "GET",
-        })
-        .then(function (resposta) {
-            resposta.json().then((servidores) => {
-                servidores.forEach((servidor) => {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((servidor) => {
                     servidor_select.innerHTML += `<option value='${servidor.idServidor}'>${servidor.nome}</option>`;
                 });
-            });
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
         })
-        .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-        });
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
     }
 
     function cadastrar() {
@@ -101,6 +102,7 @@
         var bairro = bairro_input.value;
         var estado = estado_input.value;
         var servidor = servidor_select.value;
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
 
         if (nome != '' &&
             bairro != '' &&
@@ -135,5 +137,10 @@
             });
             return false;
         }
+    }
+
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
     }
 </script>

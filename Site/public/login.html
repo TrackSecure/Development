@@ -137,11 +137,19 @@
                     sessionStorage.ID_USUARIO = json.idFuncionario;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.CARGO = json.cargo;
                     sessionStorage.ID_EMPRESA = json.fkEmpresa;
 
-                    setTimeout(function () {
-                      window.location = "cadastro_servidor.html";
-                    }, 2000);
+                    if (json.cargo == "Gerente de Monitoramento de Servidores") {
+                      setTimeout(function () {
+                        window.location = "dashboard_inicial_gerente.html";
+                      }, 1000);
+                    } else {
+                      setTimeout(function () {
+                        window.location = "dashboard_inicial_analista.html";
+                      }, 1000);
+                    }
+
                });
             } else {
                 console.log('Houve um erro ao tentar realizar o login');

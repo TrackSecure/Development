@@ -20,6 +20,7 @@ function autenticar(req, res) {
                             idFuncionario: resultadoAutenticar[0].idFuncionario,
                             nome: resultadoAutenticar[0].nome,
                             email: resultadoAutenticar[0].email,
+                            cargo: resultadoAutenticar[0].cargo,
                             fkEmpresa: resultadoAutenticar[0].fkEmpresa,
                         });   
                     } else if (resultadoAutenticar.length == 0) {
