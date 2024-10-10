@@ -11,7 +11,7 @@ function validarSessao(cargo_permitido, local) {
             window.location = local;
         }
     } else {
-        window.location = "index.html";
+        window.location = "../index.html";
     }
 }
 

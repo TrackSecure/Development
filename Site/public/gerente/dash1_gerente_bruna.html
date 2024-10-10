@@ -7,14 +7,15 @@
     <title>Dashboard 1º | Gerente</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash1_gerente_bruna.css">
+    <script src="../js/sessao.js"></script>
 </head>
 
-<body>
+<body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')">
     <div class="pagina">
         <header>
             <div class="perfil">
                 <div class="texto">
-                    <span>Olá, Alexandre! (Gerente de monitoramento de Servidor)</span>
+                    <span id="user"></span>
                 </div>
             </div>
             <div class="botao">
