@@ -1,20 +1,23 @@
 // sessão
-function validarSessao() {
-    var email = sessionStorage.EMAIL_USUARIO;
+function validarSessao(cargo_permitido, local) {
     var nome = sessionStorage.NOME_USUARIO;
+    var cargo = sessionStorage.CARGO;
+    var user = document.getElementById("user");
 
-    var b_usuario = document.getElementById("b_usuario");
-
-    if (email != null && nome != null) {
-        b_usuario.innerHTML = nome;
+    if (nome != null && cargo != null) {
+        user.innerHTML = `Olá, ${nome}! (${cargo})`;
+        var cargo = sessionStorage.CARGO;
+        if (cargo != cargo_permitido) {
+            window.location = local;
+        }
     } else {
-        window.location = "../login.html";
+        window.location = "index.html";
     }
 }
 
-function limparSessao() {
+function sair() {
     sessionStorage.clear();
-    window.location = "../login.html";
+    window.location = "login.html";
 }
 
 // carregamento (loading)

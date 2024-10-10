@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="css/dasboard_inicial_gerente.css">
     <link rel="stylesheet" href="css/cadastro_interno.css">
     <link rel="stylesheet" href="css/cadastro.css">
+    <script src="./js/sessao.js"></script>
 </head>
 
-<body onload="mostrar_nome()">
+<body onload="validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista.html')">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -29,7 +30,7 @@
                 <div class="container">
                     <button style="background-color: #2c90ea;" onclick="window.location='cadastro_servidor.html'">Cadastros</button>
                     <button onclick="window.location='dashboard_inicial_gerente.html'">Início</button>
-                    <button onclick="window.location='index.html'">Sair</button>
+                    <button onclick="sair()">Sair</button>
                 </div>
             </div>
         </header>

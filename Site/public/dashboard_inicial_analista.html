@@ -7,9 +7,10 @@
     <title>Dashboard Analista | Inicial</title>
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard_inicial_analista.css">
+    <script src="./js/sessao.js"></script>
 </head>
 
-<body onload="mostrar_nome()">
+<body onload="validarSessao('Analista de Sistemas', 'dashboard_inicial_gerente.html')">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -48,14 +49,3 @@
 </body>
 
 </html>
-<script>
-    function sair() {
-        window.location = "index.html"
-    }
-
-    function mostrar_nome() {
-        var nome = sessionStorage.NOME_USUARIO;
-        user.innerHTML = `Olá, ${nome}! (Analista de Sistemas)`;
-    }
-
-</script>
