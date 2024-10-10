@@ -166,5 +166,44 @@ header {
     margin-top: 2%;
 }
 
+.right-top{
+width: 100%;
+height: 50%;
+background-color: blue;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.right-bottom{
+width: 100%;
+height: 50%;
+background-color: red;
+}
+
+#select_servidor {
+    margin-top: 10%;
+    border-radius: 5%;
+    border: none;
+    padding: 5%;
+    font-weight: 900;
+    background-color: lightgrey;
+}
+
+#select_componentes {
+    margin-top: 10%;
+    border-radius: 5%;
+    border: none;
+    padding: 5%;
+    font-weight: 900;
+    background-color: lightgrey;
+}
+
+.card1{
+    width: 50%;
+    height: 80%;
+    background-color: yellow;
+    border-radius: 20%;
+}
 
 
