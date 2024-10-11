@@ -6,7 +6,6 @@ function validarSessao(cargo_permitido, local) {
 
     if (nome != null && cargo != null) {
         user.innerHTML = `Olá, ${nome}! (${cargo})`;
-        var cargo = sessionStorage.CARGO;
         if (cargo != cargo_permitido) {
             window.location = local;
         }
