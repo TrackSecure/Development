@@ -164,24 +164,27 @@ header {
 .left-top {
     width: 100%;
     height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: white;
 }
 
 .left-bottom {
     width: 100%;
     height: 50%;
-    background-color: purple;
-}
-
-/* .left h2{
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 2%;
-} */
+    flex-direction: column;
+    background-color: white;
+}
 
 .right-top {
     width: 100%;
     height: 50%;
-    background-color: blue;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -190,7 +193,7 @@ header {
 .right-bottom {
     width: 100%;
     height: 50%;
-    background-color: red;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -238,8 +241,9 @@ header {
 .card1 {
     width: 50%;
     height: 80%;
-    background-color: yellow;
+    background-color: #999999;
     border-radius: 20%;
+    color: #091e38;
 }
 
 .card1-top {
@@ -257,6 +261,10 @@ header {
     justify-content: center;
 }
 
+.card1-bottom h2{
+    font-weight: 400;
+}
+
 .card1-top h2 {
     text-align: center;
 }
@@ -264,7 +272,7 @@ header {
 .card2 {
     width: 50%;
     height: 30%;
-    background-color: yellow;
+    background-color: #999999;
     border-radius: 5%;
     display: flex;
     align-items: center;
@@ -275,10 +283,40 @@ header {
     font-size: 300%;
 }
 
+
+
 .left-top h2 {
     text-align: center;
 }
 
 .left-bottom h2 {
     text-align: center;
+}
+
+.left-top canvas {
+    max-width: 85%;
+    max-height: 80%;
+}
+
+.left-bottom img{
+    width: 40%;
+}
+
+.right-bottom h4{
+    color: #2a5792;
+}
+
+.right-bottom h1{
+    color: #091e38;
+}
+
+.left h2{
+    color: #2a5792;
+}
+
+.container a{
+    margin-top: 80%;
+    text-align: center;
+    text-decoration: underline;
+    color: #2c90ea;
 }
