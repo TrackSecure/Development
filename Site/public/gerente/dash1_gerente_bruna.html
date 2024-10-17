@@ -10,6 +10,37 @@
     <script src="../js/sessao.js"></script>
 </head>
 
+<style>
+    #img1 {
+        display: block;
+    }
+
+    #img2,
+    #img3,
+    #img4 {
+        display: none;
+    }
+
+    #card1 {
+        display: block;
+    }
+
+    #card2 {
+        display: none;
+    }
+
+    #myChart1 {
+        display: block;
+    }
+
+    #myChart2,
+    #myChart3,
+    #myChart4 {
+        display: none;
+    }
+
+</style>
+
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
 <body>
@@ -34,25 +65,26 @@
                 <div class="container">
                     <h2>Dashboard</h2>
                     <p class="agora">Selecione um Servidor!</p>
-                    <select id="select_servidor">
+                    <select id="select_servidor" onchange="mostrarRegressao()">
                         <option value="0" selected>Servidor 1</option>
                         <option value="1">Servidor 2</option>
                         <option value="2">Servidor 3</option>
                         <option value="3">Servidor 4</option>
                     </select>
                     <p class="agora">Ranking</p>
-                    <select id="select_componentes">
+                    <select id="select_componentes" onchange="mostrarRanking()">
                         <option value="CPU" selected>CPU</option>
                         <option value="RAM">RAM</option>
                     </select>
                     <p class="agora">Word Cloud</p>
-                    <select id="select_estacoes">
+                    <select id="select_estacoes" onchange="mostrarImagem()">
                         <option value="Azul" selected>Linha Azul</option>
                         <option value="Verde">Linha Verde</option>
                         <option value="Vermelha">Linha Vermelha</option>
                         <option value="Prata">Linha Prata</option>
                     </select>
-                    <a href="C:\Users\bruna\Downloads\teste-tracksecure.pdf" target="_blank" download="relatorio_semanal_servidores.pdf">Clique aqui para baixar seu relatório semanal!</a>
+                    <a href="C:\Users\bruna\Downloads\teste-tracksecure.pdf" target="_blank"
+                        download="relatorio_semanal_servidores.pdf">Clique aqui para baixar seu relatório semanal!</a>
                 </div>
                 <div class="logo">
                     <img src="logo.png" alt="logo" class="logo-img">
@@ -63,16 +95,22 @@
                 <div class="left">
                     <div class="left-top">
                         <h2>Frequência X Temperatura (CPU)</h2>
-                        <canvas id="myChart" width="10px" ></canvas>
+                        <canvas id="myChart1" width="10px"></canvas>
+                        <canvas id="myChart2" width="10px"></canvas>
+                        <canvas id="myChart3" width="10px"></canvas>
+                        <canvas id="myChart4" width="10px"></canvas>
                     </div>
                     <div class="left-bottom">
                         <h2>Quantidade de Pessoas em Cada Estação</h2>
-                        <img src="linhaAzul.png" alt="">
+                        <img id="img1" src="linhaAzul.png" alt="">
+                        <img id="img2" src="linhaVerde.png" alt="">
+                        <img id="img3" src="linhaVermelha.png" alt="">
+                        <img id="img4" src="linhaPrata.png" alt="">
                     </div>
                 </div>
                 <div class="right">
                     <div class="right-top">
-                        <div class="card1">
+                        <div id="card1" class="card1">
                             <div class="card1-top">
                                 <h2>Top 3</h2>
                                 <h2>Utilização de CPU</h2>
@@ -81,6 +119,17 @@
                                 <h2>Servidor 3</h2>
                                 <h2>Servidor 1</h2>
                                 <h2>Servidor 2</h2>
+                            </div>
+                        </div>
+                        <div id="card2" class="card1">
+                            <div class="card1-top">
+                                <h2>Top 3</h2>
+                                <h2>Utilização de RAM</h2>
+                            </div>
+                            <div class="card1-bottom">
+                                <h2>Servidor 2</h2>
+                                <h2>Servidor 3</h2>
+                                <h2>Servidor 1</h2>
                             </div>
                         </div>
                     </div>
@@ -111,7 +160,7 @@
         regression.push({ x: i, y: yval })
     };
 
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = document.getElementById('myChart1').getContext('2d');
     const scatterChart = new Chart(ctx, {
         type: 'scatter',
         data: {
@@ -182,21 +231,42 @@
         options: {}
     });
 
+    function mostrarRegressao() {
 
+    }
 
+    function mostrarImagem() {
 
+        document.getElementById('img1').style.display = 'none';
+        document.getElementById('img2').style.display = 'none';
+        document.getElementById('img3').style.display = 'none';
+        document.getElementById('img4').style.display = 'none';
 
+        const linhaSelecionada = document.getElementById('select_estacoes').value;
 
+        if (linhaSelecionada === 'Azul') {
+            document.getElementById('img1').style.display = 'block';
+        } else if (linhaSelecionada === 'Verde') {
+            document.getElementById('img2').style.display = 'block';
+        } else if (linhaSelecionada === 'Vermelha') {
+            document.getElementById('img3').style.display = 'block';
+        } else if (linhaSelecionada === 'Prata') {
+            document.getElementById('img4').style.display = 'block';
+        }
+    }
 
+    function mostrarRanking() {
+        document.getElementById('card1').style.display = 'none';
+        document.getElementById('card2').style.display = 'none';
 
+        const rankingSelecionado = document.getElementById('select_componentes').value;
 
-
-
-
-
-
-
-
+        if (rankingSelecionado === 'CPU') {
+            document.getElementById('card1').style.display = 'block';
+        } else if (rankingSelecionado === 'RAM') {
+            document.getElementById('card2').style.display = 'block';
+        }
+    }
 
     function sair() {
         window.location = "../index.html"
