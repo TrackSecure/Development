@@ -49,12 +49,52 @@
             <div class="left">
                 <div class="left-top">
                     <h2>Percentual de Uso RAM X CPU (Média por Dia)</h2>
-                    <canvas class="grafico1" width="10px" style="display: block;"></canvas>
-                    <canvas class="grafico2" width="10px" style="display: none;"></canvas>
-                    <canvas class="grafico3" width="10px" style="display: none;"></canvas>
+                    <canvas class="grafico1" width="8 px" style="display: block;"></canvas>
+                    <canvas class="grafico2" width="8 px" style="display: none;"></canvas>
+                    <canvas class="grafico3" width="8 px" style="display: none;"></canvas>
                 </div>
                 <div class="left-bottom">
-                  
+                    <h2 class="titulo2">Percentual de Uso (CPU | RAM | DISCO)</h2>
+                        <div class="card">
+                            <div class="card1">
+                                <div class="cardT">
+                                    <h3>CPU</h3>
+                                </div>
+                            <div id="mensagemCPU"></div>
+                            </div>
+                            <div class="card2">
+                                <div class="cardT">
+                                    <h3>RAM</h3>
+                                </div>
+                            <div id="mensagemRAM"></div>
+                            </div>
+                            <div class="card3">
+                                <div class="cardT">
+                                    <h3>DISCO</h3>
+                                </div>
+                                <div id="mensagemDISCO" ></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="rigth">
+                <div class="rigth-top">
+                    <div class="card-rigth">
+                        <h2 class="titulo3">Quantidade de Pacotes Recebidos</h2>
+                        <div id="mensagemPacotes"></div>
+                    </div>
+                </div>
+                <div class="rigth-bottom">
+                    <div class="rigth-bottom">
+                        <div class="card-rigth2">
+                            <h2 class="titulo4">Possíveis Processos Maliciosos em seu Servidor</h2>
+                            <div id="mensagemProcessos"></div>
+                            <div id="mensagemProcessos2"></div>
+                            <div id="mensagemProcessos3"></div>
+                            <div id="mensagemProcessos4"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
     </div>
@@ -192,10 +232,34 @@ function mostrarGrafico() {
     // Mostrando o gráfico correto com base no valor selecionado
     if (selectValue == 0) {
         grafico1.style.display = 'block';
+        mensagemCPU.innerHTML = `<div style="color:red">80%</div>`
+        mensagemRAM.innerHTML = `<div style="color:red">70%</div>`
+        mensagemDISCO.innerHTML = `<div style="color:green">30%</div>`
+        mensagemPacotes.innerHTML = `<div style="color:green">172</div>`
+        mensagemProcessos.innerHTML = `<div style="color:red">new.rar</div>`
+        mensagemProcessos2.innerHTML = `<div style="color:red">worm.exe</div>`
+        mensagemProcessos3.innerHTML = `<div style="color:red">phishing.bat</div>`
+        mensagemProcessos4.innerHTML = `<div style="color:red">explorer.bat</div>`
     } else if (selectValue == 1) {
         grafico2.style.display = 'block';
+        mensagemCPU.innerHTML = `<div style="color:orange">50%</div>`
+        mensagemRAM.innerHTML = `<div style="color:green">45%</div>`
+        mensagemDISCO.innerHTML = `<div style="color:red">70%</div>`
+        mensagemPacotes.innerHTML = `<div style="color:green">156</div>`
+        mensagemProcessos.innerHTML = `<div style="color:red">worm.exe</div>`
+        mensagemProcessos2.innerHTML = `<div style="color:red">new.rar</div>`
+        mensagemProcessos3.innerHTML = `<div style="color:red">explorer.bat</div>`
+        mensagemProcessos4.innerHTML = `<div style="color:red">phishing.bat</div>`
     } else if (selectValue == 2) {
         grafico3.style.display = 'block';
+        mensagemCPU.innerHTML = `<div style="color:red">75%</div>`
+        mensagemRAM.innerHTML = `<div style="color:green">30%</div>`
+        mensagemDISCO.innerHTML = `<div style="color:orange">60%</div>`
+        mensagemPacotes.innerHTML = `<div style="color:green">165</div>`
+        mensagemProcessos.innerHTML = `<div style="color:red">phishing.bat</div>`
+        mensagemProcessos2.innerHTML = `<div style="color:red">explorer.bat</div>`
+        mensagemProcessos3.innerHTML = `<div style="color:red">new.rar</div>`
+        mensagemProcessos4.innerHTML = `<div style="color:red">worm.exe</div>`
     }
 }
 </script>
