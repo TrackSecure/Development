@@ -109,7 +109,7 @@
           <div class="alerta_erro">
             <div class="card_erro" id="cardErro">
               <span id="mensagem_erro"></span>
-              <div id="div_erros_login" style="color: white;"></div>
+              <div id="div_erros_cadastro" style="color: white;"></div>
             </div>
           </div>
         </div>
@@ -203,9 +203,9 @@
       cpfVar == '' ||
       emailVar == '' ||
       senhaVar == '') {
-      div_erros_login.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
+      div_erros_cadastro.innerHTML = '<u>Atenção!</u> Todos os campos precisam ser preenchidos para a conclusão do cadastro!';
     } else {
-      div_erros_login.innerHTML = "";
+      div_erros_cadastro.innerHTML = "";
       if (tamNome <= 1) {
         div_erros_usuario.innerHTML = 'O nome inserido é inválido.';
       } else {
@@ -262,7 +262,7 @@
       }
 
       if (validado == 9) {
-        div_erros_login.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
+        div_erros_cadastro.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
         fetch("/usuarios/cadastrar", {
           method: "POST",
           headers: {
@@ -291,6 +291,7 @@
 
 
             } else {
+              div_erros_cadastro.innerHTML = 'Já existe um usuário cadastrado com o e-mail inserido!';
               console.log('Houve um erro ao tentar realizar o cadastro');
             }
           })
