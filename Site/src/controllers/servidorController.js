@@ -56,7 +56,45 @@ function listarServidores(req, res) {
     });
 }
 
+function atualizar(req, res) {
+    var idServidor = req.body.idServer;
+    var so = req.body.soServer;
+    var disco = req.body.discoServer;
+    var memoria = req.body.memoriaServer;
+    var cpu = req.body.cpuServer;
+
+    if (idServidor == undefined) {
+        res.status(400).send("O idServidor do servidor está undefined!");
+    } else if (so == undefined) {
+        res.status(400).send("O Sistema Operacional está undefined!");
+    } else if (disco == undefined) {
+        res.status(400).send("O Disco está undefined!");
+    } else if (memoria == undefined) {
+        res.status(400).send("A memória está undefined!");
+    } else if (cpu == undefined) {
+        res.status(400).send("A frequência da cpu está undefined!")
+    } 
+    else {
+        servidorModel.atualizar(idServidor, so, disco, memoria, cpu)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao atualizar o servidor! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     cadastrar,
-    listarServidores
+    listarServidores,
+    atualizar
 }

@@ -133,29 +133,36 @@ body {
 }
 
 .textos-cadastro input {
-    width: 16vw;
     border: none;
     border-radius: 10px;
     padding: 1vw;
     background: #ffffff;
     color: black;
-    font-size: 0.8rem;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
     outline: none;
     box-sizing: border-box;
 }
 
 .textos-cadastro select {
-    width: 16vw;
     border: none;
     border-radius: 10px;
-    padding: 15px;
     background: #ffffff;
     color: black;
-    font-size: 0.8rem;
     box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
     outline: none;
     box-sizing: border-box;
+}
+
+.cadastro_campo input {
+    width: 16vw;
+    padding: 1vw;
+    font-size: 0.8rem;
+}
+
+.cadastro_campo select {
+    width: 16vw;
+    padding: 1vw;
+    font-size: 0.8rem;
 }
 
 .textos-cadastro > label {

@@ -1,18 +1,27 @@
 .card_cadastro {
     background-color: #091e38;
-    width: 40vw;
     height: fit-content;
-    font-size: 4vh;
     color: #ddd;
     border-radius: 2vh;
     border: 2px solid #2c90ea;
-    margin-left: 20rem;
     margin-top: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 1rem;
+}
+
+.cadastro {
+    margin-left: 20rem;
+    width: 40vw;
+    font-size: 4vh;
+}
+
+.gerenciar {
+    margin-left: 3rem;
+    width: 35vw;
+    font-size: 3vh;
 }
 
 .coluna {
@@ -37,7 +46,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 4rem;
+    margin-top: 0.5rem;
 }
 
 .cadastros button {
@@ -48,4 +57,17 @@
     padding: 0.5rem;
     margin: 2rem;
     cursor: pointer;
+}
+
+.input_gerenciar input {
+    width: 12vw;
+    padding: 0.7vw;
+    font-size: 0.8rem;
+}
+
+.input_gerenciar select {
+    width: 12vw;
+    height: 3.2rem;
+    padding: 0.7vw;
+    font-size: 0.8rem;
 }

@@ -39,37 +39,39 @@
                 <div class="cadastros">
                     <button style="background-color: #2c90ea;" onclick="window.location='cadastro_servidor.html'">Cadastro de servidor</button>
                     <button onclick="window.location='cadastro_estacao.html'">Cadastro de estação</button>
+                    <button onclick="window.location='gerenciar_cadastros.html'">Gerenciar cadastros</button>
                 </div>
             </div>
-            <div class="card_cadastro">
+            <div class="card_cadastro cadastro">
                 <span>Cadastro de servidor</span>
-                <div class="textos-cadastro", style="align-items: center;">
+                <div class="textos-cadastro cadastro_campo", style="align-items: center;">
                     <label for="nome">Nome:</label>
                     <input id="nome_input" type="text" name="nome">
                 </div>
                 <div style="display: flex; flex-direction: row;">
                     <div class="coluna">
-                        <div class="textos-cadastro">
+                        <div class="textos-cadastro cadastro_campo">
                             <label for="so">Sistema Operacional:</label>
                             <input id="so_input" type="text" name="so">
                         </div>
-                        <div class="textos-cadastro">
+                        <div class="textos-cadastro cadastro_campo">
                             <label for="disco">Disco Total:</label>
                             <input id="disco_input" type="number" name="disco">
                         </div>
                     </div>
                     <div class="coluna">
-                        <div class="textos-cadastro">
+                        <div class="textos-cadastro cadastro_campo">
                             <label for="memoria">Memória Total:</label>
                             <input id="memoria_input" type="number" name="memoria">
                         </div>
-                        <div class="textos-cadastro">
+                        <div class="textos-cadastro cadastro_campo">
                             <label for="cpu">Frequência Máx. CPU:</label>
                             <input id="cpu_input" type="number" name="cpu">
                         </div>
                     </div>
                 </div>
                 <button onclick="cadastrar()" class="btn2">Cadastrar</button>
+                <div id="div_erros_cadastro" style="color: white;"></div>
             </div>
         </div>
     </div>
@@ -110,9 +112,9 @@
                 console.log("resposta: ", resposta);
 
                 if (resposta.ok) {
-                    alert("Servidor cadastrado!");
+                    div_erros_cadastro.innerHTML = "Servidor cadastrado com sucesso!";
                 } else {
-                console.log('Houve um erro ao tentar realizar o cadastro');
+                    div_erros_cadastro.innerHTML = 'Houve um erro ao tentar realizar o cadastro';
                 }
             })
             .catch(function (resposta) {

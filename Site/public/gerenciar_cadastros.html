@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br   ">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Servidor</title>
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dasboard_inicial_gerente.css">
+    <link rel="stylesheet" href="css/cadastro_interno.css">
+    <link rel="stylesheet" href="css/cadastro.css">
+    <script src="./js/sessao.js"></script>
+</head>
+
+<!-- <body onload="listarServidores(), listarEstacoes(), validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista.html')"> -->
+<body onload="listarServidores(), listarEstacoes()">
+    <div class="pagina">
+        <header>
+            <div class="perfil">
+                <div class="texto">
+                    <span id="user"></span>
+                    <p>! Gerente de monitoramento de Servidor</p>
+                </div>
+            </div>
+            <div class="botao">
+                <div class="container">
+                    <button style="background-color: #2c90ea;" onclick="window.location='cadastro_servidor.html'">Cadastros</button>
+                    <button onclick="window.location='dashboard_inicial_gerente.html'">Início</button>
+                    <button onclick="sair()">Sair</button>
+                </div>
+            </div>
+        </header>
+        <div class="paginaDash">
+            <div class="menu">
+                <div class="logo">
+                    <img src="imgs/logo.png" alt="logo" class="logo-img">
+                    <a href="index.html" class="logo_txt"><span>Track</span>Secure</a>
+                </div>
+                <div class="cadastros">
+                    <button onclick="window.location='cadastro_servidor.html'">Cadastro de servidor</button>
+                    <button onclick="window.location='cadastro_estacao.html'">Cadastro de estação</button>
+                    <button style="background-color: #2c90ea;" onclick="window.location='gerenciar_cadastros.html'">Gerenciar cadastros</button>
+                </div>
+            </div>
+            <div class="card_cadastro gerenciar">
+                <span>Atualizar cadastro de servidor</span>
+                <div class="textos-cadastro input_gerenciar", style="align-items: center;">
+                    <label for="servidor">Servidor:</label>
+                    <select name="servidor" id="servidor_select1">
+                        <option selected disabled value="">Selecione o servidor</option>
+                    </select>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="coluna">
+                        <div class="textos-cadastro input_gerenciar">
+                            <label for="so">Sistema Operacional:</label>
+                            <input id="so_input" type="text" name="so">
+                        </div>
+                        <div class="textos-cadastro input_gerenciar">
+                            <label for="disco">Disco Total:</label>
+                            <input id="disco_input" type="number" name="disco">
+                        </div>
+                    </div>
+                    <div class="coluna">
+                        <div class="textos-cadastro input_gerenciar">
+                            <label for="memoria">Memória Total:</label>
+                            <input id="memoria_input" type="number" name="memoria">
+                        </div>
+                        <div class="textos-cadastro input_gerenciar">
+                            <label for="cpu">Frequência Máx. CPU:</label>
+                            <input id="cpu_input" type="number" name="cpu">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="atualizarServidor()" class="btn2">Atualizar</button>
+                <div id="div_erros_cadastro1" style="color: white;"></div>
+            </div>
+            <div class="card_cadastro gerenciar">
+                <span>Atualizar cadastro de estação</span>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="coluna">
+                        <div class="input_gerenciar textos-cadastro">
+                            <label for="estacao">Estação:</label>
+                            <select name="estacao" id="estacao_select">
+                                <option selected disabled value="">Selecione a estação</option>
+                            </select>
+                        </div>
+                        <div class="input_gerenciar textos-cadastro">
+                            <label for="bairro">Bairro:</label>
+                            <input id="bairro_input" type="text" name="bairro">
+                        </div>
+                    </div>
+                    <div class="coluna">
+                        <div class="input_gerenciar textos-cadastro">
+                            <label for="estado">Estado:</label>
+                            <input id="estado_input" type="text" name="estado">
+                        </div>
+                        <div class="input_gerenciar textos-cadastro">
+                            <label for="servidor">Servidor:</label>
+                            <select name="servidor" id="servidor_select2">
+                                <option selected disabled value="">Escolha um servidor</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="atualizarEstacao()" class="btn2">Atualizar</button>
+                <div id="div_erros_cadastro2" style="color: white;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function listarServidores() {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((servidor) => {
+                    servidor_select1.innerHTML += `<option value='${servidor.idServidor}'>${servidor.nome}</option>`;
+                    servidor_select2.innerHTML += `<option value='${servidor.idServidor}'>${servidor.nome}</option>`;
+                });
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
+
+    function listarEstacoes() {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+
+        fetch(`/estacao/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((estacao) => {
+                    estacao_select.innerHTML += `<option value='${estacao.idEstacao}'>${estacao.nome}</option>`;
+                });
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados das estações: ${error.message}`);
+            });
+    }
+
+    function atualizarServidor() {
+        var id = servidor_select1.value;
+        var so = so_input.value;
+        var disco = Number(disco_input.value);
+        var memoria = Number(memoria_input.value);
+        var cpu = Number(cpu_input.value);
+
+        if (id != '' &&
+            so != '' &&
+            disco != '' &&
+            memoria != '' &&
+            cpu != '' 
+        ) {
+            fetch("/servidor/atualizar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: id,
+                soServer: so,
+                discoServer: disco,
+                memoriaServer: memoria,
+                cpuServer: cpu
+            }),
+            })
+            .then(function (resposta) {
+                
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    div_erros_cadastro1.innerHTML = "Servidor atualizado com sucesso!";
+                } else {
+                    div_erros_cadastro1.innerHTML = 'Houve um erro ao tentar atualizar o servidor';
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+            return false;
+        }
+    }
+
+    function atualizarEstacao() {
+        var id = estacao_select.value;
+        var bairro = bairro_input.value;
+        var estado = estado_input.value;
+        var servidor = servidor_select2.value;
+
+        if (id != '' &&
+            bairro != '' &&
+            estado != '' &&
+            servidor != ''
+        ) {
+            fetch("/estacao/atualizar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: id,
+                bairroServer: bairro,
+                estadoServer: estado,
+                servidorServer: servidor
+            }),
+            })
+            .then(function (resposta) {
+                
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    div_erros_cadastro2.innerHTML = "Estação atualizada com sucesso!";
+                } else {
+                    div_erros_cadastro2.innerHTML = 'Houve um erro ao tentar atualizar a estação';
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+            return false;
+        }
+    }
+
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
+</script>

@@ -43,12 +43,12 @@
   
           <div style="display: flex; flex-direction: row;">
   
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">Usuário:</label>
               <input id="nome_input" type="text" name="usuario" placeholder="Nome de usuario">
               <div id="div_erros_usuario"></div>
             </div>
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">Email:</label>
               <input id="email_input" type="email" name="email" placeholder="exemplo@email.com">
               <div id="div_erros_email"></div>
@@ -58,12 +58,12 @@
   
           <div style="display: flex; flex-direction: row;">
   
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">CPF:</label>
               <input oninput="formatar_cpf()" id="cpf_input" type="text" name="cpf" placeholder="000.000.000-00" maxlength="14">
               <div id="div_erros_cpf"></div>
             </div>
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">Telefone:</label>
               <input oninput="formatar_telefone()" id="telefone_input" type="text" name="cpf" placeholder="(11)95953-0000" maxlength="14">
               <div id="div_erros_telefone"></div>
@@ -73,7 +73,7 @@
   
           <div style="display: flex; flex-direction: row;">
   
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">Cargo:</label>
               <select id="cargo_select">
                 <option value="0">Selecione uma opção:</option>
@@ -82,7 +82,7 @@
               </select>
               <div id="div_erros_cargo"></div>
             </div>
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="usuario">Código da Empresa:</label>
               <input id="codigo_input" type="number" name="cpf" placeholder="Digite o código:">
               <div id="div_erros_codigo"></div>
@@ -92,12 +92,12 @@
   
           <div style="display: flex; flex-direction: row;">
   
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="senha">Senha:</label>
               <input id="senha_input" type="password" name="senha" placeholder="********">
               <div id="div_erros_senha"></div>
             </div>
-            <div class="textos-cadastro">
+            <div class="textos-cadastro cadastro_campo">
               <label for="senha">Confirmar Senha:</label>
               <input id="confirmarSenha_input" type="password" name="senha1" placeholder="********">
               <div id="div_erros_confirmacao"></div>
