@@ -10,18 +10,17 @@
     <script src="../js/sessao.js"></script>
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
-<body>
+<body onload="mostrar_nome(), mostrarGrafico()">
     <div class="dashboard">
         <header>
             <div class="perfil">
                 <div class="texto">
                     <span id="user"></span>
-                    <p>! (Analista de Sistemas)</p>
                 </div>
             </div>
             <div class="botao">
                 <div class="container">
-                    <button onclick="inicio()">Início</button>
+                    <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
                     <button onclick="sair()">Sair</button>
                 </div>
             </div>
@@ -262,4 +261,9 @@ function mostrarGrafico() {
         mensagemProcessos4.innerHTML = `<div style="color:red">worm.exe</div>`
     }
 }
+
+function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
 </script>

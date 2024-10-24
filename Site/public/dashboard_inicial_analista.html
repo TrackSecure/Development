@@ -11,7 +11,7 @@
 </head>
 
 <!-- <body onload="validarSessao('Analista de Sistemas', 'dashboard_inicial_gerente.html')"> -->
-<body>
+<body onload="mostrar_nome()">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -50,3 +50,10 @@
 </body>
 
 </html>
+
+<script>
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
+</script>
