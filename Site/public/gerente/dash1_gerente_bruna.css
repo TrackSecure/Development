@@ -241,7 +241,7 @@ header {
 .card1 {
     width: 50%;
     height: 80%;
-    background-color: #999999;
+    background-color: rgb(208, 208, 208);
     border-radius: 20%;
     color: #091e38;
 }
@@ -272,7 +272,7 @@ header {
 .card2 {
     width: 50%;
     height: 30%;
-    background-color: #999999;
+    background-color: rgb(208, 208, 208);
     border-radius: 5%;
     display: flex;
     align-items: center;

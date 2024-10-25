@@ -228,7 +228,7 @@ header {
 #mensagemCPU, #mensagemRAM, #mensagemDISCO {
     display: flex;
     flex-direction: row;
-    background-color: gray;
+    background-color: rgb(208, 208, 208);
     align-items: center;
     justify-content: center;
     width: 100px;
@@ -260,7 +260,7 @@ header {
 .card-rigth {
     display: flex;
     flex-direction: column;
-    background-color: gray;
+    background-color: rgb(208, 208, 208);
     align-items: center;
     justify-content: center;
     margin-left: 40px;
@@ -285,7 +285,7 @@ header {
 .card-rigth2 {
     display: flex;
     flex-direction: column;
-    background-color: gray;
+    background-color: rgb(208, 208, 208);
     align-items: center;
     justify-content: center;
     margin-left: 40px;
