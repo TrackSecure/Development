@@ -5,7 +5,6 @@ function cadastrar(req, res) {
     var bairro = req.body.bairroServer;
     var estado = req.body.estadoServer;
     var servidor = req.body.servidorServer;
-    var fkEmpresa = req.body.fkEmpresaServer;
 
     if (nome == undefined) {
         res.status(400).send("O nome está undefined!");
@@ -15,11 +14,9 @@ function cadastrar(req, res) {
         res.status(400).send("O estado está undefined!");
     } else if (servidor == undefined) {
         res.status(400).send("O servidor está undefined!");
-    } else if (fkEmpresa == undefined) {
-        res.status(400).send("A fkEmpresa está undefined!");
-    }
+    } 
     else {
-        estacaoModel.cadastrar(nome, bairro, estado, servidor, fkEmpresa)
+        estacaoModel.cadastrar(nome, bairro, estado, servidor)
         .then(
             function (resultado) {
                 res.json(resultado);

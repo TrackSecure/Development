@@ -79,7 +79,7 @@
     function listarServidores() {
         var fkEmpresa = sessionStorage.ID_EMPRESA;
 
-        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/servidor/listar`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {
@@ -100,7 +100,6 @@
         var bairro = bairro_input.value;
         var estado = estado_input.value;
         var servidor = servidor_select.value;
-        var fkEmpresa = sessionStorage.ID_EMPRESA;
 
         if (nome != '' &&
             bairro != '' &&
@@ -116,8 +115,7 @@
                 nomeServer: nome,
                 bairroServer: bairro,
                 estadoServer: estado,
-                servidorServer: servidor,
-                fkEmpresaServer: fkEmpresa
+                servidorServer: servidor
             }),
             })
             .then(function (resposta) {
