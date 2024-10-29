@@ -4,13 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio | TrackSecure</title>
+
+    <!-- boxIcons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- favIcon -->
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
+
+    <!-- meuCSS -->
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/footer.css">
-    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./css/media.css">
+
     <script src="./js/sessao.js"></script>
-    <title>Inicio | TrackSecure</title>
+
 </head>
 
 <body>
@@ -24,15 +34,17 @@
             <a href="index.html" class="logo-txt"><span>TrackSecure</span></a>
         </div>
 
-        <nav class="navbar">
-            <a href="#inicio">Inicio</a>
-            <a href="#sobre">Sobre</a>
-            <a href="#recursos">Serviços</a>
-            <a href="#contato">Contato</a>
-            <a>|</a>
-            <a href="login.html">Login</a>
-            <a href="cadastro.html">Cadastro</a>
-        </nav>
+        <button class="menu-button"><i class='bx bx-menu'></i></button>
+
+        <ul class="navbar">
+            <ul><a href="#inicio">Inicio</a></ul>
+            <ul><a href="#sobre">Sobre</a></ul>
+            <ul><a href="#recursos">Serviços</a></ul>
+            <ul><a href="#contato">Contato</a></ul>
+            <ul><a>|</a></ul>
+            <ul><a href="login.html">Login</a></ul>
+            <ul><a href="cadastro.html">Cadastro</a></ul>
+        </ul>
 
     </header>
 
@@ -55,33 +67,35 @@
     <section class="informativo">
         <h1>Institucional</h1>
         <center>
-        <div class="info">
-            <div class="card">
-                <img src="imgs/missao.png" alt="missao" style="width: 50%;">
-                <h4>Missão</h4>
-                <p>Buscamos ser referência em tudo o que fazemos, com total dedicação às nossas atividades. Nosso
-                    compromisso é entregar soluções de alta qualidade para nossos clientes, gerar valor e proporcionar
-                    um futuro promissor para todos os nossos colaboradores.</p>
-            </div>
+            <div class="info">
+                <div class="card">
+                    <img src="imgs/missao.png" alt="missao" style="width: 50%;">
+                    <h4>Missão</h4>
+                    <p>Buscamos ser referência em tudo o que fazemos, com total dedicação às nossas atividades. Nosso
+                        compromisso é entregar soluções de alta qualidade para nossos clientes, gerar valor e
+                        proporcionar
+                        um futuro promissor para todos os nossos colaboradores.</p>
+                </div>
 
-            <div class="card">
-                <img src="imgs/visao.png" alt="visao style=" style="width: 50%;">
-                <h4>Visão</h4>
-                <p>Transformar a segurança e a eficiência do transporte público por meio de soluções inovadoras e
-                    tecnologicamente avançadas. Almejamos ser a principal escolha para o monitoramento de sistemas de
-                    controle de acesso.</p>
-            </div>
+                <div class="card">
+                    <img src="imgs/visao.png" alt="visao style=" style="width: 50%;">
+                    <h4>Visão</h4>
+                    <p>Transformar a segurança e a eficiência do transporte público por meio de soluções inovadoras e
+                        tecnologicamente avançadas. Almejamos ser a principal escolha para o monitoramento de sistemas
+                        de
+                        controle de acesso.</p>
+                </div>
 
 
-            <div class="card">
-                <img src="imgs/valores.png" alt="valores style=" style="width: 50%;">
-                <h4>Valores</h4>
-                <p>Nossos valores são a base sobre a qual construímos nosso projeto, acreditamos na integridade e na
-                    transparência como pilares fundamentais em todas as nossas interações e decisões. Além da
-                    resiliência e dedicação para conquistar nossos objetivos.</p>
+                <div class="card">
+                    <img src="imgs/valores.png" alt="valores style=" style="width: 50%;">
+                    <h4>Valores</h4>
+                    <p>Nossos valores são a base sobre a qual construímos nosso projeto, acreditamos na integridade e na
+                        transparência como pilares fundamentais em todas as nossas interações e decisões. Além da
+                        resiliência e dedicação para conquistar nossos objetivos.</p>
+                </div>
             </div>
-        </div>
-    </center>
+        </center>
 
         <!-- SOBRE SITE -->
 
@@ -127,8 +141,7 @@
                     <div class="carrosel-track">
 
                         <div class="carrosel-item">
-                            <img src="imgs/ImagemRoleta (4).jpg"
-                                alt="Imagem 1">
+                            <img src="imgs/ImagemRoleta (4).jpg" alt="Imagem 1">
                             <div class="caption">
                                 <h1>Dados monitorados em tempo real</h1>
                                 <p>Ao se cadastrar você terá acesso a nossa Dashboard, que exibe gráficos e análises em
@@ -137,8 +150,7 @@
                         </div>
 
                         <div class="carrosel-item">
-                            <img src="imgs/ImagemRoleta (2).jpg"
-                                alt="Imagem 2">
+                            <img src="imgs/ImagemRoleta (2).jpg" alt="Imagem 2">
                             <div class="caption">
                                 <h1>Monitoramento proativo</h1>
                                 <p>A TrackSecure monitora os servidores 24/7 e identifica possíveis problemas antes que
@@ -147,8 +159,7 @@
                         </div>
 
                         <div class="carrosel-item">
-                            <img src="imgs/ImagemRoleta (3).jpg"
-                                alt="Imagem 3">
+                            <img src="imgs/ImagemRoleta (3).jpg" alt="Imagem 3">
                             <div class="caption">
                                 <h1>Alertas e notificações</h1>
                                 <p>Para eventos critícos como falhas no servidor, o cliente pode ser alertado através de
@@ -193,6 +204,11 @@
             </div>
             </div>
         </footer>
+
+        <!-- Jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </body>
 
@@ -256,6 +272,16 @@
         currentIndex = (currentIndex - 1 + items.length) % items.length;
         moveToSlide(currentIndex);
     });
+
+    //menu hamburguer
+    const menuButton = document.querySelector('.menu-button');
+    const navbar = document.querySelector('.navbar');
+
+    menuButton.addEventListener('click',
+        () => {
+            navbar.classList.toggle('active');
+
+        });
 
 
 </script>

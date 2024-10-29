@@ -166,7 +166,7 @@ span {
     justify-content: center;
     margin-top: 20px;
     max-width: 1200px;
-    margin-left: 190px;  
+    margin-left: 190px;
     margin-right: 80px;
 }
 
@@ -322,26 +322,26 @@ span {
 
 /* servicos */
 
-.recursos{
+.recursos {
     padding: 30px;
 }
 
-.carrosel h1{
-font-size: 30px;
-color: #091e38;
-text-align: center;
-margin: 10px;
+.carrosel h1 {
+    font-size: 30px;
+    color: #091e38;
+    text-align: center;
+    margin: 10px;
 }
 
-.carrosel-item h1{
-font-size: 30px;
-color: #ffffffe6;
-text-align: center;
+.carrosel-item h1 {
+    font-size: 30px;
+    color: #ffffffe6;
+    text-align: center;
 }
 
 .carrosel {
     position: relative;
-    width: 600px; 
+    width: 600px;
     overflow: hidden;
     margin: auto;
 }
@@ -370,8 +370,8 @@ text-align: center;
 }
 
 .carrosel-item:hover img {
-    transform: scale(1.05); 
-    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.6); 
+    transform: scale(1.05);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.6);
 }
 
 .caption {
@@ -390,7 +390,7 @@ text-align: center;
 
 .carrosel-item:hover .caption {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1); 
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
 .carrosel-botao {
@@ -457,7 +457,7 @@ html {
 .area2,
 .area3,
 .area4 .btn,
-.btn-cont{
+.btn-cont {
     visibility: hidden;
 }
 
@@ -465,76 +465,12 @@ html {
     0% {
         background-position: 0% 50%;
     }
+
     100% {
         background-position: 100% 50%;
     }
 }
-/* Responsividade */
-@media (max-width: 900px) {
-    html {
-        font-size: 45.5%;
-    }
 
-    .header .navbar {
-        flex-direction: column;
-    }
-
-    .header .logo {
-        margin-left: 0;
-    }
-
-    .inicio .conteudo {
-        margin-left: 0;
-    }
-
-    .info {
-        grid-template-columns: 1fr;
-    }
-
-    .sobre {
-        flex-direction: column;
-    }
-
-    .sobre .sobre1 {
-        margin-left: 0;
-    }
-
-    .como .como1 {
-        padding: 100px 20px;
-    }
-
-    .carrosel {
-        width: 100%;
-    }
+.menu-button {
+    display: none;
 }
-
-@media (max-width: 600px) {
-    .sobre .btn-cont {
-        width: 80%;
-    }
-
-    .card {
-        max-width: 100%;
-    }
-
-    .inicio .conteudo h2 {
-        font-size: 3.5rem;
-    }
-
-    .inicio .conteudo p {
-        font-size: 1.6rem;
-    }
-
-    .header .navbar a {
-        font-size: 1.5rem;
-    }
-
-    .como .como1 h2 {
-        font-size: 3rem;
-    }
-
-    .como .como1 p {
-        font-size: 1.8rem;
-    }
-}
-    
