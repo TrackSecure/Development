@@ -110,11 +110,25 @@ span {
     color: #698cbe;
 }
 
+.header .navbar {
+    display: flex;
+    align-items: center;
+}
+
 .header .navbar a {
     margin: 0 10px;
     font-size: 14px;
     color: #ffffff;
     font-weight: bold;
+}
+
+.navbar {
+    height: 70px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .header .navbar a:hover {

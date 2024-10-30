@@ -1,0 +1,123 @@
+/* celulares */
+@media (min-width: 320px) and (max-width: 480px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* #region header */
+
+    .menu-button {
+        display: block;
+        border: none;
+        color: whitesmoke;
+        background-color: #091e38;
+        font-size: 30px;
+        margin-right: 12%;
+    }
+
+    .navbar li {
+        display: none;
+    }
+
+    .navbar.active {
+        flex-direction: column;
+        display: block;
+        height: auto;
+        width: 100px;
+        margin-top: 23%;
+        margin-left: 50%;
+        background-color: #091e38;
+
+    }
+
+    .navbar.active li {
+        display: block;
+        padding: 15px;
+    }
+
+    /* #endregion */
+
+    /* #region inicio */
+
+    .inicio {
+        min-height: 100vh;
+    }
+
+    .inicio .conteudo {
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 50px;
+        margin-top: 20%;
+    }
+
+    .conteudo a {
+        width: 50%;
+    }
+
+    .navbar {
+        margin-top: 0%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: 10%;
+    }
+
+
+    /* #endregion */
+
+    /* #region informativo */
+
+    /* #endregion */
+
+    /* #region sobre */
+
+    /* #endregion */
+
+    /* #region como */
+
+    /* #endregion */
+
+    /* #region recursos */
+
+    /* #endregion */
+
+    /* #region footer */
+
+    /* #endregion */
+
+}
+
+/* tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+    /* #region header */
+
+    /* #endregion */
+
+    /* #region inicio */
+
+    /* #endregion */
+
+    /* #region informativo */
+
+    /* #endregion */
+
+    /* #region sobre */
+
+    /* #endregion */
+
+    /* #region como */
+
+    /* #endregion */
+
+    /* #region recursos */
+
+    /* #endregion */
+
+    /* #region footer */
+
+    /* #endregion */
+
+}
