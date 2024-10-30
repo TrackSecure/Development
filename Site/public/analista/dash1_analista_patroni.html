@@ -46,13 +46,8 @@
 
         <div class="caixaGrafico">
             <div class="left">
+            
                 <div class="left-top">
-                    <h2>Percentual de Uso RAM X CPU (Média por Dia)</h2>
-                    <canvas class="grafico1" width="8 px" style="display: block;"></canvas>
-                    <canvas class="grafico2" width="8 px" style="display: none;"></canvas>
-                    <canvas class="grafico3" width="8 px" style="display: none;"></canvas>
-                </div>
-                <div class="left-bottom">
                     <h2 class="titulo2">Percentual de Uso (CPU | RAM | DISCO)</h2>
                         <div class="card">
                             <div class="card1">
@@ -74,6 +69,12 @@
                                 <div id="mensagemDISCO" ></div>
                             </div>
                         </div>
+                </div>
+                <div class="left-bottom">
+                    <h2>Percentual de Uso RAM X CPU (Média por Dia)</h2>
+                    <canvas class="grafico1" width="8 px" style="display: block;"></canvas>
+                    <canvas class="grafico2" width="8 px" style="display: none;"></canvas>
+                    <canvas class="grafico3" width="8 px" style="display: none;"></canvas>
                 </div>
             </div>
 
@@ -115,14 +116,14 @@
             label: 'CPU', // Corrigido de 'labels' para 'label'
             data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
             borderWidth: 4,
-            borderColor: 'blue',
+            borderColor: 'purple',
             backgroundColor: 'transparent',
         },
         {
             label: 'RAM', // Corrigido de 'labels' para 'label'
             data: [60,75,70,65,80,50,40,60,70,65],
             borderWidth: 4,
-            borderColor: '#2a5792',
+            borderColor: 'blue',
             backgroundColor: 'transparent',
         }
     ]
