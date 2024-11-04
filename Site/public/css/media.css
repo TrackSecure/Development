@@ -263,31 +263,242 @@
 
 /* tablets */
 @media (min-width: 481px) and (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
     /* #region header */
+
+    .menu-button {
+        display: block;
+        border: none;
+        color: whitesmoke;
+        background-color: #091e38;
+        font-size: 30px;
+        margin-right: 12%;
+    }
+
+    .navbar li {
+        display: none;
+    }
+
+    .navbar.active {
+        flex-direction: column;
+        display: block;
+        height: auto;
+        width: 100px;
+        margin-top: 18%;
+        margin-left: 50%;
+        background-color: #091e38;
+
+    }
+
+    .navbar.active li {
+        display: block;
+        padding: 15px;
+    }
+
 
     /* #endregion */
 
     /* #region inicio */
 
+    .inicio .conteudo {
+        margin-left: 50px;
+    }
+
     /* #endregion */
 
     /* #region informativo */
+
+    .info{
+        margin-left: 30%;
+    }
 
     /* #endregion */
 
     /* #region sobre */
 
+    .sobre .imagem{
+        display: none;
+    }
+
+    .sobre .sobre1 h3 {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        color: #091e38;
+    }
+
+    .sobre .sobre1 {
+        max-width: 700px;
+        position: relative;
+        margin-left: 10px;
+    }
+
     /* #endregion */
 
     /* #region como */
+
+    .como .como1 h2 {
+        margin-top: 50%;
+        align-items: flex-end;
+        font-size: 4rem;
+    }
+
+    .como .como1 p {
+        font-size: 2rem;
+        line-height: 1;
+    }
+
+    .como .como1 {
+        flex-direction: column;
+        padding: 110px;
+        text-align: center;
+    }
 
     /* #endregion */
 
     /* #region recursos */
 
+    .carrosel-botao {
+        padding: 10px;
+    }
+
+    .carrosel-item h1 {
+        font-size: 20px;
+    }
+    
+    .carrosel {
+        width: 350px;
+    }
+
+    .caption p{
+        display: none;
+    } 
+
+    .carrosel h1 {
+        text-align: center;
+        margin: 10px;
+        margin-bottom: 15%;
+    }
+
+    .carrosel button{
+        margin-top: 12%;
+    }
+
     /* #endregion */
 
     /* #region footer */
+
+    .contato{
+        height: 100%;
+        margin-right: 7%;
+    }
+
+    .colunas{
+        width: 100%;
+        height: 100%;
+        font-size: 3vw;
+        margin-top: 50px;
+        margin-left: 50%;
+    }
+
+    .bottom {
+        border-top: 1px solid white;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 20px; 
+    }
+
+    .column-sac{
+        display: none;
+    }
+
+    .column-ouvidoria{
+        display: none;
+    }
+
+    /* #endregion */
+
+    /* #region login */
+
+    .login{
+        height: 90vh;
+    }
+
+    .login button{
+        width: 300px;
+    }
+
+    .login-esquerda img{
+        display: none;
+    }
+
+    .login-esquerda{
+        display: none;
+    }
+
+    .login-direita {
+        width: 100%;
+        margin-left: 0%;
+    }
+
+    .card-login {
+        width: 60vw;
+        margin-top: 0%;
+    }
+
+    .textos input{
+        width: 300px;
+    }
+
+    .header .navbar a {
+        margin: 0 5px;
+        font-size: 15px;
+    }
+
+    .logo img{
+        display: none;
+    }
+
+    .navbar{
+        margin-left: 40%;
+        display: flex;
+        margin-top: 0%;
+    }
+
+    header{
+        display: flex;
+    }
+
+    /* #endregion */
+
+     /* #region cadastro */
+
+     .card-cadastro label{
+        font-size: 10px;
+    }
+
+    .card-cadastro {
+        width: 85vw;
+        height: 60vh;
+    }
+
+    .textos-cadastro input {
+        width: 35vw;
+    }
+
+    .textos-cadastro select {
+        width: 35vw;
+    }
+
+    .card-cadastro h1{
+        font-size: 30px;
+    }
 
     /* #endregion */
 
