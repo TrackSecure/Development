@@ -11,460 +11,492 @@
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-<body onload="mostrar_nome(), mostrarGrafico()">
-    <div class="dashboard">
-        <header>
-            <div class="perfil">
-                <div class="texto">
-                    <span id="user"></span>
-                </div>
+    <body>
+        <body onload="mostrar_nome(), mostrarGrafico()">
+            <div class="dashboard">
+                <header>
+                    <div class="perfil">
+                        <div class="texto">
+                            <span id="user"></span>
+                        </div>
+                    </div>
+                    <div class="botao">
+                        <div class="container">
+                            <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
+                            <button onclick="sair()">Sair</button>
+                        </div>
+                    </div>
+                </header>
             </div>
-            <div class="botao">
-                <div class="container">
-                    <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                    <button onclick="sair()">Sair</button>
-                </div>
-            </div>
-        </header>
-    </div>
-
-    <div class="paginaDash">
-        <div class="menu">
-            <div class="container">
-                <h2>Dashboard</h2>
-                <p class="Servidor">Selecione um Servidor!</p>
-                <select id="select_servidor" onchange= "mostrarGrafico()">
-                    <option value="0" selected>Servidor 1</option>
-                    <option value="1">Servidor 2</option>
-                    <option value="2">Servidor 3</option>
-                </select>
-            </div>
-            <div class="logo">
-                <img src="logo.png" alt="logo" class="logo-img">
-                <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
-            </div>
-        </div>
-
-        <div class="caixaGrafico">
-            <div class="left">
-                <div class="left-top">
-                    <h3 class="titulo2">Comparação de Uso Diário(CPU | RAM | DISCO)</h3>
-                    <canvas class="grafico1" height="260%" style="display: block;"></canvas>
-                    <canvas class="grafico2" height="123%" style="display: none;"></canvas>
-                    <canvas class="grafico3" height="123%" style="display: none;"></canvas>
-                </div>
-                <div class="left-bottom">
-                    <h3>Percentual de Uso RAM X CPU (Média por Hora) <select id="select_grafico_linha"
-                            onchange="mostrarGrafico2()">
-                            <option value="0" selected>CPU</option>
-                            <option value="1">RAM</option>
-                            <option value="2">DISCO</option>
-                        </select></h3>
-                    <canvas class="grafico4" height="105%" style="display: block;"></canvas>
-                    <canvas class="grafico5" height="105%" style="display: none;"></canvas>
-                    <canvas class="grafico6" height="105%" style="display: none;"></canvas>
-                </div>
-            </div>
-
-            <div class="rigth">
-                <div class="rigth-top">
-                    <div class="card-rigth">
-                        <h2 class="titulo3">Quantidade de Pacotes Recebidos</h2>
-                        <div id="mensagemPacotes"></div>
+    
+    
+    
+            <div class="paginaDash">
+    
+    
+                <div class="menu">
+                    <div class="container">
+                        <h2>Dashboard</h2>
+                        <p class="Servidor">Selecione um Servidor!</p>
+                        <select id="select_servidor" onchange="mostrarGrafico()">
+                            <option value="0" selected>Servidor 1</option>
+                            <option value="1">Servidor 2</option>
+                            <option value="2">Servidor 3</option>
+                        </select>
+                    </div>
+                    <div class="logo">
+                        <img src="logo.png" alt="logo" class="logo-img">
+                        <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
                     </div>
                 </div>
-                <div class="rigth-bottom">
-                    <div class="rigth-bottom">
-                            <h3 class="titulo2">Comparação de Disco dos Servidores</h3>
-                                <canvas class="grafico7" height="150%" style="display: block;"></canvas>
-                                <canvas class="grafico8" height="150%" style="display: none;"></canvas>
-                                <canvas class="grafico9" height="150%" style="display: none;"></canvas>
+    
+    
+    
+                
+                <div class="caixaGrafico">
+    
+    
+                    <div class="left">
+                        <div class="left-top">
+                            <h3><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h3>
+    
+                            <canvas class="grafico1"  style="display: block;"></canvas>
+                            <canvas class="grafico2"  style="display: none;"></canvas>
+                            <canvas class="grafico3"  style="display: none;"></canvas>
+    
+                        </div>
+                        <div class="left-bottom">
+                            <h3 style="width: 60%;"> <b>Percentual de Uso RAM X CPU (Média por Hora)</b> 
+                                <select id="select_grafico_linha" onchange="mostrarGrafico2()">
+                                    <option value="0" selected>CPU</option>
+                                    <option value="1">RAM</option>
+                                    <option value="2">DISCO</option>
+                                </select>
+                            </h3>
+    
+                                <canvas class="grafico4" height="130%" style="display: block;"></canvas>
+                                <canvas class="grafico5" height="130%" style="display: none;"></canvas>
+                                <canvas class="grafico6" height="130%" style="display: none;"></canvas>
+    
+                        </div>
                     </div>
+                    
+    
+                    <div class="rigth">
+                        <div class="rigth-top">
+                            <div class="card-rigth-top">
+                                <h2 class="titulo3">Quantidade de Pacotes Recebidos</h2>
+                                <div id="mensagemPacotes"></div>
+                            </div>
+                        </div>
+                        <div class="rigth-bottom">
+                            <div class="rigth-bottom">
+                                <h3>Comparação de Disco dos Servidores</h3>
+    
+                                <canvas class="grafico7" style="display: block;"></canvas>
+                                <canvas class="grafico8" style="display: none;"></canvas>
+                                <canvas class="grafico9" style="display: none;"></canvas>
+    
+                            </div>
+                        </div>
+                    </div>
+    
+    
                 </div>
+    
+    
+    
             </div>
-        </div>
-
-
-
-</body>
-
-</html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
-<script>
-    var ctxGrafico1 = document.getElementsByClassName('grafico1')
-
-    new Chart(ctxGrafico1, {
-        type: 'line',
-        data: {
-            labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-            datasets: [{
-                label: 'CPU', 
-                data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'transparent',
-            },
-            {
-                label: 'RAM', 
-                data: [60, 75, 70, 65, 80, 50, 40, 60, 70, 65],
-                borderWidth: 4,
-                borderColor: '#2c5782',
-                backgroundColor: 'transparent',
-            },
-            {
-                label: 'Disco', 
-                data: [60,60,60,60,60,60,60,60,60,60],
-                borderWidth: 4,
-                borderColor: '#2b6797',
-                backgroundColor: 'transparent',
-            }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
-                        }
+    </body>
+    </html>
+    
+    
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    
+    
+    
+    
+    <script>
+    
+    
+        var ctxGrafico1 = document.getElementsByClassName('grafico1')
+        var ctxGrafico2 = document.getElementsByClassName('grafico2')
+        var ctxGrafico3 = document.getElementsByClassName('grafico3')
+        var ctxGrafico4 = document.getElementsByClassName('grafico4')
+        var ctxGrafico5 = document.getElementsByClassName('grafico5')
+        var ctxGrafico6 = document.getElementsByClassName('grafico6')
+        var ctxGrafico7 = document.getElementsByClassName('grafico7')
+        var ctxGrafico8 = document.getElementsByClassName('grafico8')
+        var ctxGrafico9 = document.getElementsByClassName('grafico9')
+    
+    
+        new Chart(ctxGrafico1, {
+            type: 'line',
+            data: {
+                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
+                datasets: [{
+                        label: 'CPU',
+                        data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
+                        borderWidth: 4,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'RAM',
+                        data: [60, 75, 70, 65, 80, 50, 40, 60, 70, 65],
+                        borderWidth: 4,
+                        borderColor: '#2c5782',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'Disco',
+                        data: [60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
+                        borderWidth: 4,
+                        borderColor: '#2b6797',
+                        backgroundColor: 'transparent',
                     }
-                }]
-            }
-        }
-    });
-
-    var ctxGrafico2 = document.getElementsByClassName('grafico2')
-
-    new Chart(ctxGrafico2, {
-        type: 'line',
-        data: {
-            labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-            datasets: [{
-                label: 'CPU', 
-                data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'transparent',
+                ]
             },
-            {
-                label: 'RAM', 
-                data: [70, 75, 70, 60, 65, 60, 40, 50, 70, 65],
-                borderWidth: 4,
-                borderColor: '#2a5792',
-                backgroundColor: 'transparent',
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    
+        new Chart(ctxGrafico2, {
+            type: 'line',
+            data: {
+                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
+                datasets: [{
+                        label: 'CPU',
+                        data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
+                        borderWidth: 4,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'RAM',
+                        data: [70, 75, 70, 60, 65, 60, 40, 50, 70, 65],
+                        borderWidth: 4,
+                        borderColor: '#2a5792',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'Disco',
+                        data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
+                        borderWidth: 4,
+                        borderColor: '#2b6797',
+                        backgroundColor: 'transparent',
+                    }
+                ]
             },
-            {
-                label: 'Disco', 
-                data: [50,50,50,50,50,50,50,50,50,50],
-                borderWidth: 4,
-                borderColor: '#2b6797',
-                backgroundColor: 'transparent',
-            }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
                         }
-                    }
-                }]
+                    }]
+                }
             }
-        }
-    });
-
-    var ctxGrafico3 = document.getElementsByClassName('grafico3')
-
-    new Chart(ctxGrafico3, {
-        type: 'line',
-        data: {
-            labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-            datasets: [{
-                label: 'CPU', 
-                data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'transparent',
+        });
+    
+        new Chart(ctxGrafico3, {
+            type: 'line',
+            data: {
+                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
+                datasets: [{
+                        label: 'CPU',
+                        data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
+                        borderWidth: 4,
+                        borderColor: 'blue',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'RAM',
+                        data: [60, 40, 50, 70, 65, 75, 70, 60, 65, 60],
+                        borderWidth: 4,
+                        borderColor: '#2a5792',
+                        backgroundColor: 'transparent',
+                    },
+                    {
+                        label: 'Disco',
+                        data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65],
+                        borderWidth: 4,
+                        borderColor: '#2b6797',
+                        backgroundColor: 'transparent',
+                    }
+                ]
             },
-            {
-                label: 'RAM', 
-                data: [60, 40, 50, 70, 65, 75, 70, 60, 65, 60],
-                borderWidth: 4,
-                borderColor: '#2a5792',
-                backgroundColor: 'transparent',
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    
+        
+    
+    
+    
+    
+        new Chart(ctxGrafico4, {
+            type: 'line',
+            data: {
+                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
+                datasets: [{
+                    label: 'CPU',
+                    data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
+                    borderWidth: 4,
+                    borderColor: 'blue',
+                    backgroundColor: 'transparent',
+                }, ]
             },
-            {
-                label: 'Disco', 
-                data: [65,65,65,65,65,65,65,65,65,65],
-                borderWidth: 4,
-                borderColor: '#2b6797',
-                backgroundColor: 'transparent',
-            }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
                         }
-                    }
-                }]
+                    }]
+                }
             }
-        }
-    });
-
-    var ctxGrafico4 = document.getElementsByClassName('grafico4')
-
-    new Chart(ctxGrafico4, {
-        type: 'line',
-        data: {
-            labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
-            datasets: [{
-                label: 'CPU', 
-                data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'transparent',
-            },]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
+        });
+    
+        new Chart(ctxGrafico5, {
+            type: 'line',
+            data: {
+                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
+                datasets: [{
+                    label: 'RAM',
+                    data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
+                    borderWidth: 4,
+                    borderColor: 'blue',
+                    backgroundColor: 'transparent',
+                }, ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
                         }
-                    }
-                }]
+                    }]
+                }
             }
-        }
-    });
-
-    var ctxGrafico5 = document.getElementsByClassName('grafico5')
-
-    new Chart(ctxGrafico5, {
-        type: 'line',
-        data: {
-            labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
-            datasets: [{
-                label: 'RAM', 
-                data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'transparent',
-            },]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
+        });
+    
+        new Chart(ctxGrafico6, {
+            type: 'line',
+            data: {
+                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
+                datasets: [{
+                    label: 'DISCO',
+                    data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
+                    borderWidth: 4,
+                    borderColor: 'blue',
+                    backgroundColor: 'transparent',
+                }, ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 100,
+                            callback: function (value) {
+                                return value + "%";
+                            }
                         }
-                    }
-                }]
+                    }]
+                }
             }
-        }
-    });
-
-    var ctxGrafico6 = document.getElementsByClassName('grafico6')
-
-    new Chart(ctxGrafico6, {
-        type: 'line',
+        });
+    
+    
+    
+    
+    
+    
+        new Chart(ctxGrafico7, {
+        type: 'bar',
         data: {
-            labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
+            labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
             datasets: [{
                 label: 'DISCO',
-                data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
+                data: [77, 75, 85],  // Dados
                 borderWidth: 4,
                 borderColor: 'blue',
-                backgroundColor: 'transparent',
-            },]
+                backgroundColor: 'blue',
+            }]
         },
         options: {
             scales: {
-                yAxes: [{
+                y: {
+                    beginAtZero: true,  
+                    min: 0,             
+                    max: 100,           
                     ticks: {
-                        min: 0,
-                        max: 100,
-                        callback: function (value) {
-                            return value + "%";
+                        callback: function(value) {
+                            return value + '%';  
                         }
                     }
-                }]
+                }
             }
         }
     });
-
-
-    var ctxGrafico7 = document.getElementsByClassName('grafico7')
     
-    new Chart(ctxGrafico7, {
-    type: 'bar',
-    data: {
-        labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-        datasets: [{
-            label: 'DISCO',
-            data: [70, 75, 85],
-            borderWidth: 4,
-            borderColor: 'blue',
-            backgroundColor: 'blue',
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                suggestedMin: 0, 
-                suggestedMax: 100, 
-                ticks: {
-                    callback: function (value) {
-                        return value + "%";
+        new Chart(ctxGrafico8, {
+            type: 'bar',
+            data: {
+                labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
+                datasets: [{
+                    label: 'DISCO',
+                    data: [75, 85, 65],
+                    borderWidth: 4,
+                    borderColor: 'blue',
+                    backgroundColor: 'blue',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: {
+                            callback: function (value) {
+                                return value + "%";
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-});
-
-
-var ctxGrafico8 = document.getElementsByClassName('grafico8')
+        });
     
-    new Chart(ctxGrafico8, {
-    type: 'bar',
-    data: {
-        labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-        datasets: [{
-            label: 'DISCO',
-            data: [75, 85, 65],
-            borderWidth: 4,
-            borderColor: 'blue',
-            backgroundColor: 'blue', 
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                suggestedMin: 0, 
-                suggestedMax: 100, 
-                ticks: {
-                    callback: function (value) {
-                        return value + "%"; 
+        new Chart(ctxGrafico9, {
+            type: 'bar',
+            data: {
+                labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
+                datasets: [{
+                    label: 'DISCO',
+                    data: [70, 55, 65],
+                    borderWidth: 4,
+                    borderColor: 'blue',
+                    backgroundColor: 'blue',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: {
+                            callback: function (value) {
+                                return value + "%";
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
-});
-
-var ctxGrafico9 = document.getElementsByClassName('grafico9')
+        });
     
-    new Chart(ctxGrafico9, {
-    type: 'bar',
-    data: {
-        labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-        datasets: [{
-            label: 'DISCO',
-            data: [70, 55, 65],
-            borderWidth: 4,
-            borderColor: 'blue',
-            backgroundColor: 'blue', 
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                suggestedMin: 0, 
-                suggestedMax: 100, 
-                ticks: {
-                    callback: function (value) {
-                        return value + "%"; 
-                    }
-                }
+    
+       
+    
+    
+        function mostrarGrafico() {
+            const selectValue = document.getElementById('select_servidor').value;
+    
+            const grafico1 = document.getElementsByClassName('grafico1')[0];
+            const grafico2 = document.getElementsByClassName('grafico2')[0];
+            const grafico3 = document.getElementsByClassName('grafico3')[0];
+            const grafico7 = document.getElementsByClassName('grafico7')[0];
+            const grafico8 = document.getElementsByClassName('grafico8')[0];
+            const grafico9 = document.getElementsByClassName('grafico9')[0];
+    
+    
+            grafico1.style.display = 'none';
+            grafico2.style.display = 'none';
+            grafico3.style.display = 'none';
+            grafico7.style.display = 'none';
+            grafico8.style.display = 'none';
+            grafico9.style.display = 'none';
+    
+    
+            if (selectValue == 0) {
+                grafico1.style.display = 'block';
+                grafico7.style.display = 'block';
+                mensagemPacotes.innerHTML = `<div style="color:green">172</div>`
+            } else if (selectValue == 1) {
+                grafico2.style.display = 'block';
+                grafico8.style.display = 'block';
+                mensagemPacotes.innerHTML = `<div style="color:green">156</div>`
+            } else if (selectValue == 2) {
+                grafico3.style.display = 'block';
+                grafico9.style.display = 'block';
+                mensagemPacotes.innerHTML = `<div style="color:green">165</div>`
             }
         }
-    }
-});
-
-
-
-    function mostrarGrafico() {
-        const selectValue = document.getElementById('select_servidor').value; 
     
-        const grafico1 = document.getElementsByClassName('grafico1')[0];
-        const grafico2 = document.getElementsByClassName('grafico2')[0];
-        const grafico3 = document.getElementsByClassName('grafico3')[0];
-        const grafico7 = document.getElementsByClassName('grafico7')[0];
-        const grafico8 = document.getElementsByClassName('grafico8')[0];
-        const grafico9 = document.getElementsByClassName('grafico9')[0];
+        function mostrarGrafico2() {
+            const selectValue = document.getElementById('select_grafico_linha').value;
     
-        
-        grafico1.style.display = 'none';
-        grafico2.style.display = 'none';
-        grafico3.style.display = 'none';
-        grafico7.style.display = 'none';
-        grafico8.style.display = 'none';
-        grafico9.style.display = 'none';
+            const grafico4 = document.getElementsByClassName('grafico4')[0];
+            const grafico5 = document.getElementsByClassName('grafico5')[0];
+            const grafico6 = document.getElementsByClassName('grafico6')[0];
     
-        
-        if (selectValue == 0) {
-            grafico1.style.display = 'block';
-            grafico7.style.display = 'block';
-            mensagemPacotes.innerHTML = `<div style="color:green">172</div>`
-        } else if (selectValue == 1) {
-            grafico2.style.display = 'block';
-            grafico8.style.display = 'block';
-            mensagemPacotes.innerHTML = `<div style="color:green">156</div>`
-        } else if (selectValue == 2) {
-            grafico3.style.display = 'block';
-            grafico9.style.display = 'block';
-            mensagemPacotes.innerHTML = `<div style="color:green">165</div>`
+            grafico4.style.display = 'none';
+            grafico5.style.display = 'none';
+            grafico6.style.display = 'none';
+    
+            if (selectValue == 0) {
+                grafico4.style.display = 'block';
+            } else if (selectValue == 1) {
+                grafico5.style.display = 'block';
+            } else if (selectValue == 2) {
+                grafico6.style.display = 'block';
+    
+            }
+    
         }
-    }
-
-    function mostrarGrafico2() {
-        const selectValue = document.getElementById('select_grafico_linha').value;
-
-        const grafico4 = document.getElementsByClassName('grafico4')[0];
-        const grafico5 = document.getElementsByClassName('grafico5')[0];
-        const grafico6 = document.getElementsByClassName('grafico6')[0];
-
-        grafico4.style.display = 'none';
-        grafico5.style.display = 'none';
-        grafico6.style.display = 'none';
-
-        if (selectValue == 0) {
-            grafico4.style.display = 'block';
-        } else if (selectValue == 1) {
-            grafico5.style.display = 'block';
-        } else if (selectValue == 2) {
-            grafico6.style.display = 'block';
-
-        }
-
-    }
-
     
-
-    function mostrar_nome() {
-        var nome = sessionStorage.NOME_USUARIO;
-        user.innerHTML = `Olá, ${nome}`;
-    }
-</script>
+    
+    
+        function mostrar_nome() {
+            var nome = sessionStorage.NOME_USUARIO;
+            user.innerHTML = `Olá, ${nome}`;
+        }
+    </script>
