@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+    text-decoration: none;
+    transition: .2s linear;
+}
+
+body {
+    background-color: #dddd;
+}
+
+.pagina {
+    width: 100vw;
+    height: 100vh;
+}
+
+header {
+    height: 12%;
+    width: 100%;
+    background-color: #091e38;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid #2c90ea;
+}
+
+.perfil {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.texto {
+    color: white;
+    width: 100%;
+    height: 70%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.botao {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.botao button {
+    cursor: pointer;
+    border: none;
+    border-radius: 5vh;
+    width: 15%;
+    height: 30%;
+    background-color: white;
+    color: rgb(7, 6, 6);
+    font-size: 1.5vh;
+    margin-left: 5%;
+}
+
+.botao button:hover {
+    background-color: black;
+    color: white;
+    border: 2px solid #5c93d6;
+}
+
+.botao button:hover {
+    background-color: black;
+    color: white;
+    border: 2px solid #5c93d6;
+}
+
+.botao .container {
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.container {
+    width: 80%;
+    display: flex;
+    margin: auto;
+}
+
+.container a{
+    margin-top: 80%;
+    text-align: center;
+    text-decoration: underline;
+    color: #2c90ea;
+}
+
+.paginaDash {
+    width: 100%;
+    height: 88%;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu {
+    width: 20%;
+    height: 100%;
+    background-color: #091e38;
+}
+
+.menu .container {
+    flex-direction: column;
+    color: white;
+    height: 80%;
+    align-items: center;
+}
+
+.menu .container h2 {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    font-weight: 400;
+}
