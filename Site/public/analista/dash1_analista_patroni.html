@@ -8,495 +8,1550 @@
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash1_analista_patroni.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-    <body>
-        <body onload="mostrar_nome(), mostrarGrafico()">
-            <div class="dashboard">
-                <header>
-                    <div class="perfil">
-                        <div class="texto">
-                            <span id="user"></span>
-                        </div>
+<body>
+
+    <body onload="mostrar_nome(), mostrarGrafico(), mostrarGrafico2()">
+        <div class="dashboard">
+            <header>
+                <div class="perfil">
+                    <div class="texto">
+                        <span id="user"></span>
                     </div>
-                    <div class="botao">
-                        <div class="container">
-                            <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                            <button onclick="sair()">Sair</button>
-                        </div>
-                    </div>
-                </header>
-            </div>
-    
-    
-    
-            <div class="paginaDash">
-    
-    
-                <div class="menu">
+                </div>
+                <div class="botao">
                     <div class="container">
-                        <h2>Dashboard</h2>
-                        <p class="Servidor">Selecione um Servidor!</p>
-                        <select id="select_servidor" onchange="mostrarGrafico()">
-                            <option value="0" selected>Servidor 1</option>
-                            <option value="1">Servidor 2</option>
-                            <option value="2">Servidor 3</option>
-                        </select>
-                    </div>
-                    <div class="logo">
-                        <img src="logo.png" alt="logo" class="logo-img">
-                        <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+                        <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
+                        <button onclick="sair()">Sair</button>
                     </div>
                 </div>
-    
-    
-    
-                
-                <div class="caixaGrafico">
-    
-    
-                    <div class="left">
-                        <div class="left-top">
-                            <h3><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h3>
-    
-                            <canvas class="grafico1"  style="display: block;"></canvas>
-                            <canvas class="grafico2"  style="display: none;"></canvas>
-                            <canvas class="grafico3"  style="display: none;"></canvas>
-    
-                        </div>
-                        <div class="left-bottom">
-                            <h3 style="width: 60%;"> <b>Percentual de Uso RAM X CPU (Média por Hora)</b> 
-                                <select id="select_grafico_linha" onchange="mostrarGrafico2()">
-                                    <option value="0" selected>CPU</option>
-                                    <option value="1">RAM</option>
-                                    <option value="2">DISCO</option>
-                                </select>
-                            </h3>
-    
-                                <canvas class="grafico4" height="130%" style="display: block;"></canvas>
-                                <canvas class="grafico5" height="130%" style="display: none;"></canvas>
-                                <canvas class="grafico6" height="130%" style="display: none;"></canvas>
-    
-                        </div>
-                    </div>
-                    
-    
-                    <div class="rigth">
-                        <div class="rigth-top">
-                            <div class="card-rigth-top">
-                                <h2 class="titulo3">Quantidade de Pacotes Recebidos</h2>
-                                <div id="mensagemPacotes"></div>
-                            </div>
-                        </div>
-                        <div class="rigth-bottom">
-                            <div class="rigth-bottom">
-                                <h3>Comparação de Disco dos Servidores</h3>
-    
-                                <canvas class="grafico7" style="display: block;"></canvas>
-                                <canvas class="grafico8" style="display: none;"></canvas>
-                                <canvas class="grafico9" style="display: none;"></canvas>
-    
-                            </div>
-                        </div>
-                    </div>
-    
-    
+            </header>
+        </div>
+
+
+
+        <div class="paginaDash">
+
+
+            <div class="menu">
+                <div class="container">
+                    <h2>Dashboard</h2>
+                    <p class="Servidor">Selecione uma Linha!</p>
+                    <select id="select_Linha" onchange="mostrarGrafico(), mostrarGrafico2()">
+                        <option value="0" selected>Linha Azul</option>
+                        <option value="1">Linha Vermelha</option>
+                        <option value="2">Linha Verde</option>
+                        <option value="3">Linha Prata</option>
+                    </select>
+                    <p class="Servidor">Selecione um Servidor!</p>
+                    <select id="select_servidor" onchange="mostrarGrafico()">
+                        <option value="0" selected>Servidor 1</option>
+                        <option value="1">Servidor 2</option>
+                        <option value="2">Servidor 3</option>
+                    </select>
                 </div>
-    
-    
-    
+                <div class="logo">
+                    <img src="logo.png" alt="logo" class="logo-img">
+                    <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+                </div>
             </div>
+
+
+
+
+            <div class="caixaGrafico">
+
+
+                <div class="left">
+                    <div class="left-top">
+                        <h3><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h3>
+
+                        <div id="chart1" class="grafico1"></div>
+                        <div id="chart2" class="grafico2"></div>
+                        <div id="chart3" class="grafico3"></div>
+                        <div id="chart1_2" class="grafico1_2"></div>
+                        <div id="chart2_2" class="grafico2_2"></div>
+                        <div id="chart3_2" class="grafico3_2"></div>
+                        <div id="chart1_3" class="grafico1_3"></div>
+                        <div id="chart2_3" class="grafico2_3"></div>
+                        <div id="chart3_3" class="grafico3_3"></div>
+                        <div id="chart1_4" class="grafico1_4"></div>
+                        <div id="chart2_4" class="grafico2_4"></div>
+                        <div id="chart3_4" class="grafico3_4"></div>
+
+                    </div>
+                    <div class="left-bottom">
+                        <h3 style="width: 60%;"> <b>Percentual de Uso RAM X CPU (Média por Hora)</b>
+                            <select id="select_grafico_linha" onchange="mostrarGrafico2()">
+                                <option value="0" selected>CPU</option>
+                                <option value="1">RAM</option>
+                                <option value="2">DISCO</option>
+                            </select>
+                        </h3>
+
+                        <div id="chart4" class="grafico4"></div>
+                        <div id="chart5" class="grafico5"></div>
+                        <div id="chart6" class="grafico6"></div>
+                        <div id="chart4_2" class="grafico4_2"></div>
+                        <div id="chart5_2" class="grafico5_2"></div>
+                        <div id="chart6_2" class="grafico6_2"></div>
+                        <div id="chart4_3" class="grafico4_3"></div>
+                        <div id="chart5_3" class="grafico5_3"></div>
+                        <div id="chart6_3" class="grafico6_3"></div>
+                        <div id="chart4_4" class="grafico4_4"></div>
+                        <div id="chart5_4" class="grafico5_4"></div>
+                        <div id="chart6_4" class="grafico6_4"></div>
+
+                    </div>
+                </div>
+
+
+                <div class="rigth">
+                    <div class="rigth-top">
+                        <div class="card-rigth-top">
+                            <h2 class="titulo3">Quantidade de Pacotes Recebidos</h2>
+                            <div id="mensagemPacotes"></div>
+                        </div>
+                    </div>
+                    <div class="rigth-bottom">
+                        <div class="rigth-bottom">
+                            <h3>Comparação de Disco dos Servidores</h3>
+
+                            <div id="chart7" class="grafico7"></div>
+                            <div id="chart8" class="grafico8"></div>
+                            <div id="chart9" class="grafico9"></div>
+                            <div id="chart7_2" class="grafico7_2"></div>
+                            <div id="chart8_2" class="grafico8_2"></div>
+                            <div id="chart9_2" class="grafico9_2"></div>
+                            <div id="chart7_3" class="grafico7_3"></div>
+                            <div id="chart8_3" class="grafico8_3"></div>
+                            <div id="chart9_3" class="grafico9_3"></div>
+                            <div id="chart7_4" class="grafico7_4"></div>
+                            <div id="chart8_4" class="grafico8_4"></div>
+                            <div id="chart9_4" class="grafico9_4"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
     </body>
-    </html>
-    
-    
-    
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    
-    
-    
-    
-    <script>
-    
-    
-        var ctxGrafico1 = document.getElementsByClassName('grafico1')
-        var ctxGrafico2 = document.getElementsByClassName('grafico2')
-        var ctxGrafico3 = document.getElementsByClassName('grafico3')
-        var ctxGrafico4 = document.getElementsByClassName('grafico4')
-        var ctxGrafico5 = document.getElementsByClassName('grafico5')
-        var ctxGrafico6 = document.getElementsByClassName('grafico6')
-        var ctxGrafico7 = document.getElementsByClassName('grafico7')
-        var ctxGrafico8 = document.getElementsByClassName('grafico8')
-        var ctxGrafico9 = document.getElementsByClassName('grafico9')
-    
-    
-        new Chart(ctxGrafico1, {
-            type: 'line',
-            data: {
-                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-                datasets: [{
-                        label: 'CPU',
-                        data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
-                        borderWidth: 4,
-                        borderColor: 'blue',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'RAM',
-                        data: [60, 75, 70, 65, 80, 50, 40, 60, 70, 65],
-                        borderWidth: 4,
-                        borderColor: '#2c5782',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'Disco',
-                        data: [60, 60, 60, 60, 60, 60, 60, 60, 60, 60],
-                        borderWidth: 4,
-                        borderColor: '#2b6797',
-                        backgroundColor: 'transparent',
-                    }
-                ]
+
+</html>
+
+
+
+
+<script>
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [50, 45, 55, 60, 30, 35, 45, 55, 40]
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
+            {
+                name: "RAM",
+                data: [30, 35, 45, 55, 40, 45, 55, 60, 30]
             }
-        });
-    
-        new Chart(ctxGrafico2, {
+        ],
+        chart: {
+            width: 700,
+            height: 360,
             type: 'line',
-            data: {
-                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-                datasets: [{
-                        label: 'CPU',
-                        data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
-                        borderWidth: 4,
-                        borderColor: 'blue',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'RAM',
-                        data: [70, 75, 70, 60, 65, 60, 40, 50, 70, 65],
-                        borderWidth: 4,
-                        borderColor: '#2a5792',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'Disco',
-                        data: [50, 50, 50, 50, 50, 50, 50, 50, 50, 50],
-                        borderWidth: 4,
-                        borderColor: '#2b6797',
-                        backgroundColor: 'transparent',
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
+            zoom: {
+                enabled: false
             }
-        });
-    
-        new Chart(ctxGrafico3, {
-            type: 'line',
-            data: {
-                labels: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09", "10/09"],
-                datasets: [{
-                        label: 'CPU',
-                        data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
-                        borderWidth: 4,
-                        borderColor: 'blue',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'RAM',
-                        data: [60, 40, 50, 70, 65, 75, 70, 60, 65, 60],
-                        borderWidth: 4,
-                        borderColor: '#2a5792',
-                        backgroundColor: 'transparent',
-                    },
-                    {
-                        label: 'Disco',
-                        data: [65, 65, 65, 65, 65, 65, 65, 65, 65, 65],
-                        borderWidth: 4,
-                        borderColor: '#2b6797',
-                        backgroundColor: 'transparent',
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
-            }
-        });
-    
-        
-    
-    
-    
-    
-        new Chart(ctxGrafico4, {
-            type: 'line',
-            data: {
-                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
-                datasets: [{
-                    label: 'CPU',
-                    data: [75, 50, 45, 80, 50, 75, 90, 50, 65, 85],
-                    borderWidth: 4,
-                    borderColor: 'blue',
-                    backgroundColor: 'transparent',
-                }, ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
-            }
-        });
-    
-        new Chart(ctxGrafico5, {
-            type: 'line',
-            data: {
-                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
-                datasets: [{
-                    label: 'RAM',
-                    data: [70, 75, 60, 50, 70, 65, 80, 50, 60, 70],
-                    borderWidth: 4,
-                    borderColor: 'blue',
-                    backgroundColor: 'transparent',
-                }, ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
-            }
-        });
-    
-        new Chart(ctxGrafico6, {
-            type: 'line',
-            data: {
-                labels: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00"],
-                datasets: [{
-                    label: 'DISCO',
-                    data: [65, 80, 50, 60, 70, 75, 50, 45, 80, 50],
-                    borderWidth: 4,
-                    borderColor: 'blue',
-                    backgroundColor: 'transparent',
-                }, ]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            min: 0,
-                            max: 100,
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }]
-                }
-            }
-        });
-    
-    
-    
-    
-    
-    
-        new Chart(ctxGrafico7, {
-        type: 'bar',
-        data: {
-            labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-            datasets: [{
-                label: 'DISCO',
-                data: [77, 75, 85],  // Dados
-                borderWidth: 4,
-                borderColor: 'blue',
-                backgroundColor: 'blue',
-            }]
         },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,  
-                    min: 0,             
-                    max: 100,           
-                    ticks: {
-                        callback: function(value) {
-                            return value + '%';  
-                        }
-                    }
-                }
-            }
-        }
-    });
-    
-        new Chart(ctxGrafico8, {
-            type: 'bar',
-            data: {
-                labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-                datasets: [{
-                    label: 'DISCO',
-                    data: [75, 85, 65],
-                    borderWidth: 4,
-                    borderColor: 'blue',
-                    backgroundColor: 'blue',
-                }]
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        suggestedMin: 0,
-                        suggestedMax: 100,
-                        ticks: {
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    
-        new Chart(ctxGrafico9, {
-            type: 'bar',
-            data: {
-                labels: ["Servidor 1", "Servidor 2", "Servidor 3"],
-                datasets: [{
-                    label: 'DISCO',
-                    data: [70, 55, 65],
-                    borderWidth: 4,
-                    borderColor: 'blue',
-                    backgroundColor: 'blue',
-                }]
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart1"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [50, 45, 55, 60, 30, 45, 55, 60, 50]
             },
+            {
+                name: "RAM",
+                data: [30, 35, 45, 55, 40, 35, 45, 55, 50]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart2"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [45, 50, 40, 55, 50, 35, 60, 55, 40]
+            },
+            {
+                name: "RAM",
+                data: [35, 40, 45, 50, 55, 30, 45, 50, 35]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart3"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+            name: 'CPU',
+            data: [45, 50, 40, 55, 50, 35, 60]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart4"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+            name: 'RAM',
+            data: [55, 60, 30, 45, 55, 60, 50]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart5"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [60, 40],
+        chart: {
+            type: 'donut',
+            width: 700,
+            height: 350
+        },
+        labels: ['Disco Usado', 'Disco Disponível'],
+        responsive: [{
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        suggestedMin: 0,
-                        suggestedMax: 100,
-                        ticks: {
-                            callback: function (value) {
-                                return value + "%";
-                            }
-                        }
-                    }
+                chart: {},
+                legend: {
+                    position: 'bottom'
                 }
             }
-        });
-    
-    
-       
-    
-    
-        function mostrarGrafico() {
-            const selectValue = document.getElementById('select_servidor').value;
-    
-            const grafico1 = document.getElementsByClassName('grafico1')[0];
-            const grafico2 = document.getElementsByClassName('grafico2')[0];
-            const grafico3 = document.getElementsByClassName('grafico3')[0];
-            const grafico7 = document.getElementsByClassName('grafico7')[0];
-            const grafico8 = document.getElementsByClassName('grafico8')[0];
-            const grafico9 = document.getElementsByClassName('grafico9')[0];
-    
-    
-            grafico1.style.display = 'none';
-            grafico2.style.display = 'none';
-            grafico3.style.display = 'none';
-            grafico7.style.display = 'none';
-            grafico8.style.display = 'none';
-            grafico9.style.display = 'none';
-    
-    
-            if (selectValue == 0) {
-                grafico1.style.display = 'block';
-                grafico7.style.display = 'block';
-                mensagemPacotes.innerHTML = `<div style="color:green">172</div>`
-            } else if (selectValue == 1) {
-                grafico2.style.display = 'block';
-                grafico8.style.display = 'block';
-                mensagemPacotes.innerHTML = `<div style="color:green">156</div>`
-            } else if (selectValue == 2) {
-                grafico3.style.display = 'block';
-                grafico9.style.display = 'block';
-                mensagemPacotes.innerHTML = `<div style="color:green">165</div>`
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart6"), options);
+    chart.render();
+
+
+
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [55, 40, 85]
+        }, {
+            name: 'Disco Disponivel',
+            data: [45, 60, 15]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart7"), options);
+    chart.render();
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [70, 20, 60]
+        }, {
+            name: 'Disco Disponivel',
+            data: [30, 80, 40]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart8"), options);
+    chart.render();
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [30, 75, 65]
+        }, {
+            name: 'Disco Disponivel',
+            data: [70, 25, 35]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart9"), options);
+    chart.render();
+
+
+
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [55, 60, 80, 75, 70, 70, 60, 80, 75]
+            },
+            {
+                name: "RAM",
+                data: [45, 40, 45, 75, 80, 65, 75, 70, 60]
             }
-        }
-    
-        function mostrarGrafico2() {
-            const selectValue = document.getElementById('select_grafico_linha').value;
-    
-            const grafico4 = document.getElementsByClassName('grafico4')[0];
-            const grafico5 = document.getElementsByClassName('grafico5')[0];
-            const grafico6 = document.getElementsByClassName('grafico6')[0];
-    
-            grafico4.style.display = 'none';
-            grafico5.style.display = 'none';
-            grafico6.style.display = 'none';
-    
-            if (selectValue == 0) {
-                grafico4.style.display = 'block';
-            } else if (selectValue == 1) {
-                grafico5.style.display = 'block';
-            } else if (selectValue == 2) {
-                grafico6.style.display = 'block';
-    
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
             }
-    
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart1_2"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [45, 45, 50, 60, 65, 60, 70, 90, 75]
+            },
+            {
+                name: "RAM",
+                data: [30, 35, 30, 40, 50, 60, 65, 60, 50]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart2_2"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [35, 40, 45, 50, 55, 30, 60, 55, 40]
+            },
+            {
+                name: "RAM",
+                data: [45, 50, 40, 55, 50, 35, 45, 50, 35]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart3_2"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+            name: 'CPU',
+            data: [75, 70, 65, 60, 75, 80, 70]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart4_2"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+            name: 'RAM',
+            data: [55, 65, 60, 40, 45, 75, 70]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart5_2"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [55, 45],
+        chart: {
+            type: 'donut',
+            width: 700,
+            height: 350
+        },
+        labels: ['Disco Usado', 'Disco Disponível'],
+        responsive: [{
+            options: {
+                chart: {},
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart6_2"), options);
+    chart.render();
+
+
+
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [80, 30, 10]
+        }, {
+            name: 'Disco Disponivel',
+            data: [20, 70, 90]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart7_2"), options);
+    chart.render();
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [45, 55, 65]
+        }, {
+            name: 'Disco Disponivel',
+            data: [55, 45, 35]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart8_2"), options);
+    chart.render();
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [60, 10, 35]
+        }, {
+            name: 'Disco Disponivel',
+            data: [40, 90, 65]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart9_2"), options);
+    chart.render();
+
+
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [65, 70, 85, 80, 75, 80, 70, 85, 80]
+            },
+            {
+                name: "RAM",
+                data: [55, 50, 55, 85, 90, 75, 85, 80, 70]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart1_3"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [55, 50, 55, 65, 75, 70, 80, 95, 85]
+            },
+            {
+                name: "RAM",
+                data: [40, 45, 40, 50, 60, 70, 75, 70, 60]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart2_3"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [45, 50, 55, 60, 65, 40, 70, 65, 50]
+            },
+            {
+                name: "RAM",
+                data: [55, 60, 50, 65, 60, 45, 55, 60, 45]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart3_3"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+            name: 'CPU',
+            data: [85, 80, 75, 70, 85, 90, 80]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart4_3"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+            name: 'RAM',
+            data: [65, 75, 70, 50, 55, 85, 80]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart5_3"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [65, 35],
+        chart: {
+            type: 'donut',
+            width: 700,
+            height: 350
+        },
+        labels: ['Disco Usado', 'Disco Disponível'],
+        responsive: [{
+            options: {
+                chart: {},
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart6_3"), options);
+    chart.render();
+
+
+
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [70, 40, 15]
+        }, {
+            name: 'Disco Disponível',
+            data: [30, 60, 85]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart7_3"), options);
+    chart.render();
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [50, 60, 70]
+        }, {
+            name: 'Disco Disponível',
+            data: [50, 40, 30]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart8_3"), options);
+    chart.render();
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [65, 15, 45]
+        }, {
+            name: 'Disco Disponível',
+            data: [35, 85, 55]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart9_3"), options);
+    chart.render();
+
+
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+    // ########################################
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [70, 75, 65, 90, 80, 85, 75, 95, 85]
+            },
+            {
+                name: "RAM",
+                data: [60, 65, 70, 85, 80, 75, 80, 85, 75]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart1_4"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [50, 55, 60, 75, 80, 85, 90, 100, 95]
+            },
+            {
+                name: "RAM",
+                data: [45, 50, 55, 70, 75, 80, 85, 90, 80]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart2_4"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+                name: "CPU",
+                data: [55, 60, 65, 70, 75, 80, 85, 90, 95]
+            },
+            {
+                name: "RAM",
+                data: [50, 55, 60, 65, 70, 75, 80, 85, 90]
+            }
+        ],
+        chart: {
+            width: 700,
+            height: 360,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        title: {
+            align: 'left'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 1
+            },
+        },
+        xaxis: {
+            categories: ["01/09", "02/09", "03/09", "04/09", "05/09", "06/09", "07/09", "08/09", "09/09"],
+        },
+        colors: ['#FF4560', '#00E396']
+    };
+    var chart = new ApexCharts(document.querySelector("#chart3_4"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [{
+            name: 'CPU',
+            data: [80, 85, 90, 85, 80, 75, 70]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart4_4"), options);
+    chart.render();
+
+
+
+
+    var options = {
+        series: [{
+            name: 'RAM',
+            data: [75, 70, 65, 60, 65, 70, 75]
+        }],
+        chart: {
+            width: 700,
+            height: 350,
+            type: 'area'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: ["01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00"]
+        },
+        tooltip: {
+            x: {
+                format: 'dd/MM/yy HH:mm'
+            },
+        },
+    };
+    var chart = new ApexCharts(document.querySelector("#chart5_4"), options);
+    chart.render();
+
+
+
+    var options = {
+        series: [60, 40],
+        chart: {
+            type: 'donut',
+            width: 700,
+            height: 350
+        },
+        labels: ['Disco Usado', 'Disco Disponível'],
+        responsive: [{
+            options: {
+                chart: {},
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }]
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart6_4"), options);
+    chart.render();
+
+
+
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [85, 50, 20]
+        }, {
+            name: 'Disco Disponível',
+            data: [15, 50, 80]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart7_4"), options);
+    chart.render();
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [40, 60, 80]
+        }, {
+            name: 'Disco Disponível',
+            data: [60, 40, 20]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart8_4"), options);
+    chart.render();
+
+
+    var options = {
+        series: [{
+            name: 'Disco Usado',
+            data: [55, 20, 45]
+        }, {
+            name: 'Disco Disponível',
+            data: [45, 80, 55]
+        }],
+        chart: {
+            type: 'bar',
+            width: 500,
+            height: 400,
+            stacked: true,
+            stackType: '100%'
+        },
+        xaxis: {
+            categories: ['Servidor 1', 'Servidor 2', 'Servidor 3'],
+        },
+        fill: {
+            opacity: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart9_4"), options);
+    chart.render();
+
+
+
+
+    function mostrarGrafico() {
+        const selectValue = document.getElementById('select_servidor').value;
+        const selectLinhaValue = document.getElementById('select_Linha').value;
+
+        const grafico1 = document.getElementsByClassName('grafico1')[0];
+        const grafico2 = document.getElementsByClassName('grafico2')[0];
+        const grafico3 = document.getElementsByClassName('grafico3')[0];
+
+        const grafico1_2 = document.getElementsByClassName('grafico1_2')[0];
+        const grafico2_2 = document.getElementsByClassName('grafico2_2')[0];
+        const grafico3_2 = document.getElementsByClassName('grafico3_2')[0];
+
+        const grafico1_3 = document.getElementsByClassName('grafico1_3')[0];
+        const grafico2_3 = document.getElementsByClassName('grafico2_3')[0];
+        const grafico3_3 = document.getElementsByClassName('grafico3_3')[0];
+
+        const grafico1_4 = document.getElementsByClassName('grafico1_4')[0];
+        const grafico2_4 = document.getElementsByClassName('grafico2_4')[0];
+        const grafico3_4 = document.getElementsByClassName('grafico3_4')[0];
+
+        const grafico7 = document.getElementsByClassName('grafico7')[0];
+        const grafico8 = document.getElementsByClassName('grafico8')[0];
+        const grafico9 = document.getElementsByClassName('grafico9')[0];
+
+        const grafico7_2 = document.getElementsByClassName('grafico7_2')[0];
+        const grafico8_2 = document.getElementsByClassName('grafico8_2')[0];
+        const grafico9_2 = document.getElementsByClassName('grafico9_2')[0];
+
+        const grafico7_3 = document.getElementsByClassName('grafico7_3')[0];
+        const grafico8_3 = document.getElementsByClassName('grafico8_3')[0];
+        const grafico9_3 = document.getElementsByClassName('grafico9_3')[0];
+
+        const grafico7_4 = document.getElementsByClassName('grafico7_4')[0];
+        const grafico8_4 = document.getElementsByClassName('grafico8_4')[0];
+        const grafico9_4 = document.getElementsByClassName('grafico9_4')[0];
+
+
+        grafico1.style.display = 'none';
+        grafico2.style.display = 'none';
+        grafico3.style.display = 'none';
+
+        grafico1_2.style.display = 'none';
+        grafico2_2.style.display = 'none';
+        grafico3_2.style.display = 'none';
+
+        grafico1_3.style.display = 'none';
+        grafico2_3.style.display = 'none';
+        grafico3_3.style.display = 'none';
+        grafico1_4.style.display = 'none';
+        grafico2_4.style.display = 'none';
+        grafico3_4.style.display = 'none';
+
+        grafico7.style.display = 'none';
+        grafico8.style.display = 'none';
+        grafico9.style.display = 'none';
+
+        grafico7_2.style.display = 'none';
+        grafico8_2.style.display = 'none';
+        grafico9_2.style.display = 'none';
+
+        grafico7_3.style.display = 'none';
+        grafico8_3.style.display = 'none';
+        grafico9_3.style.display = 'none';
+
+        grafico7_4.style.display = 'none';
+        grafico8_4.style.display = 'none';
+        grafico9_4.style.display = 'none';
+
+
+        if (selectValue == 0 && selectLinhaValue == 0) {
+            grafico1.style.display = 'block';
+            grafico7.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">172</div>`
+        } else if (selectValue == 1 && selectLinhaValue == 0) {
+            grafico2.style.display = 'block';
+            grafico8.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">156</div>`
+        } else if (selectValue == 2 && selectLinhaValue == 0) {
+            grafico3.style.display = 'block';
+            grafico9.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">165</div>`
+        } else if (selectValue == 0 && selectLinhaValue == 1) {
+            grafico1_2.style.display = 'block';
+            grafico7_2.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">250</div>`
+        } else if (selectValue == 1 && selectLinhaValue == 1) {
+            grafico2_2.style.display = 'block';
+            grafico8_2.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">200</div>`
+        } else if (selectValue == 2 && selectLinhaValue == 1) {
+            grafico3_2.style.display = 'block';
+            grafico9_2.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">100</div>`
+        } else if (selectValue == 0 && selectLinhaValue == 2) {
+            grafico1_3.style.display = 'block';
+            grafico7_3.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">350</div>`
+        } else if (selectValue == 1 && selectLinhaValue == 2) {
+            grafico2_3.style.display = 'block';
+            grafico8_3.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">1200</div>`
+        } else if (selectValue == 2 && selectLinhaValue == 2) {
+            grafico3_3.style.display = 'block';
+            grafico9_3.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">947</div>`
+        } else if (selectValue == 0 && selectLinhaValue == 3) {
+            grafico1_4.style.display = 'block';
+            grafico7_4.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">3050</div>`
+        } else if (selectValue == 1 && selectLinhaValue == 3) {
+            grafico2_4.style.display = 'block';
+            grafico8_4.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">1640</div>`
+        } else if (selectValue == 2 && selectLinhaValue == 3) {
+            grafico3_4.style.display = 'block';
+            grafico9_4.style.display = 'block';
+            mensagemPacotes.innerHTML = `<div style="color:green">1527</div>`
         }
-    
-    
-    
-        function mostrar_nome() {
-            var nome = sessionStorage.NOME_USUARIO;
-            user.innerHTML = `Olá, ${nome}`;
+
+    }
+
+    function mostrarGrafico2() {
+        const selectValue = document.getElementById('select_grafico_linha').value;
+        const selectLinhaValue = document.getElementById('select_Linha').value;
+
+        const grafico4 = document.getElementsByClassName('grafico4')[0];
+        const grafico5 = document.getElementsByClassName('grafico5')[0];
+        const grafico6 = document.getElementsByClassName('grafico6')[0];
+
+        const grafico4_2 = document.getElementsByClassName('grafico4_2')[0];
+        const grafico5_2 = document.getElementsByClassName('grafico5_2')[0];
+        const grafico6_2 = document.getElementsByClassName('grafico6_2')[0];
+
+        const grafico4_3 = document.getElementsByClassName('grafico4_3')[0];
+        const grafico5_3 = document.getElementsByClassName('grafico5_3')[0];
+        const grafico6_3 = document.getElementsByClassName('grafico6_3')[0];
+
+        const grafico4_4 = document.getElementsByClassName('grafico4_4')[0];
+        const grafico5_4 = document.getElementsByClassName('grafico5_4')[0];
+        const grafico6_4 = document.getElementsByClassName('grafico6_4')[0];
+
+
+        grafico4.style.display = 'none';
+        grafico5.style.display = 'none';
+        grafico6.style.display = 'none';
+
+        grafico4_2.style.display = 'none';
+        grafico5_2.style.display = 'none';
+        grafico6_2.style.display = 'none';
+
+        grafico4_3.style.display = 'none';
+        grafico5_3.style.display = 'none';
+        grafico6_3.style.display = 'none';
+
+        grafico4_4.style.display = 'none';
+        grafico5_4.style.display = 'none';
+        grafico6_4.style.display = 'none';
+
+        if (selectValue == 0 && selectLinhaValue == 0) {
+            grafico4.style.display = 'block';
+        } else if (selectValue == 1 && selectLinhaValue == 0) {
+            grafico5.style.display = 'block';
+        } else if (selectValue == 2 && selectLinhaValue == 0) {
+            grafico6.style.display = 'block';
+        } else if (selectValue == 0 && selectLinhaValue == 1) {
+            grafico4_2.style.display = 'block';
+        } else if (selectValue == 1 && selectLinhaValue == 1) {
+            grafico5_2.style.display = 'block';
+        } else if (selectValue == 2 && selectLinhaValue == 1) {
+            grafico6_2.style.display = 'block';
+        } else if (selectValue == 0 && selectLinhaValue == 2) {
+            grafico4_3.style.display = 'block';
+        } else if (selectValue == 1 && selectLinhaValue == 2) {
+            grafico5_3.style.display = 'block';
+        } else if (selectValue == 2 && selectLinhaValue == 2) {
+            grafico6_3.style.display = 'block';
+        } else if (selectValue == 0 && selectLinhaValue == 3) {
+            grafico4_4.style.display = 'block';
+        } else if (selectValue == 1 && selectLinhaValue == 3) {
+            grafico5_4.style.display = 'block';
+        } else if (selectValue == 2 && selectLinhaValue == 3) {
+            grafico6_4.style.display = 'block';
         }
-    </script>
+
+    }
+
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
+</script>
