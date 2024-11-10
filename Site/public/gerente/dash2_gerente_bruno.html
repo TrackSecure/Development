@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div>
-                        <span>Selecione uma linha</span>
+                        <span>Selecione um servidor</span>
                         <select name="servidores" id="">
                             <option value="Servidor 1">Servidor 1</option>
                             <option value="Servidor 2">Servidor 2</option>
@@ -84,13 +84,14 @@
                         <div class="card_reducao"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8595;</span>4</div>
                     </div>
                 </div>
-                <div style="color: #093e45;" class="graficos">
+                <div class="graficos">
                     <div>
-                        <h5>Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do Servidor 1</h2>
+                        <h5 style="text-align: center;">Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do Servidor 1</h2>
                         <div id="grafico1"></div>
                     </div>
+                    <hr style="width: 0.2rem; background-color: #092a45;">
                     <div>
-                        <h4>Tempo total de Downtime no Servidor 1</h4>    
+                        <h4 style="text-align: center;">Tempo total de Downtime no Servidor 1</h4>    
                         <div id="grafico2"></div>
                     </div>
                 </div>
@@ -151,7 +152,7 @@
           },
         ],
           chart: {
-          height: 370,
+          height: 360,
           width: 500,
           type: 'line',
         },
@@ -164,11 +165,13 @@
           show: true,
           position: 'top',
           horizontalAlign: 'center',
+          fontSize: "15rem"
         },
         };
 
         var chart1 = new ApexCharts(document.getElementById("grafico1"), options);
         chart1.render();
+
 
         var options2 = {
           series: [{
@@ -176,23 +179,40 @@
         }],
           chart: {
           type: 'bar',
-          height: 370,
+          height: 340,
           width: 500
         },
         plotOptions: {
           bar: {
-            borderRadius: 4,
-            borderRadiusApplication: 'end',
-            horizontal: true,
+            barHeight: '100%',
+            distributed: true,
+            horizontal: true
           }
         },
         dataLabels: {
-          enabled: false
-        },
+                enabled: false
+            },
+        colors: ['#72bbc5', '#194554'
+        ],
         xaxis: {
-          categories: ['Outubro', 'Novembro']
+          categories: ['Outubro', 'Novembro'
+          ],
+          title: {
+            text: "Horas"
+          },
         },
-        colors:['#1b8a99', '#093e45']
+        yaxis: {
+          labels: {
+            show: false
+          }
+        },
+        legend: {
+            position: "top",
+            fontSize: "19rem",
+            markers: {
+                size: 9
+            }
+        }
         };
 
         var chart2 = new ApexCharts(document.getElementById("grafico2"), options2);
