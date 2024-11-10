@@ -1,16 +1,200 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br   ">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard 2º | Gerente</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <title>Dashboard | Comparação - Mês atual e meses anteriores</title>
+    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash2_gerente_bruno.css">
-    <script src="../js/sessao.js"></script>
+    <script src="./js/sessao.js"></script>
 </head>
-<!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
-<body>
-    
+
+<!-- <body onload="listarServidores(), validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista,html')"> -->
+<body onload="mostrar_nome()">
+    <div class="pagina">
+        <header>
+            <div class="perfil">
+                <div class="texto">
+                    <span id="user"></span>
+                </div>
+            </div>
+            <div class="botao">
+                <div class="container">
+                    <button onclick="window.location='cadastro_estacao.html'">Cadastros</button>
+                    <button onclick="window.location='dashboard_inicial_gerente.html'">Início</button>
+                    <button onclick="sair()">Sair</button>
+                </div>
+            </div>
+        </header>
+        <div class="paginaDash">
+            <div class="menu">
+                <div class="selects">
+                    <div>
+                        <span>Selecione uma linha</span>
+                        <select name="linhas" id="">
+                            <option value="Azul">Azul</option>
+                            <option value="Verde">Verde</option>
+                            <option value="Vermelha">Vermelha</option>
+                            <option value="Prata">Prata</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span>Selecione uma linha</span>
+                        <select name="servidores" id="">
+                            <option value="Servidor 1">Servidor 1</option>
+                            <option value="Servidor 2">Servidor 2</option>
+                            <option value="Servidor 3">Servidor 3</option>
+                            <option value="Servidor 4">Servidor 4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="logo">
+                    <img src="../imgs/logo.png" alt="logo" class="logo-img">
+                    <a href="index.html" class="logo_txt"><span>Track</span>Secure</a>
+                </div>
+            </div>
+            <div class="topo_dash">
+                <div>
+                    <span>Aumento/redução de problemas por componente de hardware (Servidor 1) em relação a</span>
+                    <select name="meses" id="">
+                        <option value="">Janeiro</option>
+                        <option value="">Fevereiro</option>
+                        <option value="">Março</option>
+                        <option value="">Abril</option>
+                        <option value="">Maio</option>
+                        <option value="">Junho</option>
+                        <option value="">Julho</option>
+                        <option value="">Agosto</option>
+                        <option value="">Setembro</option>
+                        <option selected value="">Outubro</option>
+                    </select>
+                </div>
+                <div class="cards">
+                    <div>
+                        <h3 style="color: #1ec9d5;">CPU</h3>
+                        <div class="card_aumento"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8593;</span>2</div>
+                    </div>
+                    <div>
+                        <h3 style="color: #218c93;">RAM</h3>
+                        <div class="card_aumento"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8593;</span>7</div>
+                    </div>
+                    <div>
+                        <h3 style="color: #122178;">Disco</h3>
+                        <div class="card_reducao"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8595;</span>4</div>
+                    </div>
+                </div>
+                <div style="color: #093e45;" class="graficos">
+                    <div>
+                        <h5>Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do Servidor 1</h2>
+                        <div id="grafico1"></div>
+                    </div>
+                    <div>
+                        <h4>Tempo total de Downtime no Servidor 1</h4>    
+                        <div id="grafico2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+    function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
+
+    var options = {
+          colors:['#1ec9d5', '#218c93', '#122178'],
+          series: [
+          {
+            name: 'CPU',
+            data: [
+              {
+                x: 'Outubro',
+                y: 12,
+              },
+              {
+                x: 'Novembro',
+                y: 14,
+              },
+            ],
+          },
+          {
+            name: 'RAM',
+            data: [
+              {
+                x: 'Outubro',
+                y: 9,
+              },
+              {
+                x: 'Novembro',
+                y: 16,
+              },
+            ],
+          },
+          {
+            name: 'Disco',
+            data: [
+              {
+                x: 'Outubro',
+                y: 11,
+              },
+              {
+                x: 'Novembro',
+                y: 7,
+              },
+            ],
+          },
+        ],
+          chart: {
+          height: 370,
+          width: 500,
+          type: 'line',
+        },
+        plotOptions: {
+          line: {
+            isSlopeChart: true,
+          },
+        },
+        legend: {
+          show: true,
+          position: 'top',
+          horizontalAlign: 'center',
+        },
+        };
+
+        var chart1 = new ApexCharts(document.getElementById("grafico1"), options);
+        chart1.render();
+
+        var options2 = {
+          series: [{
+          data: [5, 9]
+        }],
+          chart: {
+          type: 'bar',
+          height: 370,
+          width: 500
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            borderRadiusApplication: 'end',
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: ['Outubro', 'Novembro']
+        },
+        colors:['#1b8a99', '#093e45']
+        };
+
+        var chart2 = new ApexCharts(document.getElementById("grafico2"), options2);
+        chart2.render();
+</script>
