@@ -6,57 +6,75 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
-
-USE aquatech;
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
+DROP DATABASE IF EXISTS TrackSecure;
+CREATE DATABASE TrackSecure;
+ 
+USE TrackSecure;
+ 
+CREATE TABLE Empresa (
+  idEmpresa INT PRIMARY KEY,
+  cnpj CHAR(14) NOT NULL,
+  razaoSocial VARCHAR(60) NOT NULL,
+  cep CHAR(8) NOT NULL,
+  logradouro VARCHAR(150) NOT NULL,
+  numero VARCHAR(10) NOT NULL,
+  telefone CHAR(11) NOT NULL
 );
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+INSERT INTO Empresa VALUES
+(1, '12345678901234', 'Empresa Teste', '12345678', 'Teste', '1', '12345678901');
+ 
+CREATE TABLE Funcionario (
+  idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(50) NOT NULL,
+  senha VARCHAR(50) NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
+  cpf CHAR(11) NOT NULL,
+  telefone CHAR(11) NOT NULL,
+  cargo VARCHAR(50) NOT NULL,
+  fkEmpresa INT NOT NULL,
+  CONSTRAINT fkUsuarioEmpresa FOREIGN KEY (fkEmpresa) REFERENCES Empresa (idEmpresa)
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE Servidor (
+  MacAddress CHAR(17) PRIMARY KEY,
+  nome VARCHAR(80) NULL,
+  sistOperacional VARCHAR(60) NULL,
+  memoriaTotal DECIMAL(5,2) NULL,
+  discoTotal DECIMAL(5,2) NULL,
+  freqMaxProcessador DECIMAL(5,2) NULL,
+  fkEmpresa INT NOT NULL,
+  CONSTRAINT fkServidorEmpresa FOREIGN KEY (fkEmpresa) REFERENCES Empresa (idEmpresa)
+);
+ 
+CREATE TABLE Registro (
+  idRegistro INT PRIMARY KEY AUTO_INCREMENT,
+  dtHora DATETIME DEFAULT CURRENT_TIMESTAMP(),
+  porcentagemProcessador DECIMAL(5,2) NULL,
+  porcentagemMemoria DECIMAL(5,2) NULL,
+  porcentagemDisco DECIMAL(5,2) NULL,
+  freqProcessador DOUBLE NULL,
+  memoriaUsada DOUBLE NULL,
+  discoUsado DOUBLE NULL,
+  fkServidor CHAR(17) NOT NULL,
+  CONSTRAINT fkRegistroServidor FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+CREATE TABLE Estacao (
+  idEstacao INT PRIMARY KEY AUTO_INCREMENT,
+  nome VARCHAR(45) NULL,
+  bairro VARCHAR(45) NULL,
+  estado VARCHAR(45) NULL,
+  linha VARCHAR(45),
+  fkServidor CHAR(17) NOT NULL,
+  CONSTRAINT fkEstacaoServidor FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
-
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
+CREATE TABLE Alerta (
+  idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+  tipo VARCHAR(45) NULL,
+  descricao VARCHAR(100) NULL,
+  dtHora DATETIME DEFAULT CURRENT_TIMESTAMP(),
+  fkServidor CHAR(17),
+  CONSTRAINT fkAlertaServidor FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );
-
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
