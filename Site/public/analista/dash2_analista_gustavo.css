@@ -154,58 +154,58 @@ header {
     text-align: center;
 }
 
-.left-bottom .select_componente {
-    width: 400px;
-    height: 40px;
-    border-radius: 20px;
-    font-weight: 900;
-    font-size: 20px;
-    border: none;
-    background-color: lightgrey;
+.caixaGrafico {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 101%;
+    
+}
+
+.titulos_kpi {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.titulos_kpi h2{
+    width: 300px;
     text-align: center;
 }
 
-.caixaGrafico {
-    width: 100%;
-    height: 100%;
+.kpis{
     display: flex;
-}
-
-.right {
-    width: 50%;
-    height: 100%;
-}
-
-.left {
-    width: 50%;
-    
-    border-right: solid 3px black;
-    display: flex;
-    
-    align-items: center;
-    flex-direction: column;
-}
-
-.left-bottom {
     width: 100%;
-    padding-top: 20px;
+    height: 15%;
+    padding-top: 10px;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.cardT {
     display: flex;
     align-items: center;
-    flex-direction: column;
-    background-color: white;
+    text-align: center;
+    width: 180px;
+    justify-content: center;
+    border: 4px solid black;
+    border-radius: 10px;
+    font-size: 30px;
 }
 
-.left-top h2 {
-    margin: 0;
-}
-
-.left-top {
-    width: 100%;
-    height: 30%;
-    display: flex;
-    padding-top: 20px;
-    flex-direction: column;
-    background-color: white;
+.botao_detalhes {
+    border: none;
+    /* Remove a borda */
+    background: transparent;
+    /* Deixa o fundo transparente */
+    font-weight: 800;
+    color: #2c90ea;
+    /* Cor do texto */
+    font-size: 15px;
+    /* Tamanho do texto */
+    cursor: pointer;
 }
 
 .titulo {
@@ -215,22 +215,28 @@ header {
     color: #2c90ea;
 }
 
+.detalhes {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-right: 147px;
+    border-bottom: 3px solid black;
+}
+
 .ver_detalhes {
-    height: 35px;
-    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: end;
+    width: 140px;
     border-radius: 20px;
     cursor: pointer;
     color: #2c90ea;
     border: none;
     font-weight: bold;
     background-color: rgb(208, 208, 208);
-}
-
-.cardT {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
 }
 
 .card {
@@ -242,120 +248,30 @@ header {
     color: #2c90ea;
 }
 
-.card1 {
-    display: block;
-}
-
-.card2 {
-    display: block;
-}
-
-.card3 {
-    display: block;
-}
-
-#mensagemCPU,
-#mensagemRAM,
-#mensagemDISCO {
-    display: flex;
-    flex-direction: row;
-    background-color: rgb(208, 208, 208);
-    align-items: center;
-    justify-content: center;
-    width: 120px;
-    height: 70px;
-    font-size: 40px;
-    border-radius: 10px;
-    
-}
-
-.rigth-top {
-    width: 100%;
-    height: 50%;
+.esquerda {
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 50%;
     flex-direction: column;
-    background-color: white;
+    padding-top: 10px;
+    border-right: 3px solid black;
+    height: 380px;
 }
 
-.rigth-bottom {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: white;
+.esquerda h2 {
+    padding-bottom: 20px;
 }
 
-.card-rigth {
+.servidores {
     display: flex;
-    flex-direction: column;
-    background-color: rgb(208, 208, 208);
-    align-items: center;
-    justify-content: center;
-    margin-left: 40px;
-    margin-top: 10%;
-    height: 35vh;
-    border-radius: 30px;
-}
-
-.titulo3 {
-    display: flex;
-    flex-direction: row;
-    margin-top: 100px;
-}
-
-#mensagemPacotes {
-    display: flex;
-    flex-direction: row;
-    font-size: 80px;
-    margin-bottom: 100px;
-}
-
-.card-rigth2 {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(208, 208, 208);
-    align-items: center;
-    justify-content: center;
-    margin-left: 40px;
-    margin-top: 1%;
-    height: 50vh;
     border-radius: 20px;
-    width: 97%;
+    flex-direction: column;
+    height: 60%;
+    width: 70%;
+    background-color: grey;
+    overflow: auto;
 }
 
-.titulo4 {
-    display: flex;
-    flex-direction: row;
-}
-
-#mensagemProcessos {
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-}
-
-#mensagemProcessos2 {
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-
-
-}
-
-#mensagemProcessos3 {
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-
-}
-
-#mensagemProcessos4 {
-    display: flex;
-    flex-direction: row;
-    font-size: 20px;
-
+.servidores::-webkit-scrollbar{
+    display: none;
 }
