@@ -2,21 +2,18 @@ var estacaoModel = require("../models/estacaoModel");
 
 function cadastrar(req, res) {
     var nome  = req.body.nomeServer;
-    var bairro = req.body.bairroServer;
-    var estado = req.body.estadoServer;
+    var linha = req.body.linhaServer;
     var servidor = req.body.servidorServer;
 
     if (nome == undefined) {
         res.status(400).send("O nome está undefined!");
-    } else if (bairro == undefined) {
-        res.status(400).send("O bairro está undefined!");
-    } else if (estado == undefined) {
-        res.status(400).send("O estado está undefined!");
+    } else if (linha == undefined) {
+        res.status(400).send("A linha está undefined!");
     } else if (servidor == undefined) {
         res.status(400).send("O servidor está undefined!");
     } 
     else {
-        estacaoModel.cadastrar(nome, bairro, estado, servidor)
+        estacaoModel.cadastrar(nome, linha, servidor)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -52,21 +49,18 @@ function listarEstacoes(req, res) {
 
 function atualizar(req, res) {
     var idEstacao  = req.body.idServer;
-    var bairro = req.body.bairroServer;
-    var estado = req.body.estadoServer;
+    var linha = req.body.linhaServer;
     var servidor = req.body.servidorServer;
 
     if (idEstacao == undefined) {
         res.status(400).send("O nome está undefined!");
-    } else if (bairro == undefined) {
-        res.status(400).send("O bairro está undefined!");
-    } else if (estado == undefined) {
-        res.status(400).send("O estado está undefined!");
+    } else if (linha == undefined) {
+        res.status(400).send("A linha está undefined!");
     } else if (servidor == undefined) {
         res.status(400).send("O servidor está undefined!");
     }
     else {
-        estacaoModel.atualizar(idEstacao, bairro, estado, servidor)
+        estacaoModel.atualizar(idEstacao, linha, servidor)
         .then(
             function (resultado) {
                 res.json(resultado);
