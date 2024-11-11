@@ -67,30 +67,14 @@
 
                 <div class="left">
                     <div class="left-top">
-                        <h3><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h3>
 
-                        <div id="chart1" class="grafico1"></div>
-                        <div id="chart2" class="grafico2"></div>
-                        <div id="chart3" class="grafico3"></div>
-                        <div id="chart1_2" class="grafico1_2"></div>
-                        <div id="chart2_2" class="grafico2_2"></div>
-                        <div id="chart3_2" class="grafico3_2"></div>
-                        <div id="chart1_3" class="grafico1_3"></div>
-                        <div id="chart2_3" class="grafico2_3"></div>
-                        <div id="chart3_3" class="grafico3_3"></div>
-                        <div id="chart1_4" class="grafico1_4"></div>
-                        <div id="chart2_4" class="grafico2_4"></div>
-                        <div id="chart3_4" class="grafico3_4"></div>
-
-                    </div>
-                    <div class="left-bottom">
-                        <h3 style="width: 60%;"> <b>Percentual de Uso RAM X CPU (Média por Hora)</b>
+                        <h4 style="width: 50%;"> <b>Percentual de Uso RAM X CPU (P/Hora)</b>
                             <select id="select_grafico_linha" onchange="mostrarGrafico2()">
                                 <option value="0" selected>CPU</option>
                                 <option value="1">RAM</option>
                                 <option value="2">DISCO</option>
                             </select>
-                        </h3>
+                        </h4>
 
                         <div id="chart4" class="grafico4"></div>
                         <div id="chart5" class="grafico5"></div>
@@ -104,6 +88,24 @@
                         <div id="chart4_4" class="grafico4_4"></div>
                         <div id="chart5_4" class="grafico5_4"></div>
                         <div id="chart6_4" class="grafico6_4"></div>
+
+                    </div>
+                    <div class="left-bottom">
+
+                        <h4><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h4>
+
+                        <div id="chart1" class="grafico1"></div>
+                        <div id="chart2" class="grafico2"></div>
+                        <div id="chart3" class="grafico3"></div>
+                        <div id="chart1_2" class="grafico1_2"></div>
+                        <div id="chart2_2" class="grafico2_2"></div>
+                        <div id="chart3_2" class="grafico3_2"></div>
+                        <div id="chart1_3" class="grafico1_3"></div>
+                        <div id="chart2_3" class="grafico2_3"></div>
+                        <div id="chart3_3" class="grafico3_3"></div>
+                        <div id="chart1_4" class="grafico1_4"></div>
+                        <div id="chart2_4" class="grafico2_4"></div>
+                        <div id="chart3_4" class="grafico3_4"></div>
 
                     </div>
                 </div>
@@ -161,8 +163,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -204,8 +206,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -248,8 +250,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -286,8 +288,8 @@
             data: [45, 50, 40, 55, 50, 35, 60]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -317,8 +319,8 @@
             data: [55, 60, 30, 45, 55, 60, 50]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -345,8 +347,8 @@
         series: [60, 40],
         chart: {
             type: 'donut',
-            width: 700,
-            height: 350
+            width: 600,
+            height: 250
         },
         labels: ['Disco Usado', 'Disco Disponível'],
         responsive: [{
@@ -376,8 +378,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -402,8 +404,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -429,8 +431,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -467,8 +469,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -510,8 +512,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -554,8 +556,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -592,8 +594,8 @@
             data: [75, 70, 65, 60, 75, 80, 70]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -623,8 +625,8 @@
             data: [55, 65, 60, 40, 45, 75, 70]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -651,8 +653,8 @@
         series: [55, 45],
         chart: {
             type: 'donut',
-            width: 700,
-            height: 350
+            width: 600,
+            height: 250
         },
         labels: ['Disco Usado', 'Disco Disponível'],
         responsive: [{
@@ -682,8 +684,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -708,8 +710,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -735,8 +737,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -772,8 +774,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -815,8 +817,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -859,8 +861,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -897,8 +899,8 @@
             data: [85, 80, 75, 70, 85, 90, 80]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -928,8 +930,8 @@
             data: [65, 75, 70, 50, 55, 85, 80]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -956,8 +958,8 @@
         series: [65, 35],
         chart: {
             type: 'donut',
-            width: 700,
-            height: 350
+            width: 600,
+            height: 250
         },
         labels: ['Disco Usado', 'Disco Disponível'],
         responsive: [{
@@ -987,8 +989,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -1013,8 +1015,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -1040,8 +1042,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -1077,8 +1079,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -1120,8 +1122,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -1164,8 +1166,8 @@
             }
         ],
         chart: {
-            width: 700,
-            height: 360,
+            width: 600,
+            height: 300,
             type: 'line',
             zoom: {
                 enabled: false
@@ -1202,8 +1204,8 @@
             data: [80, 85, 90, 85, 80, 75, 70]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -1233,8 +1235,8 @@
             data: [75, 70, 65, 60, 65, 70, 75]
         }],
         chart: {
-            width: 700,
-            height: 350,
+            width: 600,
+            height: 250,
             type: 'area'
         },
         dataLabels: {
@@ -1261,8 +1263,8 @@
         series: [60, 40],
         chart: {
             type: 'donut',
-            width: 700,
-            height: 350
+            width: 600,
+            height: 250
         },
         labels: ['Disco Usado', 'Disco Disponível'],
         responsive: [{
@@ -1292,8 +1294,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -1318,8 +1320,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
@@ -1345,8 +1347,8 @@
         }],
         chart: {
             type: 'bar',
-            width: 500,
-            height: 400,
+            width: 350,
+            height: 300,
             stacked: true,
             stackType: '100%'
         },
