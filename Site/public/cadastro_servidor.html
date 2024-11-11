@@ -43,12 +43,18 @@
             </div>
             <div class="card_cadastro cadastro">
                 <span>Cadastro de servidor</span>
-                <div class="textos-cadastro cadastro_campo", style="align-items: center;">
-                    <label for="nome">Nome:</label>
-                    <input id="nome_input" type="text" name="nome">
-                </div>
-                <div style="display: flex; flex-direction: row;">
-                    <div class="coluna">
+                <div style="display: flex; flex-direction: column;">
+                    <div class="linha">
+                        <div class="textos-cadastro cadastro_campo">
+                            <label for="nome">Nome:</label>
+                            <input id="nome_input" type="text" name="nome">
+                        </div>
+                        <div class="textos-cadastro cadastro_campo">
+                            <label for="mac_addr">Mac Address</label>
+                            <input id="mac_addr_input" type="text" name="mac_addr">
+                        </div>
+                    </div>
+                    <div class="linha">
                         <div class="textos-cadastro cadastro_campo">
                             <label for="so">Sistema Operacional:</label>
                             <input id="so_input" type="text" name="so">
@@ -58,7 +64,7 @@
                             <input id="disco_input" type="number" name="disco">
                         </div>
                     </div>
-                    <div class="coluna">
+                    <div class="linha">
                         <div class="textos-cadastro cadastro_campo">
                             <label for="memoria">Memória Total:</label>
                             <input id="memoria_input" type="number" name="memoria">
@@ -80,6 +86,7 @@
 <script>
     function cadastrar() {
         var nome = nome_input.value;
+        var mac_addr = mac_addr_input.value;
         var so = so_input.value;
         var disco = Number(disco_input.value);
         var memoria = Number(memoria_input.value);
@@ -87,6 +94,7 @@
         var idEmpresa = sessionStorage.ID_EMPRESA;
 
         if (nome != '' &&
+            mac_addr != '' &&
             so != '' &&
             disco != '' &&
             memoria != '' &&
@@ -99,6 +107,7 @@
             },
             body: JSON.stringify({
                 nomeServer: nome,
+                macServer: mac_addr,
                 soServer: so,
                 discoServer: disco,
                 memoriaServer: memoria,

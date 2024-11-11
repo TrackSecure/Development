@@ -20,20 +20,26 @@
 }
 
 .gerenciar {
-    margin-left: 3rem;
-    width: 35vw;
+    margin-left: 2rem;
+    width: 38vw;
     font-size: 3vh;
     height: 78%;
   
 }
 
 #att{
-    margin-bottom: 13%;
+    margin-top: 8%;
+    margin-bottom: 3%;
 }
 
 .coluna {
     display: flex;
     flex-direction: column;
+}
+
+.linha {
+    display: flex;
+    flex-direction: row;
 }
 
 .btn2 {
@@ -67,13 +73,13 @@
 }
 
 .input_gerenciar input {
-    width: 12vw;
+    width: 14vw;
     padding: 0.7vw;
     font-size: 0.8rem;
 }
 
 .input_gerenciar select {
-    width: 12vw;
+    width: 14vw;
     height: 3.2rem;
     padding: 0.7vw;
     font-size: 0.8rem;

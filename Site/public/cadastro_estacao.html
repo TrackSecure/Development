@@ -43,21 +43,21 @@
             </div>
             <div class="card_cadastro cadastro">
                 <span>Cadastro de estação</span>
-                <div style="display: flex; flex-direction: row;">
+                <div style="display: flex; flex-direction: column;">
                     <div class="coluna">
                         <div class="textos-cadastro cadastro_campo">
                             <label for="nome">Nome:</label>
                             <input id="nome_input" type="text" name="nome">
                         </div>
                         <div class="textos-cadastro cadastro_campo">
-                            <label for="bairro">Bairro:</label>
-                            <input id="bairro_input" type="text" name="bairro">
-                        </div>
-                    </div>
-                    <div class="coluna">
-                        <div class="textos-cadastro cadastro_campo">
-                            <label for="estado">Estado:</label>
-                            <input id="estado_input" type="text" name="estado">
+                            <label for="linha">Linha:</label>
+                            <select name="linha" id="linha_select">
+                                <option selected disabled value="">Escolha uma linha</option>
+                                <option>Azul</option>
+                                <option>Verde</option>
+                                <option>Vermelha</option>
+                                <option>Prata</option>
+                            </select>
                         </div>
                         <div class="textos-cadastro cadastro_campo">
                             <label for="servidor">Servidor:</label>
@@ -79,7 +79,7 @@
     function listarServidores() {
         var fkEmpresa = sessionStorage.ID_EMPRESA;
 
-        fetch(`/servidor/listar`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {
@@ -97,13 +97,11 @@
 
     function cadastrar() {
         var nome = nome_input.value;
-        var bairro = bairro_input.value;
-        var estado = estado_input.value;
+        var linha = linha_select.value;
         var servidor = servidor_select.value;
 
         if (nome != '' &&
-            bairro != '' &&
-            estado != '' &&
+            linha != '' &&
             servidor != ''
         ) {
             fetch("/estacao/cadastrar", {
@@ -113,8 +111,7 @@
             },
             body: JSON.stringify({
                 nomeServer: nome,
-                bairroServer: bairro,
-                estadoServer: estado,
+                linhaServer: linha,
                 servidorServer: servidor
             }),
             })

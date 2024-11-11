@@ -1,10 +1,10 @@
 var database = require("../database/config")
 
-function cadastrar(nome, bairro, estado, servidor) {
-    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, bairro, estado, servidor);
+function cadastrar(nome, linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, linha, servidor);
 
     var instrucaoSql = `
-        INSERT INTO Estacao (nome, bairro, estado, fkServidor) VALUES ('${nome}', '${bairro}', '${estado}', ${servidor});
+        INSERT INTO Estacao (nome, linha, fkServidor) VALUES ('${nome}', '${linha}', ${servidor});
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -18,11 +18,11 @@ function listarEstacoes(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
-function atualizar(idEstacao, bairro, estado, servidor) {
-    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", idEstacao, bairro, estado, servidor);
+function atualizar(idEstacao, linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", idEstacao, linha, servidor);
 
     var instrucaoSql = `
-        UPDATE Estacao SET bairro = '${bairro}', estado = '${estado}', fkServidor = ${servidor} WHERE idEstacao = ${idEstacao};
+        UPDATE Estacao SET linha = '${linha}', fkServidor = ${servidor} WHERE idEstacao = ${idEstacao};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
