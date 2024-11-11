@@ -7,6 +7,7 @@
     <title>Dashboard 3º | Analista</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash3_analista_vitor.css">
+    <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
@@ -19,8 +20,8 @@
                 </div>
             </div>
             <div class="botao">
-                    <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                    <button onclick="sair()">Sair</button>
+                <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
+                <button onclick="sair()">Sair</button>
             </div>
         </header>
     </div>
@@ -38,10 +39,10 @@
                 </select>
                 <p class="Servidor">Selecione um Servidor</p>
                 <select class="select_servidor" id="select_servidor" onchange="mostrarGrafico()">
-                    <option>Servidor 1</option>
-                    <option>Servidor 2</option>
-                    <option>Servidor 3</option>
-                    <option>Servidor 4</option>
+                    <option value="0">Servidor 1</option>
+                    <option value="1">Servidor 2</option>
+                    <option value="2">Servidor 3</option>
+                    <option value="3">Servidor 4</option>
                 </select>
             </div>
             <div class="logo">
@@ -53,32 +54,35 @@
         <div class="conteudo">
             <h2>Quantidade de processos acima do esperado em Memoria RAM - Servidor1 (p/hora)</h2>
 
-            <div class="info-centro">
-                <div class="box">
-                    <p>Total de processos</p>
-                    <div class="value">120</div>
+            <div class="informacoes-central">
+                <div class="card-central">
+                    <p style="font-weight: bolder;">Total de processos</p>
+                    <div id="mensagemAlerta" class="card-valor"></div>
                 </div>
-                <div class="box alert">
-                    <p>Acima do esperado</p>
-                    <div class="value">2</div>
+                <div style="border: red 3px solid;" class="card-central">
+                    <p style="color: red; font-weight: bolder;">Acima do esperado</p>
+                    <div id="mensagemAlertaAcima" class="card-valor-alerta"></div>
                 </div>
             </div>
 
             <div class="graficos-e-processos">
                 <div class="grafico">
                     <h3>Top 5 - Processos com o maior consumo de RAM (GB) - Servidor 1 (p/hora)</h3>
-                    <div id="chart"></div>
+                    <div id="chart" class="graficoServ_1"></div>
+                    <div id="chart2" class="graficoServ_2"></div>
+                    <div id="chart3" class="graficoServ_3"></div>
+                    <div id="chart4" class="graficoServ_4"></div>
                 </div>
-            
-                <div class="vertical-bar"></div> <!-- Barra vertical adicionada -->
-            
-                <div class="rigth-bottom">
-                    <div class="card-rigth2">
-                        <h2 class="titulo4">Possíveis Processos Maliciosos no Servidor 1 (p/hora)</h2>
-                        <div id="mensagemProcessos"></div>
-                        <div id="mensagemProcessos2"></div>
-                        <div id="mensagemProcessos3"></div>
-                        <div id="mensagemProcessos4"></div>
+
+                <div class="barra-vertical"></div> <!-- Barra vertical adicionada -->
+
+                <div class="processos">
+                    <div class="card-processos">
+                        <h2 class="titulo-processos">Possíveis Processos Maliciosos no Servidor 1 (p/hora)</h2>
+                        <div class="mensagemProcessos" id="mensagemProcessos"></div>
+                        <div class="mensagemProcessos"  id="mensagemProcessos2"></div>
+                        <div class="mensagemProcessos"  id="mensagemProcessos3"></div>
+                        <div class="mensagemProcessos"  id="mensagemProcessos4"></div>
                     </div>
                 </div>
             </div>
@@ -87,59 +91,167 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script>
+
+        //Gráfico de servidor 1
+        var options = {
+            chart: {
+                type: 'bar',
+                height: 250,
+            },
+            series: [{
+                name: 'Uso RAM',
+                data: [6, 5.5, 4, 3.2, 2.5]
+            }],
+            xaxis: {
+                categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    barHeight: '70%',
+                }
+            },
+            colors: ['#091e38'],
+        };
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+
+        //Gráfico do servidor 2
+        var options2 = {
+            chart: {
+                type: 'bar',
+                height: 250,
+            },
+            series: [{
+                name: 'Uso RAM',
+                data: [4, 3.8, 3.4, 3, 2.5]
+            }],
+            xaxis: {
+                categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    barHeight: '70%',
+                }
+            },
+            colors: ['#091e38'],
+        };
+        var chart = new ApexCharts(document.querySelector("#chart2"), options2);
+        chart.render();
+
+
+        //Gráfico do servidor 3
+        var options3 = {
+            chart: {
+                type: 'bar',
+                height: 250,
+            },
+            series: [{
+                name: 'Uso RAM',
+                data: [16, 14, 13, 8, 5]
+            }],
+            xaxis: {
+                categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    barHeight: '70%',
+                }
+            },
+            colors: ['#091e38'],
+        };
+        var chart = new ApexCharts(document.querySelector("#chart3"), options3);
+        chart.render();
+
+
+
+        //Gráfico do servidor 4
+        var options4 = {
+            chart: {
+                type: 'bar',
+                height: 250,
+            },
+            series: [{
+                name: 'Uso RAM',
+                data: [4, 3.4, 3.1, 3, 2]
+            }],
+            xaxis: {
+                categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    barHeight: '70%',
+                }
+            },
+            colors: ['#091e38'],
+        };
+        var chart = new ApexCharts(document.querySelector("#chart4"), options4);
+        chart.render();
+
+        function mostrarGrafico() {
+
+            //Processos maliciosos 
+            const selectValue = document.getElementById('select_servidor').value;
+
+            //Gráfico de top 5 processos 
+            var graficoProcessos1 = document.getElementsByClassName('graficoServ_1')[0];
+            var graficoProcessos2 = document.getElementsByClassName('graficoServ_2')[0];
+            var graficoProcessos3 = document.getElementsByClassName('graficoServ_3')[0];
+            var graficoProcessos4 = document.getElementsByClassName('graficoServ_4')[0];
+
+
+            graficoProcessos1.style.display = 'none';
+            graficoProcessos2.style.display = 'none';
+            graficoProcessos3.style.display = 'none';
+            graficoProcessos4.style.display = 'none';
+
+
+            if (selectValue == 0) {
+                graficoProcessos1.style.display = 'block';
+                mensagemProcessos.innerHTML = `<div>new.rar</div>`;
+                mensagemProcessos2.innerHTML = `<div>worm.exe</div>`;
+                mensagemProcessos3.innerHTML = `<div>phishing.bat</div>`;
+                mensagemProcessos4.innerHTML = `<div>explorer.bat</div>`;
+                mensagemAlerta.innerHTML = '<div>120</div>';
+                mensagemAlertaAcima.innerHTML = '<div>&#8593;2</div>';
+            } else if (selectValue == 1) {
+                graficoProcessos2.style.display = 'block';
+                mensagemProcessos.innerHTML = `<div>worm.exe</div>`;
+                mensagemProcessos2.innerHTML = `<div>new.rar</div>`;
+                mensagemProcessos3.innerHTML = `<div>explorer.bat</div>`;
+                mensagemProcessos4.innerHTML = `<div>phishing.bat</div>`;
+                mensagemAlerta.innerHTML = '<div>115</div>';
+                mensagemAlertaAcima.innerHTML = '<div>&#8593;4</div>';
+            } else if (selectValue == 2) {
+                graficoProcessos3.style.display = 'block';
+                mensagemProcessos.innerHTML = `<div>phishing.bat</div>`;
+                mensagemProcessos2.innerHTML = `<div>explorer.bat</div>`;
+                mensagemProcessos3.innerHTML = `<div>new.rar</div>`;
+                mensagemProcessos4.innerHTML = `<div>worm.exe</div>`;
+                mensagemAlerta.innerHTML = '<div>140</div>';
+                mensagemAlertaAcima.innerHTML = '<div>&#8593;1</div>';
+            } else if (selectValue == 3) {
+                graficoProcessos4.style.display = 'block';
+                mensagemProcessos.innerHTML = `<div>wornm.bat</div>`;
+                mensagemProcessos2.innerHTML = `<div>new.bat</div>`;
+                mensagemProcessos3.innerHTML = `<div>explorer.rar</div>`;
+                mensagemProcessos4.innerHTML = `<div>phishing.exe</div>`;
+                mensagemAlerta.innerHTML = '<div>103</div>';
+                mensagemAlertaAcima.innerHTML = '<div>&#8593;2</div>';
+            }
+        }
+
         function mostrar_nome() {
             var nome = sessionStorage.NOME_USUARIO;
             var cargo = sessionStorage.CARGO;
             user.innerHTML = `Olá, ${nome} (${cargo})`;
         }
 
-        function mostrarGrafico() {
 
-            // Gráfico dos processos com mais uso de RAM
-            var options = {
-                chart: {
-                    type: 'bar',
-                    height: 250,
-                },
-                series: [{
-                    name: 'Uso RAM',
-                    data: [6, 5.5, 4, 3.2, 2.5]
-                }],
-                xaxis: {
-                    categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
-                },
-                plotOptions: {
-                    bar: {
-                        horizontal: true,
-                        barHeight: '70%',
-                    }
-                },
-                colors: ['#091e38'],
-            };
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
-
-            
-            //Processos maliciosos 
-            const selectValue = document.getElementById('select_servidor').value; 
-
-            if (selectValue == 0) {
-                mensagemProcessos.innerHTML = `<div style="color:red">new.rar</div>`
-                mensagemProcessos2.innerHTML = `<div style="color:red">worm.exe</div>`
-                mensagemProcessos3.innerHTML = `<div style="color:red">phishing.bat</div>`
-                mensagemProcessos4.innerHTML = `<div style="color:red">explorer.bat</div>`
-            } else if (selectValue == 1) {
-                mensagemProcessos.innerHTML = `<div style="color:red">worm.exe</div>`
-                mensagemProcessos2.innerHTML = `<div style="color:red">new.rar</div>`
-                mensagemProcessos3.innerHTML = `<div style="color:red">explorer.bat</div>`
-                mensagemProcessos4.innerHTML = `<div style="color:red">phishing.bat</div>`
-            } else if (selectValue) {
-                mensagemProcessos.innerHTML = `<div style="color:red">phishing.bat</div>`
-                mensagemProcessos2.innerHTML = `<div style="color:red">explorer.bat</div>`
-                mensagemProcessos3.innerHTML = `<div style="color:red">new.rar</div>`
-                mensagemProcessos4.innerHTML = `<div style="color:red">worm.exe</div>`
-            }
-        }
     </script>
 </body>
 
