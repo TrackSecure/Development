@@ -122,6 +122,7 @@ header {
 
 
 .logo {
+    margin-top: 200%;
     height: 20%;
     width: 100%;
     display: flex;
@@ -150,35 +151,37 @@ header {
     display: flex;
 }
 
+/* ################################## */
+
 .right {
-    width: 45%;
+    width: 60%;
     height: 100%;
 }
 
 .left {
-    width: 55%;
+    width: 40%;
     height: 100%;
     border-right: solid 3px black;
 }
 
 .left-top {
     width: 100%;
-    height: 50%;
+    height: 60%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: white;
+    background-color: yellow;
 }
 
 .left-bottom {
     width: 100%;
-    height: 50%;
+    height: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: white;
+    background-color: blue;
 }
 
 .right-top {
@@ -200,43 +203,7 @@ header {
     flex-direction: column;
 }
 
-#select_servidor {
-    margin-top: 2%;
-    margin-bottom: 10%;
-    border-radius: 5%;
-    border: none;
-    padding: 5%;
-    font-weight: 900;
-    background-color: lightgrey;
-}
 
-#select_componentes {
-    margin-top: 2%;
-    margin-bottom: 10%;
-    border-radius: 5%;
-    border: none;
-    padding: 5%;
-    font-weight: 900;
-    background-color: lightgrey;
-}
-
-#select_estacoes {
-    margin-top: 2%;
-    border-radius: 5%;
-    border: none;
-    padding: 5%;
-    font-weight: 900;
-    background-color: lightgrey;
-}
-
-#select_meses {
-    margin-top: 10%;
-    border-radius: 5%;
-    border: none;
-    padding: 5%;
-    font-weight: 900;
-    background-color: lightgrey;
-}
 
 .card1 {
     width: 50%;
@@ -261,7 +228,7 @@ header {
     justify-content: center;
 }
 
-.card1-bottom h2{
+.card1-bottom h2 {
     font-weight: 400;
 }
 
@@ -284,39 +251,141 @@ header {
 }
 
 
-
-.left-top h2 {
-    text-align: center;
+.tituloPeriodo {
+    background-color: #091e38;
+    color: white;
+    padding: 3%;
+    padding-right: 20%;
+    padding-left: 20%;
+    font-size: 70%;
+    justify-content: flex-start;
 }
 
-.left-bottom h2 {
-    text-align: center;
+.tituloSobrecarregado {
+    color: #2a5792;
+    font-size: 120%;
 }
 
-.left-top canvas {
-    max-width: 85%;
-    max-height: 80%;
+.cardSobrecarregado {
+    background-color: #999999;
+    height: 30%;
+    width: 75%;
+    border-radius: 3%;
+    font-size: 150%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.left-bottom img{
+.cardSobrecarregado1 {
     width: 40%;
+    height: 100%;
 }
 
-.right-bottom h4{
-    color: #2a5792;
+.cardSobrecarregado2 {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-.right-bottom h1{
-    color: #091e38;
+.cardSobrecarregado button {
+    background-color: #dddddd;
+    border: none;
+    font-size: 100%;
+    border-radius: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    cursor: pointer;
+    margin-left: 5%;
+    margin-top: 5%;
 }
 
-.left h2{
-    color: #2a5792;
+.cardSobrecarregado2 h1 {
+    margin-left: 8%;
 }
 
-.container a{
-    margin-top: 80%;
-    text-align: center;
-    text-decoration: underline;
-    color: #2c90ea;
+.titulosCriticos {
+    font-size: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.alertasCriticos {
+    width: 75%;
+}
+
+.cardsCriticos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 75%;
+    margin-bottom: 10%;
+}
+
+.cardRAM {
+    width: 40%;
+    height: 100%;
+    background-color: #999999;
+    border-radius: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.cardCPU {
+    width: 40%;
+    height: 100%;
+    background-color: #999999;
+    border-radius: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.cardCPU button {
+    background-color: #dddddd;
+    border: none;
+    font-size: 100%;
+    border-radius: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+    cursor: pointer;
+    margin-left: 6%;
+    margin-top: 6%;
+}
+
+.cardRAM button {
+    background-color: #dddddd;
+    border: none;
+    font-size: 100%;
+    border-radius: 5%;
+    padding-left: 6%;
+    padding-right: 6%;
+    cursor: pointer;
+    margin-left: 6%;
+    margin-top: 6%;
+}
+
+.cardCritico1 {
+    height: 100%;
+    width: 40%;
+    
+}
+
+.cardCritico2 {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+
+.cardCritico2 h1{
+    margin-left: 3%;
 }

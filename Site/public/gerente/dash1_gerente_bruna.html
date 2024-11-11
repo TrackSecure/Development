@@ -50,30 +50,7 @@
         </header>
         <div class="paginaDash">
             <div class="menu">
-                <div class="container">
-                    <h2>Dashboard</h2>
-                    <p class="agora">Selecione um Servidor!</p>
-                    <select id="select_servidor" onchange="mostrarRegressao()">
-                        <option value="0" selected>Servidor 1</option>
-                        <option value="1">Servidor 2</option>
-                        <option value="2">Servidor 3</option>
-                        <option value="3">Servidor 4</option>
-                    </select>
-                    <p class="agora">Ranking</p>
-                    <select id="select_componentes" onchange="mostrarRanking()">
-                        <option value="CPU" selected>CPU</option>
-                        <option value="RAM">RAM</option>
-                    </select>
-                    <p class="agora">Word Cloud</p>
-                    <select id="select_estacoes" onchange="mostrarImagem()">
-                        <option value="Azul" selected>Linha Azul</option>
-                        <option value="Verde">Linha Verde</option>
-                        <option value="Vermelha">Linha Vermelha</option>
-                        <option value="Prata">Linha Prata</option>
-                    </select>
-                    <a href="C:\Users\bruna\Downloads\teste-tracksecure.pdf" target="_blank"
-                        download="relatorio_semanal_servidores.pdf">Clique aqui para baixar seu relatório semanal!</a>
-                </div>
+
                 <div class="logo">
                     <img src="logo.png" alt="logo" class="logo-img">
                     <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
@@ -82,23 +59,54 @@
             <div class="caixaGrafico">
                 <div class="left">
                     <div class="left-top">
-                        <h2>Frequência X Temperatura (CPU)</h2>
+                        <div class="tituloPeriodo">
+                            <h1>Última Semana</h1>
+                        </div>
+                        <h1 class="tituloSobrecarregado">Quantidade de Servidores Sobrecarregados</h1>
+                        <div class="cardSobrecarregado">
+                            <div class="cardSobrecarregado1"><button><strong>?</strong></button></div>
+                            <div class="cardSobrecarregado2">
+                                <h1>10</h1>
+                            </div>
+                        </div>
+                        <h1 class="tituloSobrecarregado">Quantidade de Alertas Críticos</h1>
+                        <div class="alertasCriticos">
+                            <div class="titulosCriticos">
+                                <h1>CPU</h1>
+                                <h1>RAM</h1>
+                            </div>
+                            <div class="cardsCriticos">
+                                <div class="cardCPU">
+                                    <div class="cardCritico1"><button><strong>?</strong></button></div>
+                                    <div class="cardCritico2">
+                                        <h1>10</h1>
+                                    </div>
+                                </div>
+                                <div class="cardRAM">
+                                    <div class="cardCritico1"><button><strong>?</strong></button></div>
+                                    <div class="cardCritico2">
+                                        <h1>11</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <h2>Frequência X Temperatura (CPU)</h2>
                         <canvas id="myChart1" width="10px" style="display: block;"></canvas>
                         <canvas id="myChart2" width="10px" style="display: none;"></canvas>
                         <canvas id="myChart3" width="10px" style="display: none;"></canvas>
-                        <canvas id="myChart4" width="10px" style="display: none;"></canvas>
+                        <canvas id="myChart4" width="10px" style="display: none;"></canvas> -->
                     </div>
                     <div class="left-bottom">
-                        <h2>Fluxo de Pessoas em Cada Estação</h2>
+                        <!-- <h2>Fluxo de Pessoas em Cada Estação</h2>
                         <img id="img1" src="linhaAzul.png" alt="">
                         <img id="img2" src="linhaVerde.png" alt="">
                         <img id="img3" src="linhaVermelha.png" alt="">
-                        <img id="img4" src="linhaPrata.png" alt="">
+                        <img id="img4" src="linhaPrata.png" alt=""> -->
                     </div>
                 </div>
                 <div class="right">
                     <div class="right-top">
-                        <div id="card1" class="card1">
+                        <!-- <div id="card1" class="card1">
                             <div class="card1-top">
                                 <h2>Top 3</h2>
                                 <h2>Utilização de CPU</h2>
@@ -108,8 +116,8 @@
                                 <h2>Servidor 1</h2>
                                 <h2>Servidor 2</h2>
                             </div>
-                        </div>
-                        <div id="card2" class="card1">
+                        </div> -->
+                        <!-- <div id="card2" class="card1">
                             <div class="card1-top">
                                 <h2>Top 3</h2>
                                 <h2>Utilização de RAM</h2>
@@ -119,17 +127,17 @@
                                 <h2>Servidor 3</h2>
                                 <h2>Servidor 1</h2>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="right-bottom">
-                        <h4>Quantidade de Servidores Sobrecarregados na Última Semana</h4>
+                        <!-- <h4>Quantidade de Servidores Sobrecarregados na Última Semana</h4>
                         <div class="card2">
                             <h1>2</h1>
-                        </div>
-                        <h4>Quantidade de Servidores Ociosos na Última Semana</h4>
+                        </div> -->
+                        <!-- <h4>Quantidade de Servidores Ociosos na Última Semana</h4>
                         <div class="card2">
                             <h1>1</h1>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -243,7 +251,7 @@
     // Gráfico 4 
     const regression4 = [];
     for (let i = 0; i <= 4; i++) {
-        let yval = 1000 + 600 * i;  
+        let yval = 1000 + 600 * i;
         regression4.push({ x: 40 + 10 * i, y: yval });
     }
 
