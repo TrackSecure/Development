@@ -263,7 +263,6 @@
       }
 
       if (validado == 9) {
-        div_erros_cadastro.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
         fetch("/usuarios/cadastrar", {
           method: "POST",
           headers: {
@@ -286,13 +285,12 @@
             console.log("resposta: ", resposta);
 
             if (resposta.ok) {
+              div_erros_cadastro.innerHTML = 'Usuário cadastrado com sucesso! Redirecionando para tela de login.';
               setTimeout(() => {
                 window.location.href = "login.html";
               }, "2000");
-
-
             } else {
-              div_erros_cadastro.innerHTML = 'Já existe um usuário cadastrado com o e-mail inserido!';
+              div_erros_cadastro.innerHTML = 'Houve um erro ao tentar realizar o cadastro';
               console.log('Houve um erro ao tentar realizar o cadastro');
             }
           })
