@@ -20,6 +20,15 @@ var usuarioRouter = require("./src/routes/usuarios");
 var servidorRouter = require("./src/routes/servidor")
 var estacaoRouter = require("./src/routes/estacao");
 
+var patroniRouter = require("./src/routes/analistaPatroni");
+var gustavoRouter = require("./src/routes/analistaGustavo");
+var vitorRouter = require("./src/routes/analistaVitor");
+
+var enzoRouter = require("./src/routes/gerenteEnzo");
+var brunaRouter = require("./src/routes/gerenteBruna");
+var brunoRouter = require("./src/routes/gerenteBruno");
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,6 +39,15 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/servidor", servidorRouter);
 app.use("/estacao", estacaoRouter);
+
+app.use("/analistaPatroni", patroniRouter);
+app.use("/analistaGustavo", gustavoRouter);
+app.use("/analistaVitor", vitorRouter);
+
+app.use("/gerenteBruna", brunaRouter);
+app.use("/gerenteBruno", brunoRouter);
+app.use("/gerenteEnzo", enzoRouter);
+
 
 app.listen(PORTA_APP, function () {
     console.log(`
