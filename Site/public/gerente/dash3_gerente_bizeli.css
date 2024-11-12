@@ -43,6 +43,11 @@ header {
     align-items: center;
 }
 
+.texto span {
+    font-weight: 400;
+    font-size: 2.5vh;
+}
+
 .botao {
     width: 50%;
     height: 100%;
@@ -113,7 +118,7 @@ header {
     color: white;
     height: 80%;
     align-items: center;
-    margin-top: 100px;
+    
 }
 
 .menu .container h2 {
@@ -122,16 +127,30 @@ header {
     font-weight: 400;
 }
 
-.agora{
+/* .agora{
     color: #2c90ea;
+} */
+
+.selectEsquerda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    justify-content: space-around;
 }
 
-#select_servidor {
-    margin-top: 2%;
-    margin-bottom: 10%;
-    border-radius: 5%;
-    border: none;
-    padding: 5%;
-    font-weight: 900;
-    background-color: lightgrey;
+.selectEsquerda select {
+    font-weight: bolder;
+    font-size: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    height: 3rem;
+    width: 9.5rem;
+    padding: 5px;
 }
+
+.selectEsquerda span {
+    margin-top: 90px;
+    color: rgb(133, 167, 213);
+}
+

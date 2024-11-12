@@ -10,7 +10,8 @@
     <script src="../js/sessao.js"></script>
 </head>
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
-<body>
+
+<body onload="mostrar_nome()">
 
     <div class="pagina">
         <header>
@@ -21,7 +22,7 @@
             </div>
             <div class="botao">
                 <div class="container">
-                    <button onclick="cadastro()">Cadastros</button>
+                    <button onclick="window.location='../cadastro_estacao.html'">Cadastros</button>
                     <button onclick="inicio()">Início</button>
                     <button onclick="sair()">Sair</button>
                 </div>
@@ -30,16 +31,46 @@
         <div class="paginaDash">
             <div class="menu">
                 <div class="container">
-                    <p class="agora">Selecione um Servidor</p>
-                    <select id="select_servidor">
-                        <option value="0" selected>Servidor 1</option>
-                        <option value="1">Servidor 2</option>
-                        <option value="2">Servidor 3</option>
-                        <option value="3">Servidor 4</option>
-                    </select>
+                    <div class="selectEsquerda">
+                        <span>Selecione uma linha</span>
+                        <select>
+                            <option value="0" selected>Azul</option>
+                            <option value="1">Vermelha</option>
+                            <option value="2">Verde</option>
+                            <option value="3">Prata</option>
+                        </select>
+
+                        <span>Selecione um servidor</span>
+                        <select>
+                            <option value="0" selected>Servidor 1</option>
+                            <option value="1">Servidor 2</option>
+                            <option value="2">Servidor 3</option>
+                            <option value="3">Servidor 4</option>
+                        </select>
+
+                        <span>Selecione uma Dashboard</span>
+                        <select>
+                            <option value="0" selected>Up e Downtime</option>
+                            <option value="1">Fluxo de pessoas</option>
+                            <option value="2">Alertas</option>
+                        </select>
+                    </div>
                 </div>
+            </div>
+
+           
             </div>
         </div>
 
 </body>
+
+<script>
+
+function mostrar_nome() {
+        var nome = sessionStorage.NOME_USUARIO;
+        user.innerHTML = `Olá, ${nome}`;
+    }
+
+</script>
+
 </html>
