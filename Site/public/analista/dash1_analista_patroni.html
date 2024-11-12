@@ -25,7 +25,7 @@
                 <div class="botao">
                     <div class="container">
                         <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                        <button onclick="sair()">Sair</button>
+                        <button onclick="sair()"><a href="../analista/dash2_analista_gustavo.html"></a>Sair</button>
                     </div>
                 </div>
             </header>
@@ -51,6 +51,12 @@
                         <option value="0" selected>Servidor 1</option>
                         <option value="1">Servidor 2</option>
                         <option value="2">Servidor 3</option>
+                    </select>
+                    <p class="selecionarDash">Selecione uma Dashboard!</p>
+                    <select id="select_dash" onchange="selecionarDash()">
+                        <option value="0">Dashboard inicial</option>
+                        <option value="1" selected>Dashboard detalhada</option>
+                        <option value="2">Dashboard de processos</option>
                     </select>
                 </div>
                 <div class="logo">
@@ -1550,6 +1556,17 @@
             grafico6_4.style.display = 'block';
         }
 
+    }
+
+
+    function selecionarDash(){
+        var selecionarDash = select_dash.value
+
+        if (selecionarDash == 0){
+            window.location = '../analista/dash2_analista_gustavo.html'
+        } else if (selecionarDash == 2){
+            window.location = '../analista/dash3_analista_vitor.html'
+        }
     }
 
     function mostrar_nome() {

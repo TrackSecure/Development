@@ -120,6 +120,11 @@ header {
     color: #2c90ea;
 }
 
+.selecionarDash{
+    color: #2c90ea;
+    margin-top: 90%;
+}
+
 
 .logo {
     height: 20%;
@@ -155,6 +160,16 @@ header {
 }
 
 #select_servidor {
+    margin-top: 2%;
+    margin-bottom: 10%;
+    border-radius: 5%;
+    border: none;
+    padding: 5%;
+    font-weight: 900;
+    background-color: lightgrey;
+}
+
+#select_dash {
     margin-top: 2%;
     margin-bottom: 10%;
     border-radius: 5%;
