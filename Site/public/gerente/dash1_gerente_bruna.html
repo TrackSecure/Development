@@ -8,26 +8,10 @@
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash1_gerente_bruna.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <style>
-    #img1 {
-        display: block;
-    }
-
-    #img2,
-    #img3,
-    #img4 {
-        display: none;
-    }
-
-    #card1 {
-        display: block;
-    }
-
-    #card2 {
-        display: none;
-    }
 </style>
 
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
@@ -92,12 +76,7 @@
                         </div>
                     </div>
                     <div class="left-bottom">
-                        <!-- <h2>Fluxo de Pessoas em Cada Estação</h2>
-                        <img id="img1" src="linhaAzul.png" alt="">
-                        <img id="img2" src="linhaVerde.png" alt="">
-                        <img id="img3" src="linhaVermelha.png" alt="">
-                        <img id="img4" src="linhaPrata.png" alt=""> -->
-                        <select name="select_roubo," id="1">
+                        <select name="select_rank," id="selectRank">
                             <option value="CPU">CPU</option>
                             <option value="RAM">RAM</option>
                         </select>
@@ -120,38 +99,34 @@
                 </div>
                 <div class="right">
                     <div class="right-top">
-                        <!-- <div id="card1" class="card1">
-                            <div class="card1-top">
-                                <h2>Top 3</h2>
-                                <h2>Utilização de CPU</h2>
-                            </div>
-                            <div class="card1-bottom">
-                                <h2>Servidor 3</h2>
-                                <h2>Servidor 1</h2>
-                                <h2>Servidor 2</h2>
-                            </div>
-                        </div> -->
-                        <!-- <div id="card2" class="card1">
-                            <div class="card1-top">
-                                <h2>Top 3</h2>
-                                <h2>Utilização de RAM</h2>
-                            </div>
-                            <div class="card1-bottom">
-                                <h2>Servidor 2</h2>
-                                <h2>Servidor 3</h2>
-                                <h2>Servidor 1</h2>
-                            </div>
-                        </div> -->
+                        <div class="titulo-right">
+                            <h1>Fluxo de pessoas na linha</h1>
+                            <select name="select_linha" id="selectLinha">
+                                <option value="azul">Azul</option>
+                                <option value="verde">Verde</option>
+                                <option value="vermelha">Vermelha</option>
+                                <option value="prata">Prata</option>
+                            </select>
+                            <h1>no mês:</h1>
+                            <select name="select_mes" id="selectMes">
+                                <option value="janeiro">Janeiro</option>
+                                <option value="fevereiro">Fevereriro</option>
+                                <option value="março">Março</option>
+                                <option value="abril">Abril</option>
+                                <option value="maio">Maio</option>
+                                <option value="junho">Junho</option>
+                                <option value="julho">Julho</option>
+                                <option value="agosto">Agosto</option>
+                                <option value="setembro">Setembro</option>
+                                <option value="outubro">Outubro</option>
+                            </select>
+                        </div>
+                        <div class="conteudo-right">
+                            <div id="chart"></div>
+                        </div>
                     </div>
                     <div class="right-bottom">
-                        <!-- <h4>Quantidade de Servidores Sobrecarregados na Última Semana</h4>
-                        <div class="card2">
-                            <h1>2</h1>
-                        </div> -->
-                        <!-- <h4>Quantidade de Servidores Ociosos na Última Semana</h4>
-                        <div class="card2">
-                            <h1>1</h1>
-                        </div> -->
+                       
                     </div>
                 </div>
             </div>
@@ -163,191 +138,36 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 <script>
 
-    // Gráfico 1 
-    const regression1 = [];
-    for (let i = 0; i <= 4; i++) {
-        let yval = 1200 + 400 * i;
-        regression1.push({ x: 30 + 10 * i, y: yval });
-    }
-
-    const ctx1 = document.getElementById('myChart1').getContext('2d');
-    new Chart(ctx1, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Frequência X Temperatura',
-                data: [
-                    { x: 32, y: 1300 }, { x: 35, y: 1400 }, { x: 36, y: 1500 },
-                    { x: 40, y: 1600 }, { x: 45, y: 1700 }, { x: 50, y: 1800 },
-                    { x: 55, y: 2000 }, { x: 60, y: 2100 }, { x: 62, y: 2200 },
-                    { x: 65, y: 2400 }, { x: 70, y: 2500 }, { x: 72, y: 2600 },
-                    { x: 75, y: 2700 }, { x: 78, y: 2800 }, { x: 80, y: 2850 }
-                ],
-                borderColor: '#091e38',
-                backgroundColor: '#091e38'
-            }, {
-                label: 'Linha de Regressão',
-                data: regression1,
-                borderColor: '#5c93d6',
-                backgroundColor: 'transparent',
-                type: 'line'
-            }],
+    var options = {
+        series: [{
+            data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+        }],
+        chart: {
+            type: 'bar',
+            height: 300
         },
-        options: {}
-    });
-
-    // Gráfico 2 
-    const regression2 = [];
-    for (let i = 0; i <= 4; i++) {
-        let yval = 1500 + 500 * i;
-        regression2.push({ x: 30 + 10 * i, y: yval });
-    }
-
-    const ctx2 = document.getElementById('myChart2').getContext('2d');
-    new Chart(ctx2, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Frequência X Temperatura',
-                data: [
-                    { x: 32, y: 1600 }, { x: 36, y: 1700 }, { x: 39, y: 1800 },
-                    { x: 42, y: 2000 }, { x: 45, y: 2100 }, { x: 50, y: 2200 },
-                    { x: 52, y: 2300 }, { x: 55, y: 2400 }, { x: 60, y: 2500 },
-                    { x: 62, y: 2600 }, { x: 65, y: 2700 }, { x: 67, y: 2800 },
-                    { x: 70, y: 2900 }, { x: 73, y: 3000 }, { x: 75, y: 3100 }
-                ],
-                borderColor: '#091e38',
-                backgroundColor: '#091e38'
-            }, {
-                label: 'Linha de Regressão',
-                data: regression2,
-                borderColor: '#5c93d6',
-                backgroundColor: 'transparent',
-                type: 'line'
-            }],
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                borderRadiusApplication: 'end',
+                horizontal: true,
+            }
         },
-        options: {}
-    });
-
-    // Gráfico 3 
-    const regression3 = [];
-    for (let i = 0; i <= 4; i++) {
-        let yval = 1800 + 400 * i;
-        regression3.push({ x: 35 + 10 * i, y: yval });
-    }
-
-    const ctx3 = document.getElementById('myChart3').getContext('2d');
-    new Chart(ctx3, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Frequência X Temperatura',
-                data: [
-                    { x: 37, y: 1900 }, { x: 40, y: 2000 }, { x: 43, y: 2100 },
-                    { x: 46, y: 2200 }, { x: 50, y: 2300 }, { x: 53, y: 2400 },
-                    { x: 55, y: 2500 }, { x: 60, y: 2600 }, { x: 63, y: 2700 },
-                    { x: 66, y: 2800 }, { x: 68, y: 2900 }, { x: 70, y: 3000 },
-                    { x: 73, y: 3100 }, { x: 75, y: 3200 }, { x: 78, y: 3300 }
-                ],
-                borderColor: '#091e38',
-                backgroundColor: '#091e38'
-            }, {
-                label: 'Linha de Regressão',
-                data: regression3,
-                borderColor: '#5c93d6',
-                backgroundColor: 'transparent',
-                type: 'line'
-            }],
+        dataLabels: {
+            enabled: false
         },
-        options: {}
-    });
-
-    // Gráfico 4 
-    const regression4 = [];
-    for (let i = 0; i <= 4; i++) {
-        let yval = 1000 + 600 * i;
-        regression4.push({ x: 40 + 10 * i, y: yval });
-    }
-
-    const ctx4 = document.getElementById('myChart4').getContext('2d');
-    new Chart(ctx4, {
-        type: 'scatter',
-        data: {
-            datasets: [{
-                label: 'Frequência X Temperatura',
-                data: [
-                    { x: 42, y: 1100 }, { x: 45, y: 1200 }, { x: 48, y: 1300 },
-                    { x: 50, y: 1400 }, { x: 55, y: 1500 }, { x: 57, y: 1600 },
-                    { x: 60, y: 1700 }, { x: 62, y: 1800 }, { x: 65, y: 1900 },
-                    { x: 68, y: 2000 }, { x: 70, y: 2100 }, { x: 73, y: 2200 },
-                    { x: 75, y: 2300 }, { x: 78, y: 2400 }, { x: 80, y: 2500 }
-                ],
-                borderColor: '#091e38',
-                backgroundColor: '#091e38'
-            }, {
-                label: 'Linha de Regressão',
-                data: regression4,
-                borderColor: '#5c93d6',
-                backgroundColor: 'transparent',
-                type: 'line'
-            }],
-        },
-        options: {}
-    });
-
-    function mostrarRegressao() {
-
-        document.getElementById('myChart1').style.display = 'none';
-        document.getElementById('myChart2').style.display = 'none';
-        document.getElementById('myChart3').style.display = 'none';
-        document.getElementById('myChart4').style.display = 'none';
-
-        const regressaoSelecionada = document.getElementById('select_servidor').value;
-
-        if (regressaoSelecionada == 0) {
-            document.getElementById('myChart1').style.display = 'block';
-        } else if (regressaoSelecionada == 1) {
-            document.getElementById('myChart2').style.display = 'block';
-        } else if (regressaoSelecionada == 2) {
-            document.getElementById('myChart3').style.display = 'block';
-        } else if (regressaoSelecionada == 3) {
-            document.getElementById('myChart4').style.display = 'block';
+        xaxis: {
+            categories: ['Tucuruvi','Parada Inglesa','Jardim São Paulo',
+            'Santana','Carandiru','Portuguesa Tiête','Armênia','Tiradentes',
+            'Luz','São Bento','Sé','Liberdade','São Joaquim','Vergueiro',
+            'Paraiso','Ana Rosa','Vila Mariana','Santa Cruz','Praça da Árvore',
+            'Saúde','São Judas','Conceição','Jabaquara'
+            ],
         }
+    };
 
-    }
-
-    function mostrarImagem() {
-
-        document.getElementById('img1').style.display = 'none';
-        document.getElementById('img2').style.display = 'none';
-        document.getElementById('img3').style.display = 'none';
-        document.getElementById('img4').style.display = 'none';
-
-        const linhaSelecionada = document.getElementById('select_estacoes').value;
-
-        if (linhaSelecionada === 'Azul') {
-            document.getElementById('img1').style.display = 'block';
-        } else if (linhaSelecionada === 'Verde') {
-            document.getElementById('img2').style.display = 'block';
-        } else if (linhaSelecionada === 'Vermelha') {
-            document.getElementById('img3').style.display = 'block';
-        } else if (linhaSelecionada === 'Prata') {
-            document.getElementById('img4').style.display = 'block';
-        }
-    }
-
-    function mostrarRanking() {
-        document.getElementById('card1').style.display = 'none';
-        document.getElementById('card2').style.display = 'none';
-
-        const rankingSelecionado = document.getElementById('select_componentes').value;
-
-        if (rankingSelecionado === 'CPU') {
-            document.getElementById('card1').style.display = 'block';
-        } else if (rankingSelecionado === 'RAM') {
-            document.getElementById('card2').style.display = 'block';
-        }
-    }
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
 
     function sair() {
         window.location = "../index.html"

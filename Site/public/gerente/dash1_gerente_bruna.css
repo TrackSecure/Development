@@ -171,7 +171,7 @@ header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: yellow;
+    background-color: white;
 }
 
 .left-bottom {
@@ -181,28 +181,79 @@ header {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: blue;
+    background-color: white;
 }
 
 .right-top {
     width: 100%;
-    height: 50%;
+    height: 60%;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.right-bottom{
+    width: 100%;
+    height: 40%;
+    background-color: yellow;
+
+}
+
+
+
+.titulo-right{
     background-color: white;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+.titulo-right h1{
+    font-size: 140%;
+    color: #2a5792;
+}
+
+#selectLinha{
+    background-color: #dddddd;
+    border: none;
+    font-weight: 900;
+    color: #2a5792;
+    padding: 2%;
+    border-radius: 10%;
+    font-size: 110%;
+}
+
+#selectMes{
+    background-color: #dddddd;
+    border: none;
+    font-weight: 900;
+    color: #2a5792;
+    padding: 2%;
+    border-radius: 10%;
+    font-size: 110%;
+}
+
+#chart{
+    width: 95%;
+}
+
+.apexcharts-canvas{
+    height: 100%;
+}
+
+.conteudo-right{
+    background-color: white;
+    width: 100%;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.right-bottom {
-    width: 100%;
-    height: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-direction: column;
-}
-
 
 
 .card1 {
@@ -275,6 +326,7 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    color: #091e38;
 }
 
 .cardSobrecarregado1 {
@@ -325,6 +377,7 @@ header {
     width: 100%;
     height: 75%;
     margin-bottom: 10%;
+    color: #091e38;
 }
 
 .cardRAM {
@@ -393,14 +446,14 @@ header {
 .cardRank{
     width: 80%;
     height: 70%;
-    background-color: palevioletred;
+    background-color: #999999;
     font-size: 70%;
 }
 
 .RankTitulo{
     width: 100%;
     height: 30%;
-    background-color: green;
+    background-color: #999999;
     display: flex;
     flex-direction: row;
     font-size: 80%;
@@ -417,6 +470,8 @@ header {
     width: 90%;
     display: flex;
     align-items: center;
+    color: #091e38;
+    font-weight: 900;
 }
 
 .RankTitulo2 h1{
@@ -431,6 +486,7 @@ header {
     justify-content: space-around;
     flex-direction: column;
     border-top: solid 3px #091e38;
+    color: #091e38;
 }
 
 .RankTitulo button{
@@ -445,8 +501,16 @@ header {
     margin-top: 9%;
 }
 
-.select_roubo{
-    background-color: blue;
+#selectRank{
     border: none;
-    padding: 50%;
+    padding: 2%;
+    margin-bottom: 2%;
+    padding-left: 35%;
+    padding-right: 35%;
+    font-size: 110%;
+    font-weight: 900;
+    background-color: #dddddd;
+    color: #2a5792;
 }
+
+
