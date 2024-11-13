@@ -58,15 +58,28 @@
                 </div>
             </div>
 
-           
+            <div class="cards">
+                <div>
+                    <h3 style="color: #1ec9d5;">CPU</h3>
+                    <div class="card_atencao"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;"></span>99.4%</div>
+                </div>
+                <div>
+                    <h3 style="color: #218c93;">RAM</h3>
+                    <div class="card_critico"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;"></span>9.4</div>
+                </div>
+                <div>
+                    <h3 style="color: #122178;">Disco</h3>
+                    <div class="card_atencao"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;"></span>64.7</div>
+                </div>
             </div>
         </div>
+    </div>
 
 </body>
 
 <script>
 
-function mostrar_nome() {
+    function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         user.innerHTML = `Olá, ${nome}`;
     }
