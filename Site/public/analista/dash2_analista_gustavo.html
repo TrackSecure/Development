@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash2_analista_gustavo.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
@@ -31,11 +32,19 @@
     <div class="paginaDash">
         <div class="menu">
             <div class="container">
+                <p class="Servidor">Selecione uma Linha!</p>
+                <select class="select" id="select_linha">
+                    <option value="0" selected>Todos</option>
+                    <option value="1">Linha Amarela</option>
+                    <option value="2">Linha Vermelha</option>
+                    <option value="3">Linha Verde</option>
+                </select>
                 <p class="Servidor">Selecione um Servidor!</p>
-                <select class="select_servidor" id="select_servidor" onchange="mostrarGrafico()">
-                    <option value="0" selected>Servidor 1</option>
-                    <option value="1">Servidor 2</option>
-                    <option value="2">Servidor 3</option>
+                <select class="select" id="select_servidor">
+                    <option value="0" selected>Todos</option>
+                    <option value="1">Servidor 1</option>
+                    <option value="2">Servidor 2</option>
+                    <option value="3">Servidor 3</option>
                 </select>
             </div>
             <div class="logo">
@@ -63,17 +72,38 @@
             </div>
             <div class="detalhes">
                 <div class="ver_detalhes">
-                    <button class="botao_detalhes" onclick="window.location = './dash1_analista_patroni.html'" >Ver Detalhes</button>
+                    <button class="botao_detalhes" onclick="window.location = './dash3_analista_vitor'">Ver
+                        Detalhes</button>
                 </div>
             </div>
-            <div class="esquerda">
-                <h2>Servidores / Linhas</h2>
-                <div class="servidores">
-                    <button></button>
+            <div class="centro">
+                <div class="esquerda">
+                    <h2>Servidores / Linhas</h2>
+                    <div class="servidores">
+                        <div class="caixa-esquerda">
+                            <button>TESTE</button>
+                            <button>TESTE</button>
+                            <button>TESTE</button>
+                            <button>TESTE</button>
+                            <button>TESTE</button>
+                            <button>TESTE</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="direita">
+                    <div class="cima">
+                        <select class="select_componente" id="select_componente">
+                            <option value="CPU" selected>CPU</option>
+                            <option value="RAM">RAM</option>
+                        </select>
+                        <button class="botao_detalhes" onclick="window.location = './dash1_analista_patroni.html'">Ver
+                            Detalhes</button>
+                    </div>
+                    <div id="chart"></div>
                 </div>
             </div>
         </div>
-    </div>       
+    </div>
 
 
 </body>
@@ -82,12 +112,49 @@
 
 
 <script>
-    
+
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         var cargo = sessionStorage.CARGO;
         user.innerHTML = `Olá, ${nome} (${cargo})`;
     }
 
+    var select_componente = document.getElementById('select_componente');
+
+    // Função para atualizar o gráfico
+    function atualizarGrafico() {
+        var componente = select_componente.value; // Pega o valor selecionado
+
+        var options = {
+            chart: {
+                type: 'line',
+                height: 350,
+                width: 550,
+            },
+            series: [{
+                name: componente, // Define o nome da série com o valor do select
+                data: [10, 20, 15, 30, 40, 35, 50] // Dados do gráfico
+            }],
+            xaxis: {
+                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
+            },
+            title: {
+                text: componente, // Define o título do gráfico com o valor do select
+                align: 'center'
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    }
+
+    // Atualiza o gráfico quando o select muda
+    select_componente.addEventListener('change', function () {
+        document.querySelector("#chart").innerHTML = ""; // Limpa o gráfico anterior
+        atualizarGrafico();
+    });
+
+    // Inicializa o gráfico ao carregar a página
+    atualizarGrafico();
 
 </script>

@@ -115,14 +115,14 @@ header {
 
 
 .logo {
-    margin-left: 7px;
+    margin-left: 30px;
     height: 20%;
     display: flex;
     align-items: center;
 }
 
 .logo-img {
-    width: 10%;
+    width: 12%;
     height: auto;
 }
 
@@ -142,7 +142,7 @@ header {
     padding: 0px 0px 15px 0px;
 }
 
-#select_servidor {
+.select {
     width: 150px;
     margin-top: 2%;
     margin-bottom: 10%;
@@ -221,7 +221,7 @@ header {
     justify-content: end;
     padding-top: 10px;
     padding-bottom: 20px;
-    padding-right: 147px;
+    padding-right: 200px;
     border-bottom: 3px solid black;
 }
 
@@ -248,14 +248,62 @@ header {
     color: #2c90ea;
 }
 
+.centro {
+    display: flex;
+    flex-direction: row;
+}
+
 .esquerda {
     display: flex;
     align-items: center;
     width: 50%;
     flex-direction: column;
-    padding-top: 10px;
+    padding-top: 30px;
     border-right: 3px solid black;
-    height: 380px;
+    height: 584px;
+}
+
+.direita {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+    padding-top: 30px;
+    height: 584px;  
+}
+
+.select_componente {
+    width: 250px;
+    height: 50px;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    border-radius: 20px;
+    border: none;
+    font-weight: 900;
+    background-color: rgb(208, 208, 208);
+    text-align: center;
+}
+
+.cima {
+    display: flex;
+    flex-direction: row;
+    width: 500px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.cima .botao_detalhes {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    width: 140px;
+    height: 30px;
+    background-color: rgb(208, 208, 208);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 2%;
+    margin-bottom: 5%;
 }
 
 .esquerda h2 {
@@ -266,10 +314,36 @@ header {
     display: flex;
     border-radius: 20px;
     flex-direction: column;
-    height: 60%;
+    height: 70%;
     width: 70%;
-    background-color: grey;
+    background-color: rgb(187, 187, 187);
     overflow: auto;
+    padding: 20px;
+}
+
+.caixa-esquerda {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.servidores button {
+    display: flex;
+    justify-content: flex-start;
+    border: 2px solid black;
+    background: transparent;
+    border-radius: 30px;
+    font-weight: 800;
+    color:black;
+    background-color: rgb(6, 173, 6);
+    font-size: 25px;
+    cursor: pointer; 
+    padding-left: 20px;
+    width: 400px;
+    height: 45px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .servidores::-webkit-scrollbar{
