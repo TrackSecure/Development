@@ -9,6 +9,16 @@ function cadastrarLinha(req, res) {
         })
 }
 
+function cadastrarServidor(req, res){
+    patroniModel.cadastrarServidor()
+        .then(resultado => {
+            if(resultado.length > 0){
+                res.json(resultado)
+            }
+        })
+}
+
 module.exports = {
-  cadastrarLinha
+  cadastrarLinha,
+  cadastrarServidor
 }
