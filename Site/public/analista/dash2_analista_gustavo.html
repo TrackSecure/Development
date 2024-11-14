@@ -12,7 +12,7 @@
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-<body onload="mostrar_nome()">
+<body onload="mostrar_nome(), qtdServidores()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -61,7 +61,7 @@
             </div>
             <div class="kpis">
                 <div class="cardT">
-                    <h3>3</h3>
+                    <h3 id="total-servidores"></h3>
                 </div>
                 <div class="cardT">
                     <h3 style="color: red;">3</h3>
@@ -113,6 +113,34 @@
 
 <script>
 
+    function atualizarTotalServidores() {
+        // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
+        const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
+        
+        // Faz a requisição para a API
+        fetch("/analistaGustavo/qtdServidores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ qtdservidores: fkEmpresa })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter o total de servidores');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Atualiza o conteúdo do HTML com o total de servidores
+            document.getElementById("total-servidores").textContent = data.total_servidores;
+        })
+        .catch(error => {
+            console.error("Erro ao buscar o total de servidores:", error);
+        });
+    }
+
+    
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         var cargo = sessionStorage.CARGO;
@@ -156,5 +184,8 @@
 
     // Inicializa o gráfico ao carregar a página
     atualizarGrafico();
+    // Chama a função ao carregar a página
+    window.onload = atualizarTotalServidores;
+
 
 </script>
