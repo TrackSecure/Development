@@ -85,9 +85,58 @@
         div_erros_login.innerHTML = 'A senha deve possuir ao menos 8 caracteres.';
       } else if (hashtag < 0 && arrobaSenha < 0 && underline < 0 && cifrao < 0 && porcentagem < 0) {
         div_erros_login.innerHTML = 'Por segurança, a senha deve possuir ao menos um caractere especial!';
-      } else div_erros_login.innerHTML = 'Usuário logado com sucesso! Redirecionando para tela de dashboard.';
+      } else {
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              emailServer: emailVar,
+              senhaServer: senhaVar,
+            }),
+          })
+            .then(function (resposta) {
+  
+              console.log("resposta: ", resposta);
+      
+              if (resposta.ok) {
+                div_erros_login.innerHTML = 'Usuário logado com sucesso! Redirecionando para tela de dashboard.';
+                console.log(resposta);
+  
+                  resposta.json().then(json => {
+                      console.log(json);
+                      console.log(JSON.stringify(json));
+                      sessionStorage.ID_USUARIO = json.idFuncionario;
+                      sessionStorage.NOME_USUARIO = json.nome;
+                      sessionStorage.EMAIL_USUARIO = json.email;
+                      sessionStorage.CARGO = json.cargo;
+                      sessionStorage.ID_EMPRESA = json.fkEmpresa;
+  
+                      if (json.cargo == "Gerente de Monitoramento de Servidores") {
+                        setTimeout(function () {
+                          window.location = "dashboard_inicial_gerente.html";
+                        }, 1000);
+                      } else if (json.cargo == "Analista de Sistemas") {
+                        setTimeout(function () {
+                          window.location = "dashboard_inicial_analista.html";
+                        }, 1000);
+                      }
+  
+                 });
+              } else {
+                  div_erros_login.innerHTML = 'Houve um erro ao tentar realizar o login';
+                  console.log('Houve um erro ao tentar realizar o login');
+              }
+            })
+            .catch(function (resposta) {
+              console.log(`#ERRO: ${resposta}`);
+            });
+            return false;
+      }
     
       
+<<<<<<< HEAD
       fetch("/usuarios/autenticar", {
           method: "POST",
           headers: {
@@ -133,6 +182,8 @@
             console.log(`#ERRO: ${resposta}`);
           });
           return false;
+=======
+>>>>>>> 6613f187478c6223f0e96686cf1d3156d9d46bc1
         
     
           }
