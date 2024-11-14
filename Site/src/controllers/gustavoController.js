@@ -2,7 +2,7 @@ var gustavoModel = require("../models/gustavoModel");
 
 function qtdServidores(req, res) {
     // Obtém o ID da empresa (fkEmpresa) do corpo da requisição
-    var fkEmpresa = req.body.qtdservidores;
+    var fkEmpresa = req.body.idEmpresa;
 
     // Chama a função qtdServidores do model para contar os servidores
     gustavoModel.qtdServidores(fkEmpresa)
