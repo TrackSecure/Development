@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="dash1_gerente_bruna.css">
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-tag-cloud.min.js"></script>
 </head>
 
 <style>
@@ -48,10 +50,33 @@
                         </div>
                         <h1 class="tituloSobrecarregado">Quantidade de Servidores Sobrecarregados</h1>
                         <div class="cardSobrecarregado">
-                            <div class="cardSobrecarregado1"><button><strong>?</strong></button></div>
+                            <div class="cardSobrecarregado1" id="myBtn1"><button><strong>?</strong></button></div>
                             <div class="cardSobrecarregado2">
                                 <h1>10</h1>
                             </div>
+                        </div>
+                        <div id="myModal1" class="modal">
+
+                            <!-- Modal content -->
+                            <div class="modal-content">
+                                <span class="close1">&times;</span>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                            </div>
+
                         </div>
                         <h1 class="tituloSobrecarregado">Quantidade de Alertas Críticos</h1>
                         <div class="alertasCriticos">
@@ -100,6 +125,7 @@
                 <div class="right">
                     <div class="right-top">
                         <div class="titulo-right">
+                            <button><strong>?</strong></button>
                             <h1>Fluxo de pessoas na linha</h1>
                             <select name="select_linha" id="selectLinha">
                                 <option value="azul">Azul</option>
@@ -126,7 +152,7 @@
                         </div>
                     </div>
                     <div class="right-bottom">
-                       
+                        <div id="WordCloud"></div>
                     </div>
                 </div>
             </div>
@@ -157,17 +183,63 @@
             enabled: false
         },
         xaxis: {
-            categories: ['Tucuruvi','Parada Inglesa','Jardim São Paulo',
-            'Santana','Carandiru','Portuguesa Tiête','Armênia','Tiradentes',
-            'Luz','São Bento','Sé','Liberdade','São Joaquim','Vergueiro',
-            'Paraiso','Ana Rosa','Vila Mariana','Santa Cruz','Praça da Árvore',
-            'Saúde','São Judas','Conceição','Jabaquara'
+            categories: ['Tucuruvi', 'Parada Inglesa', 'Jardim São Paulo',
+                'Santana', 'Carandiru', 'Portuguesa Tiête', 'Armênia', 'Tiradentes',
+                'Luz', 'São Bento', 'Sé', 'Liberdade', 'São Joaquim', 'Vergueiro',
+                'Paraiso', 'Ana Rosa', 'Vila Mariana', 'Santa Cruz', 'Praça da Árvore',
+                'Saúde', 'São Judas', 'Conceição', 'Jabaquara'
             ],
         }
     };
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
+
+    var data = [
+        { "x": "learning", value: 80 },
+        { "x": "includes", value: 56 },
+        { "x": "lists", value: 44 },
+        { "x": "meaning", value: 40 },
+        { "x": "useful", value: 36 },
+        { "x": "different", value: 32 },
+        { "x": "grammar", value: 28 },
+        { "x": "teaching", value: 24 },
+        { "x": "example", value: 20 },
+        { "x": "thing", value: 12 },
+    ];
+
+    chart = anychart.tagCloud(data);
+
+    var customColorScale = anychart.scales.linearColor();
+    customColorScale.colors(["#698cbe", "#091e38"]);
+
+    chart.colorScale(customColorScale);
+
+    chart.colorRange().enabled(true);
+    chart.colorRange().length("90%");
+
+    chart.width("700px");
+    chart.height("250px");
+
+    chart.tooltip().useHtml(true);
+
+    chart.tooltip().format(function () {
+        var percentOfTotal = (this.getData("value") * 100) / this.getStat("sum");
+        if (percentOfTotal < 7)
+            return percentOfTotal.toFixed(1) +
+                "%<br></br><br></br>"
+        if (percentOfTotal > 15)
+            return "<span style='font-size:26'>" +
+                percentOfTotal.toFixed(1) +
+                "%</span><br><br>"
+        return "<span style='font-size:18'>" +
+            percentOfTotal.toFixed(1) +
+            "%</span><br><br>"
+    });
+
+    chart.container("WordCloud");
+
+    chart.draw();
 
     function sair() {
         window.location = "../index.html"
@@ -184,6 +256,31 @@
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         user.innerHTML = `Olá, ${nome}`;
+    }
+
+    var modal = document.getElementById("myModal1");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn1");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close1")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 
 </script>

@@ -12,6 +12,7 @@
 
 body {
     background-color: #dddd;
+    overflow: hidden;
 }
 
 .pagina {
@@ -187,23 +188,24 @@ header {
 .right-top {
     width: 100%;
     height: 60%;
-    background-color: blue;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: white;
 }
 
-.right-bottom{
+.right-bottom {
     width: 100%;
     height: 40%;
-    background-color: yellow;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
-
-
-.titulo-right{
+.titulo-right {
     background-color: white;
     width: 100%;
     height: 20%;
@@ -213,12 +215,22 @@ header {
 
 }
 
-.titulo-right h1{
+.titulo-right button {
+    background-color: #dddddd;
+    border: none;
+    font-size: 100%;
+    border-radius: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    cursor: pointer;
+}
+
+.titulo-right h1 {
     font-size: 140%;
     color: #2a5792;
 }
 
-#selectLinha{
+#selectLinha {
     background-color: #dddddd;
     border: none;
     font-weight: 900;
@@ -228,7 +240,7 @@ header {
     font-size: 110%;
 }
 
-#selectMes{
+#selectMes {
     background-color: #dddddd;
     border: none;
     font-weight: 900;
@@ -238,15 +250,15 @@ header {
     font-size: 110%;
 }
 
-#chart{
+#chart {
     width: 95%;
 }
 
-.apexcharts-canvas{
+.apexcharts-canvas {
     height: 100%;
 }
 
-.conteudo-right{
+.conteudo-right {
     background-color: white;
     width: 100%;
     height: 80%;
@@ -429,7 +441,7 @@ header {
 .cardCritico1 {
     height: 100%;
     width: 40%;
-    
+
 }
 
 .cardCritico2 {
@@ -439,18 +451,18 @@ header {
     align-items: center;
 }
 
-.cardCritico2 h1{
+.cardCritico2 h1 {
     margin-left: 3%;
 }
 
-.cardRank{
+.cardRank {
     width: 80%;
     height: 70%;
     background-color: #999999;
     font-size: 70%;
 }
 
-.RankTitulo{
+.RankTitulo {
     width: 100%;
     height: 30%;
     background-color: #999999;
@@ -459,13 +471,13 @@ header {
     font-size: 80%;
 }
 
-.RankTitulo1{
+.RankTitulo1 {
     height: 100%;
     width: 10%;
     font-size: 200%;
 }
 
-.RankTitulo2{
+.RankTitulo2 {
     height: 100%;
     width: 90%;
     display: flex;
@@ -474,11 +486,11 @@ header {
     font-weight: 900;
 }
 
-.RankTitulo2 h1{
+.RankTitulo2 h1 {
     margin-left: 5%;
 }
 
-.RankConteudo{
+.RankConteudo {
     width: 100%;
     height: 70%;
     display: flex;
@@ -489,7 +501,7 @@ header {
     color: #091e38;
 }
 
-.RankTitulo button{
+.RankTitulo button {
     background-color: #dddddd;
     border: none;
     font-size: 100%;
@@ -501,7 +513,7 @@ header {
     margin-top: 9%;
 }
 
-#selectRank{
+#selectRank {
     border: none;
     padding: 2%;
     margin-bottom: 2%;
@@ -513,4 +525,56 @@ header {
     color: #2a5792;
 }
 
+#WordCloud {
+    height: 100%;
+    width: 100%;
+    margin-left: 5%;
+    margin-top: -5%;
+}
 
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,12 +1,7 @@
-FROM node:lts-bookworm AS dependencies
+FROM node:lts-alpine3.20
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app 
 WORKDIR /
-COPY ./Site/package.json .
-RUN npm install
-
-FROM node:lts-alpine3.20 AS deploy
-WORKDIR /
-COPY --from=dependencies ./node_modules ./node_modules
 COPY ./Site .
+RUN npm install
 EXPOSE 3333
 CMD [ "node", "app.js" ]
-
