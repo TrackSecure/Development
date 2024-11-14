@@ -50,33 +50,44 @@
                         </div>
                         <h1 class="tituloSobrecarregado">Quantidade de Servidores Sobrecarregados</h1>
                         <div class="cardSobrecarregado">
-                            <div class="cardSobrecarregado1" id="myBtn1"><button><strong>?</strong></button></div>
+                            <div class="cardSobrecarregado1" id="myBtn"><button><strong>?</strong></button></div>
                             <div class="cardSobrecarregado2">
                                 <h1>10</h1>
                             </div>
                         </div>
-                        <div id="myModal1" class="modal">
-
-                            <!-- Modal content -->
+                        <div id="myModal" class="modal">
                             <div class="modal-content">
-                                <span class="close1">&times;</span>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação</p>
+                                <span class="close">X</span>
+                                <br><br>
+                                <h1>Servidores Sobrecarregados na Última Semana</h1>
+                                <br>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
+                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
+                                        RAM 93%</span></p>
                             </div>
-
                         </div>
                         <h1 class="tituloSobrecarregado">Quantidade de Alertas Críticos</h1>
                         <div class="alertasCriticos">
@@ -86,7 +97,7 @@
                             </div>
                             <div class="cardsCriticos">
                                 <div class="cardCPU">
-                                    <div class="cardCritico1"><button><strong>?</strong></button></div>
+                                    <div class="cardCritico1" id="myBtn2"><button><strong>?</strong></button></div>
                                     <div class="cardCritico2">
                                         <h1>10</h1>
                                     </div>
@@ -258,29 +269,25 @@
         user.innerHTML = `Olá, ${nome}`;
     }
 
-    var modal = document.getElementById("myModal1");
+    var modal = document.getElementById("myModal");
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn1");
+    var btn = document.getElementById("myBtn");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close1")[0];
+    var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on the button, open the modal
     btn.onclick = function () {
         modal.style.display = "block";
     }
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function () {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
+
 
 </script>
