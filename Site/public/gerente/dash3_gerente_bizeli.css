@@ -154,39 +154,3 @@ header {
     color: rgb(133, 167, 213);
 }
 
-.cards{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 80%;
-    text-align: center;
-}
-
-.card_critico {
-    font-size: 1.5rem;
-    background-color: rgb(143, 143, 143);
-    border-radius: 2rem;
-    padding: 0 3.5rem;
-    color: rgb(190, 63, 63);
-    border: 0.2rem solid rgb(190, 63, 63);
-}
-
-
-.card_atencao{
-    font-size: 1.5rem;
-    background-color: rgb(143, 143, 143);
-    border-radius: 2rem;
-    padding: 0 3.5rem;
-    color: rgb(194, 202, 39);
-    border: 0.2rem solid rgb(194, 202, 39);
-}
-
-.card_reducao {
-    font-size: 1.5rem;
-    background-color: rgb(143, 143, 143);
-    border-radius: 2rem;
-    border-radius: 2rem;
-    padding: 0 3.5rem;
-    color: green;
-    border: 0.2rem solid rgb(190, 63, 63);
-}
