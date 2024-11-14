@@ -40,12 +40,8 @@
                 <div class="container">
                     <h2>Dashboard</h2>
                     <p class="Servidor">Selecione uma Linha!</p>
-                    <select id="select_Linha" onchange="mostrarGrafico(), mostrarGrafico2()">
-                        <option value="0" selected>Linha Azul</option>
-                        <option value="1">Linha Vermelha</option>
-                        <option value="2">Linha Verde</option>
-                        <option value="3">Linha Prata</option>
-                    </select>
+                    <select id="select_Linha" onchange="mostrarGrafico(), mostrarGrafico2()"></select>
+
                     <p class="Servidor">Selecione um Servidor!</p>
                     <select id="select_servidor" onchange="mostrarGrafico()">
                         <option value="0" selected>Servidor 1</option>
@@ -158,6 +154,30 @@
 
 
 <script>
+
+
+cadastrarLinha();
+
+        function cadastrarLinha() {
+        fetch("/analistaPatroni/cadastrarLinha", {
+            method: "GET",
+        })
+        .then(function (resposta) {
+            return resposta.json();
+        })
+        .then(function(linhas) {
+            var select_Linha = document.getElementById('select_Linha');
+            linhas.forEach((linha) => {
+            select_Linha.innerHTML += `<option value="${linha.idEstacao}">${linha.linha}</option>`;
+          });
+        })
+        .catch(function (erro) {
+            alert(erro);
+            console.log("Erro ao carregar linhas:", erro);
+        });
+        }
+
+
     var options = {
         series: [{
                 name: "CPU",
