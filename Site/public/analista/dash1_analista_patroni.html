@@ -14,7 +14,7 @@
 
 <body>
 
-    <body onload="mostrar_nome(), mostrarGrafico(), mostrarGrafico2()">
+    <body onload="mostrar_nome(), mostrarGrafico2()">
         <div class="dashboard">
             <header>
                 <div class="perfil">
@@ -25,7 +25,7 @@
                 <div class="botao">
                     <div class="container">
                         <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                        <button onclick="sair()"><a href="../analista/dash2_analista_gustavo.html"></a>Sair</button>
+                        <button onclick="window.location.href='../analista/dash2_analista_gustavo.html'">Sair</button>
                     </div>
                 </div>
             </header>
@@ -40,17 +40,17 @@
                 <div class="container">
                     <h2>Dashboard</h2>
                     <p class="Servidor">Selecione uma Linha!</p>
-                    <select id="select_Linha" onchange="mostrarGrafico(), mostrarGrafico2()"><select>
+                    <select id="select_Linha"></select>
 
-                            <p class="Servidor">Selecione um Servidor!</p>
-                            <select id="select_servidor" onchange="mostrarGrafico()"></select>
+                    <p class="Servidor">Selecione um Servidor!</p>
+                    <select id="select_servidor"></select>
 
-                            <p class="selecionarDash">Selecione uma Dashboard!</p>
-                            <select id="select_dash" onchange="selecionarDash()">
-                                <option value="0">Dashboard inicial</option>
-                                <option value="1" selected>Dashboard detalhada</option>
-                                <option value="2">Dashboard de processos</option>
-                            </select>
+                    <p class="selecionarDash">Selecione uma Dashboard!</p>
+                    <select id="select_dash" onchange="selecionarDash()">
+                        <option value="0">Dashboard inicial</option>
+                        <option value="1" selected>Dashboard detalhada</option>
+                        <option value="2">Dashboard de processos</option>
+                    </select>
                 </div>
                 <div class="logo">
                     <img src="logo.png" alt="logo" class="logo-img">
@@ -75,36 +75,21 @@
                             </select>
                         </h4>
 
-                        <div id="chart4" class="grafico4"></div>
-                        <div id="chart5" class="grafico5"></div>
-                        <div id="chart6" class="grafico6"></div>
-                        <div id="chart4_2" class="grafico4_2"></div>
-                        <div id="chart5_2" class="grafico5_2"></div>
-                        <div id="chart6_2" class="grafico6_2"></div>
-                        <div id="chart4_3" class="grafico4_3"></div>
-                        <div id="chart5_3" class="grafico5_3"></div>
-                        <div id="chart6_3" class="grafico6_3"></div>
-                        <div id="chart4_4" class="grafico4_4"></div>
-                        <div id="chart5_4" class="grafico5_4"></div>
-                        <div id="chart6_4" class="grafico6_4"></div>
+                        <div id="chart1" class="grafico1"></div>
+                        <div id="chart2" class="grafico2"></div>
+                        <div id="chart3" class="grafico3"></div>
+
 
                     </div>
                     <div class="left-bottom">
 
                         <h4><b>Comparação de Uso Diário(CPU | RAM | DISCO)</b></h4>
 
-                        <div id="chart1" class="grafico1"></div>
-                        <div id="chart2" class="grafico2"></div>
-                        <div id="chart3" class="grafico3"></div>
+                        
                         <div id="chart1_2" class="grafico1_2"></div>
                         <div id="chart2_2" class="grafico2_2"></div>
                         <div id="chart3_2" class="grafico3_2"></div>
-                        <div id="chart1_3" class="grafico1_3"></div>
-                        <div id="chart2_3" class="grafico2_3"></div>
-                        <div id="chart3_3" class="grafico3_3"></div>
-                        <div id="chart1_4" class="grafico1_4"></div>
-                        <div id="chart2_4" class="grafico2_4"></div>
-                        <div id="chart3_4" class="grafico3_4"></div>
+                     
 
                     </div>
                 </div>
@@ -151,8 +136,8 @@
 
 
 <script>
-
     cadastrarLinha();
+
     function cadastrarLinha() {
         fetch("/analistaPatroni/cadastrarLinha", {
             method: "GET",
@@ -173,6 +158,7 @@
     }
 
     cadastrarServidor()
+
     function cadastrarServidor() {
         fetch("/analistaPatroni/cadastrarServidor", {
             method: "GET"
@@ -183,7 +169,8 @@
             .then(function (servidores) {
                 var select_servidor = document.getElementById('select_servidor');
                 servidores.forEach((servidor) => {
-                    select_servidor.innerHTML += `<option value="${servidor.MacAddress}">${servidor.nome}</option`;
+                    select_servidor.innerHTML +=
+                        `<option value="${servidor.MacAddress}">${servidor.nome}</option`;
                 });
             })
             .catch(function (erro) {
@@ -207,6 +194,195 @@
         var nome = sessionStorage.NOME_USUARIO;
         user.innerHTML = `Olá, ${nome}`;
     }
+
+    function mostrarGrafico2() {
+            const selectValue = document.getElementById('select_grafico_linha').value;
+        
+            const grafico1 = document.getElementsByClassName('grafico1')[0];
+            const grafico2 = document.getElementsByClassName('grafico2')[0];
+            const grafico3 = document.getElementsByClassName('grafico3')[0];
+
+            grafico1.style.display = 'none';
+            grafico2.style.display = 'none';
+            grafico3.style.display = 'none';
+    
+            if (selectValue == 0 ) {
+                grafico1.style.display = 'block';
+                frequenciaCpuGrafico();
+            } else if (selectValue == 1) {
+                grafico2.style.display = 'block';
+                frequenciaRamGrafico();
+            } else if (selectValue == 2) {
+                grafico3.style.display = 'block';
+                frequenciaDiscoGrafico();
+            } 
+        }
+
+    frequenciaCpuGrafico()
+    function frequenciaCpuGrafico() {
+        const atualizarGraficoCPU = (dados) => {
+            const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
+            const dataCPU = dados.map(item => item.hora).reverse();
+
+            const options = {
+                series: [{
+                    name: 'CPU',
+                    data: porcentagemProcessador
+                }],
+                chart: {
+                    width: 600,
+                    height: 250,
+                    type: 'area',
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    categories: dataCPU,
+                    title: {
+                        text: "Hora"
+                    },
+                    reversed: true,
+                },
+                tooltip: {
+                    x: {
+                        format: 'HH:mm'  
+                    },
+                    theme: 'dark',
+                },
+            };
+
+
+            if (!window.chartCPU) {
+                window.chartCPU = new ApexCharts(document.querySelector("#chart1"), options);
+                window.chartCPU.render();
+            } else {
+                window.chartCPU.updateOptions(options);
+            }
+        };
+
+        const buscarDados = () => {
+            fetch("/analistaPatroni/frequenciaCpuGrafico", {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoCPU)
+        };
+
+        buscarDados();
+        setInterval(buscarDados, 2000);
+    }
+
+    frequenciaRamGrafico()
+    function frequenciaRamGrafico() {
+        const atualizarGraficoRAM = (dados) => {
+            const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
+            const dataRAM = dados.map(item => item.hora).reverse();
+
+            const options = {
+                series: [{
+                    name: 'RAM',
+                    data: porcentagemMemoria
+                }],
+                chart: {
+                    width: 600,
+                    height: 250,
+                    type: 'area',
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    categories: dataRAM,
+                    title: {
+                        text: "Hora"
+                    },
+                    reversed: true,
+                },
+                tooltip: {
+                    x: {
+                        format: 'HH:mm'  
+                    },
+                    theme: 'dark',
+                },
+            };
+
+
+            if (!window.chartRAM) {
+                window.chartRAM = new ApexCharts(document.querySelector("#chart2"), options);
+                window.chartRAM.render();
+            } else {
+                window.chartRAM.updateOptions(options);
+            }
+        };
+
+        const buscarDados = () => {
+            fetch("/analistaPatroni/frequenciaRamGrafico", {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoRAM)
+        };
+
+        buscarDados();
+        setInterval(buscarDados, 2000);
+    }
+
+    frequenciaDiscoGrafico()
+    function frequenciaDiscoGrafico() {
+        const atualizarGraficoDisco = (dados) => {
+            const porcentagemDisco = dados.map(item => item.DiscoUsado);
+            const discoDisponivel = dados.map(item => item.DiscoDisponivel)
+
+            const options = {
+                series: [
+                porcentagemDisco, 
+                discoDisponivel
+            ],
+            chart: {
+                type: 'donut',
+                width: 600,
+                height: 250
+            },
+            labels: ['Disco Usado', 'Disco Disponível'],
+            responsive: [{
+                options: {
+                    chart: {},
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+            };
+
+            if (!window.chartDisco) {
+                window.chartDisco = new ApexCharts(document.querySelector("#chart3"), options);
+                window.chartDisco.render();
+            } else {
+                window.chartDisco.updateOptions(options);
+            }
+        };
+
+        const buscarDados = () => {
+            fetch("/analistaPatroni/frequenciaDiscoGrafico", {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoDisco)
+        };
+
+        buscarDados();
+        setInterval(buscarDados, 2000);
+    }
+
+
+
 
 
 

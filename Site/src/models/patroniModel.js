@@ -20,7 +20,57 @@ function cadastrarServidor() {
     return database.executar(instrucaoSql);
 }
 
+function frequenciaCpuGrafico(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaCpuGrafico():" );
+
+    var instrucaoSql = `
+       SELECT TIME(R.dtHora) AS hora, 
+       R.porcentagemProcessador * 10 AS porcentagemProcessador
+       FROM Registro R
+       JOIN Servidor S ON R.fkServidor = S.MacAddress
+       JOIN Estacao E ON E.fkServidor = S.MacAddress
+       WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
+       ORDER BY R.dtHora DESC LIMIT 8;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
+function frequenciaRamGrafico(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaRamGrafico():" );
+
+    var instrucaoSql = `
+       SELECT TIME(R.dtHora) AS hora, 
+       R.porcentagemMemoria
+       FROM Registro R
+       JOIN Servidor S ON R.fkServidor = S.MacAddress
+       JOIN Estacao E ON E.fkServidor = S.MacAddress
+       WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
+       ORDER BY R.dtHora DESC LIMIT 8;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
+function frequenciaDiscoGrafico(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaDiscoGrafico():" );
+
+    var instrucaoSql = `
+        SELECT 
+        R.porcentagemDisco AS DiscoUsado, 
+        (100 - R.porcentagemDisco) AS DiscoDisponivel
+        FROM Registro R
+        JOIN Servidor S ON R.fkServidor = S.MacAddress
+        ORDER BY R.dtHora DESC LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
 module.exports = {
     cadastrarLinha,
-    cadastrarServidor
+    cadastrarServidor,
+    frequenciaCpuGrafico,
+    frequenciaRamGrafico,
+    frequenciaDiscoGrafico
 };
