@@ -93,13 +93,6 @@ header {
     margin: auto;
 }
 
-.container a{
-    margin-top: 80%;
-    text-align: center;
-    text-decoration: underline;
-    color: #2c90ea;
-}
-
 .paginaDash {
     width: 100%;
     height: 88%;
@@ -155,13 +148,48 @@ header {
 }
 
 .esqueda_dash{
-    height: 80%;
-    margin-top: 2rem;
-    width: fit-content;
     display: flex;
-    justify-content: start;
+    width: 120%;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
     flex-direction: column;
-    color: #165c99;
-    font-size: 1.2rem;
-    font-weight: bolder;
+    justify-content: space-around;
+    width: 30%;
+    text-align: center;
+    gap: 7rem;
+    padding-left: 50px;
+    padding-top: 25px;
+}
+
+.cards h3{
+    color: rgb(75, 117, 175);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card_ok, .card_critico, .card_atencao {
+    font-size: 1.5rem;
+    background-color: rgb(143, 143, 143);
+    border-radius: 1.3rem;
+    padding: 0.5rem 2rem;
+    color: white;
+}
+
+.card_ok{
+    color: rgb(0, 152, 0);
+    border: 0.15rem solid rgb(0, 152, 0);
+}
+
+.card_critico{
+    color: rgb(190, 63, 63);
+    border: 0.15rem solid rgb(190, 63, 63);
+}
+
+.card_atencao{
+    color: rgb(190, 221, 15);
+    border: 0.15rem solid rgb(190, 221, 15);
 }
