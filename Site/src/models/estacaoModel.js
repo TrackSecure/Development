@@ -4,7 +4,7 @@ function cadastrar(nome, linha, servidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, linha, servidor);
 
     var instrucaoSql = `
-        INSERT INTO Estacao (nome, linha, fkServidor) VALUES ('${nome}', '${linha}', ${servidor});
+        INSERT INTO Estacao (nome, linha, fkServidor) VALUES ('${nome}', '${linha}', '${servidor}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -12,8 +12,10 @@ function cadastrar(nome, linha, servidor) {
 
 function listarEstacoes(fkEmpresa) {
 
-    var instrucaoSql = `SELECT idEstacao, nome FROM Estacao WHERE fkEmpresa = ${fkEmpresa};`;
-  
+    var instrucaoSql = `
+        SELECT e.idEstacao AS idEstacao, e.nome AS nome, s.fkEmpresa AS fkEmpresa FROM Estacao e JOIN  Servidor s ON e.fkServidor = s.MacAddress WHERE  s.fkEmpresa = ${fkEmpresa};
+    `;
+
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

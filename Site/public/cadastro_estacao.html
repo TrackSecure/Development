@@ -83,7 +83,7 @@
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {
-                    servidor_select.innerHTML += `<option value='${servidor.idServidor}'>${servidor.nome}</option>`;
+                    servidor_select.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
                 });
                 });
             } else {

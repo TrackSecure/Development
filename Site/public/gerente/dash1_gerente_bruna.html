@@ -37,6 +37,13 @@
         <div class="paginaDash">
             <div class="menu">
 
+                <h1>Dashboards</h1>
+                <select name="select-dash" id="selectDash">
+                    <option id="bruna">Análise Geral</option>
+                    <option id="bruno">Alertas</option>
+                    <option id="enzo">Uptime e Downtime</option>
+                </select>
+
                 <div class="logo">
                     <img src="logo.png" alt="logo" class="logo-img">
                     <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
@@ -55,6 +62,11 @@
                                 <h1>10</h1>
                             </div>
                         </div>
+
+
+                        <!--  ################################################################################################################################ -->
+
+
                         <div id="myModal" class="modal">
                             <div class="modal-content">
                                 <span class="close">X</span>
@@ -89,6 +101,11 @@
                                         RAM 93%</span></p>
                             </div>
                         </div>
+
+
+                        <!-- ################################################################################################################################ -->
+
+
                         <h1 class="tituloSobrecarregado">Quantidade de Alertas Críticos</h1>
                         <div class="alertasCriticos">
                             <div class="titulosCriticos">
@@ -103,7 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="cardRAM">
-                                    <div class="cardCritico1"><button><strong>?</strong></button></div>
+                                    <div class="cardCritico1" id="myBtn3"><button><strong>?</strong></button></div>
                                     <div class="cardCritico2">
                                         <h1>11</h1>
                                     </div>
@@ -111,6 +128,74 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                    <!-- ################################################################################################################################ -->
+
+
+                    <div id="myModal2" class="modal2">
+                        <div class="modal-content2">
+                            <span class="close2">X</span>
+                            <br><br>
+                            <h1>Alertas Críticos de CPU na Última Semana</h1>
+                            <br>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- ################################################################################################################################ -->
+
+
+                    <div id="myModal3" class="modal3">
+                        <div class="modal-content3">
+                            <span class="close3">X</span>
+                            <br><br>
+                            <h1>Alertas Críticos de RAM na Última Semana</h1>
+                            <br>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
+                            </p>
+
+                        </div>
+                    </div>
+
+
+                    <!-- ################################################################################################################################ -->
+
                     <div class="left-bottom">
                         <select name="select_rank," id="selectRank">
                             <option value="CPU">CPU</option>
@@ -118,7 +203,7 @@
                         </select>
                         <div class="cardRank">
                             <div class="RankTitulo">
-                                <div class="RankTitulo1">
+                                <div class="RankTitulo1" id="myBtn4">
                                     <button><strong>?</strong></button>
                                 </div>
                                 <div class="RankTitulo2">
@@ -132,11 +217,43 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- ################################################################################################################################ -->
+
+
+                    <div id="myModal4" class="modal4">
+                        <div class="modal-content4">
+                            <span class="close4">X</span>
+                            <br><br>
+                            <h1>Servidores com maior <span>Processamento</span></h1>
+                            <br>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% </span>
+                            </p>
+                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% </span>
+                            </p>
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- ################################################################################################################################ -->
+
                 </div>
                 <div class="right">
+
+                    <!-- ################################################################################################################################ -->
+
+
+
+
+
+                    <!-- ################################################################################################################################ -->
                     <div class="right-top">
                         <div class="titulo-right">
-                            <button><strong>?</strong></button>
+                            <button id="myBtn5"><strong>?</strong></button>
                             <h1>Fluxo de pessoas na linha</h1>
                             <select name="select_linha" id="selectLinha">
                                 <option value="azul">Azul</option>
@@ -160,6 +277,41 @@
                         </div>
                         <div class="conteudo-right">
                             <div id="chart"></div>
+                        </div>
+                        <div id="myModal5" class="modal5">
+                            <div class="modal-content5">
+                                <span class="close5">X</span>
+                                <br><br>
+                                <h1>Fluxo de passageiros nas linhas e estações!</h1>
+                                <br>
+                                <p>Monitorar o fluxo de passageiros em cada estação e linha de metrô é essencial para:
+                                </p>
+                                <br>
+                                <ol type="I">
+                                    <li>Identificar tendências sazonais e comportamentos atípicos, como aumentos
+                                        repentinos de demanda.</li>
+                                    <li>Deslocar recursos humanos e prever manutenção em equipamentos com maior
+                                        utilização.</li>
+                                    <li>Direcionar ações para evitar filas, como a adição de catracas ou otimização de
+                                        sinalização.</li>
+                                    <li>Embasar decisões sobre futuras expansões, tanto de infraestrutura quanto de
+                                        serviços.</li>
+                                    <li>Entre outras diversas ações...</li>
+                                </ol>
+                                <br>
+                                <p>Gráfico de Barras:</p>
+                                <ol type="I">
+                                    <li>Permite análises comparativas detalhadas entre estações ou linhas, exibindo a
+                                        variação quantitativa de fluxo ao longo dos meses.</li>
+                                </ol>
+                                <br>
+                                <p>Word Cloud:</p>
+                                <ol type="I">
+                                    <li>Apresenta de forma rápida e visual as estações mais utilizadas. Quanto maior a
+                                        palavra na nuvem, maior o fluxo relativo. Essa abordagem destaca rapidamente os
+                                        pontos mais críticos para atenção.</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                     <div class="right-bottom">
@@ -269,6 +421,13 @@
         user.innerHTML = `Olá, ${nome}`;
     }
 
+
+
+    // ################################################################################################################################
+
+
+
+
     var modal = document.getElementById("myModal");
 
     var btn = document.getElementById("myBtn");
@@ -283,11 +442,97 @@
         modal.style.display = "none";
     }
 
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+
+
+
+    // ################################################################################################################################
+
+
+    var modal2 = document.getElementById("myModal2");
+
+    var btn2 = document.getElementById("myBtn2");
+
+    var span2 = document.getElementsByClassName("close2")[0];
+
+    btn2.onclick = function () {
+        modal2.style.display = "block";
     }
+
+    span2.onclick = function () {
+        modal2.style.display = "none";
+    }
+
+    // ################################################################################################################################
+
+
+    var modal3 = document.getElementById("myModal3");
+
+    var btn3 = document.getElementById("myBtn3");
+
+    var span3 = document.getElementsByClassName("close3")[0];
+
+    btn3.onclick = function () {
+        modal3.style.display = "block";
+    }
+
+    span3.onclick = function () {
+        modal3.style.display = "none";
+    }
+
+    // ################################################################################################################################
+
+
+    var modal4 = document.getElementById("myModal4");
+
+    var btn4 = document.getElementById("myBtn4");
+
+    var span4 = document.getElementsByClassName("close4")[0];
+
+    btn4.onclick = function () {
+        modal4.style.display = "block";
+    }
+
+    span4.onclick = function () {
+        modal4.style.display = "none";
+    }
+
+    // ################################################################################################################################
+
+
+    var modal5 = document.getElementById("myModal5");
+
+    var btn5 = document.getElementById("myBtn5");
+
+    var span5 = document.getElementsByClassName("close5")[0];
+
+    btn5.onclick = function () {
+        modal5.style.display = "block";
+    }
+
+    span5.onclick = function () {
+        modal5.style.display = "none";
+    }
+
+    // ################################################################################################################################
+
+    document.getElementById("selectDash").addEventListener("change", function () {
+        const opcaoSelecionada = this.options[this.selectedIndex];
+        const idSelecionado = opcaoSelecionada.id;
+
+        if (idSelecionado) {
+            switch (idSelecionado) {
+                case "bruna":
+                    window.location.href = "dash1_gerente_bruna.html";
+                    break;
+                case "bruno":
+                    window.location.href = "dash2_gerente_bruno.html";
+                    break;
+                case "enzo":
+                    window.location.href = "dash3_gerente_bizeli.html";
+                    break;
+            }
+        }
+    });
 
 
 </script>
