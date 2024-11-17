@@ -12,7 +12,7 @@
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-<body onload="mostrar_nome(), qtdServidores()">
+<body onload="mostrar_nome(), atualizarTotalServidores(), atualizarTotalAlertas(), atualizarGrafico()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -64,7 +64,7 @@
                     <h3 id="total-servidores"></h3>
                 </div>
                 <div class="cardT">
-                    <h3 style="color: red;">3</h3>
+                    <h3 id="total-alertas"></h3>
                 </div>
                 <div class="cardT">
                     <h3 style="color: red;">10</h3>
@@ -112,6 +112,38 @@
 
 
 <script>
+
+function atualizarTotalAlertas() {
+        // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
+        const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
+        
+        // Faz a requisição para a API
+        fetch("/analistaGustavo/qtdAlertas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ idEmpresa: fkEmpresa })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao obter o total de alertas');
+            }
+            return response.json();
+        })
+        .then(data => {
+            div = document.getElementById("total-alertas");
+            // Atualiza o conteúdo do HTML com o total de servidores
+            document.getElementById("total-alertas").textContent = data.total_alertas;
+
+            if(data.total_alertas >= 1) {
+                div.style.color = "red";
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao buscar o total de alertas:", error);
+        });
+    }
 
     function atualizarTotalServidores() {
         // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
@@ -181,11 +213,5 @@
         document.querySelector("#chart").innerHTML = ""; // Limpa o gráfico anterior
         atualizarGrafico();
     });
-
-    // Inicializa o gráfico ao carregar a página
-    atualizarGrafico();
-    // Chama a função ao carregar a página
-    window.onload = atualizarTotalServidores;
-
 
 </script>
