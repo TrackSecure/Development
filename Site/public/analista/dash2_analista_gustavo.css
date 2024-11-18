@@ -175,6 +175,12 @@ header {
     text-align: center;
 }
 
+.titulos_kpi h3{
+    width: 300px;
+    font-size: 20px;
+    text-align: center;
+}
+
 .kpis{
     display: flex;
     width: 100%;
@@ -272,24 +278,13 @@ header {
     height: 584px;  
 }
 
-.select_componente {
-    width: 250px;
-    height: 50px;
-    margin-top: 2%;
-    margin-bottom: 5%;
-    border-radius: 20px;
-    border: none;
-    font-weight: 900;
-    background-color: rgb(208, 208, 208);
-    text-align: center;
-}
-
 .cima {
     display: flex;
     flex-direction: row;
-    width: 500px;
+    width: 550px;
     justify-content: space-evenly;
     align-items: center;
+    margin-bottom: 5%;
 }
 
 .cima .botao_detalhes {
@@ -302,8 +297,7 @@ header {
     background-color: rgb(208, 208, 208);
     border-radius: 20px;
     cursor: pointer;
-    margin-top: 2%;
-    margin-bottom: 5%;
+    
 }
 
 .esquerda h2 {

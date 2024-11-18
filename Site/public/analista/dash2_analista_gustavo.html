@@ -58,7 +58,7 @@
             <div class="titulos_kpi">
                 <h2>Quantidade de Servidores Cadastrados</h2>
                 <h2>Quantidade de Alertas</h2>
-                <h2>Total de Processos Acima do Esperado</h2>
+                <h3>Servidores com Processos Acima do Esperado</h3>
             </div>
             <div class="kpis">
                 <div class="cardT">
@@ -88,10 +88,7 @@
                 </div>
                 <div class="direita">
                     <div class="cima">
-                        <select class="select_componente" id="select_componente">
-                            <option value="CPU" selected>CPU</option>
-                            <option value="RAM">RAM</option>
-                        </select>
+                        <h2>Monitoramento (CPU / RAM)</h2>
                         <button class="botao_detalhes" onclick="window.location = './dash1_analista_patroni.html'">Ver
                             Detalhes</button>
                     </div>
@@ -108,7 +105,7 @@
 
 
 <script>
-
+    let intervalosMonitoramento;
     function atualizarTotalAlertas() {
         // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
         const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
@@ -198,8 +195,12 @@
                 botao.addEventListener("click", () => {
                     console.log(`Servidor selecionado: ${servidor.nome}`);
 
-
-                    carregarMonitoramento(servidor.MacAddress);
+                    if (intervalosMonitoramento) {
+                        clearTimeout(intervalosMonitoramento);
+                    }
+                    intervalosMonitoramento = setInterval(() => {
+                        carregarMonitoramento(servidor.MacAddress)
+                    }, 3000);
 
                 });
 
@@ -215,36 +216,32 @@
         fetch(`/analistaGustavo/dadosMonitoramento/${MacAddress}`)
             .then((resposta) => resposta.json())
             .then((dados) => {
+                dados = dados.reverse();
                 console.log("Dados recebidos da API:", dados);
 
                 // Processando os dados
                 const labels = dados.map((dado) => {
                     const data = new Date(dado.dtHora);
-                    return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); 
+                    return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 });
                 const dadosCPU = dados.map((dado) => dado.porcentagemProcessador);
                 const dadosRAM = dados.map((dado) => dado.porcentagemMemoria);
-
-                console.log("Labels:", labels);
-                console.log("Dados CPU:", dadosCPU);
-                console.log("Dados RAM:", dadosRAM);
 
                 if (labels.length === 0 || dadosCPU.length === 0 || dadosRAM.length === 0) {
                     throw new Error("Os dados para o gráfico estão incorretos ou vazios.");
                 }
 
                 atualizarGrafico(labels, dadosCPU, dadosRAM);
+
+
             })
             .catch((erro) => console.error("Erro ao carregar monitoramento:", erro));
+
     }
 
     let graficoMonitoramento; // Variável global para o gráfico
 
     function atualizarGrafico(labels, dadosCPU, dadosRAM) {
-        if (!Array.isArray(dadosCPU) || !Array.isArray(dadosRAM) || dadosCPU.length === 0 || dadosRAM.length === 0) {
-            console.error("Erro: Os dados para o gráfico estão incorretos ou vazios.");
-            return;
-        }
 
         const options = {
             chart: {
@@ -254,47 +251,50 @@
                 toolbar: {
                     show: true,
                 },
+                animations: {
+                    enabled: false
+
+                }
             },
             series: [
-                {
-                    name: "Uso de CPU (%)",
-                    data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
+                    {
+                        name: "Uso de CPU (%)",
+                        data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
+                    },
+                    {
+                        name: "Uso de RAM (%)",
+                        data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
+                    },
+                ],
+                xaxis: {
+                    categories: labels, // Labels do eixo X
+                    title: {
+                        text: "Tempo",
+                    },
                 },
-                {
-                    name: "Uso de RAM (%)",
-                    data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
+                yaxis: {
+                    title: {
+                        text: "Uso (%)",
+                    },
                 },
-            ],
-            xaxis: {
-                categories: labels, // Labels do eixo X
-                title: {
-                    text: "Tempo",
+                colors: ["#1E90FF", "#32CD32"],
+                stroke: {
+                    curve: "smooth",
                 },
-            },
-            yaxis: {
-                title: {
-                    text: "Uso (%)",
-                },
-            },
-            colors: ["#1E90FF", "#32CD32"],
-            stroke: {
-                curve: "smooth",
-            },
-            title: {
-                text: "Monitoramento de CPU e RAM",
-                align: "center",
-            },
-        };
+            };
 
-        if (graficoMonitoramento) {
-            graficoMonitoramento.destroy(); // Destroi o gráfico antigo
-        }
+            if(graficoMonitoramento) {
+                graficoMonitoramento.destroy(); // Destroi o gráfico antigo
+            }
 
         graficoMonitoramento = new ApexCharts(
-            document.getElementById("chart"),
-            options
-        );
+                document.getElementById("chart"),
+                options
+            );
 
-        graficoMonitoramento.render(); // Renderiza o gráfico
-    }
+            graficoMonitoramento.render(); // Renderiza o gráfico
+
+
+        }
+
 </script>

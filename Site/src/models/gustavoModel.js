@@ -37,10 +37,11 @@ function dadosMonitoramento(MacAddress) {
         FROM 
             Registro
         WHERE 
-            fkServidor = ${MacAddress}
+            fkServidor = '${MacAddress}'
         ORDER BY 
-            dtHora LIMIT 10; -- Retorna os últimos 10 registros
+            dtHora desc LIMIT 10; -- Retorna os últimos 10 registros
     `;
+    console.log(instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
