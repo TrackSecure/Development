@@ -48,7 +48,39 @@ function qtdAlertas(req, res) {
         });
 }
 
+function listarServidores(req, res) {
+    gustavoModel.listarServidores()
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum servidor encontrado!");
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function dadosMonitoramento(req, res) {
+    var MacAddress = req.params.MacAddress; // Obtém o ID do servidor a partir dos parâmetros da rota.
+
+    gustavoModel.dadosMonitoramento(MacAddress).then((resultado) => {
+        if (resultado.length > 0) {
+            res.json(resultado);
+        } else {
+            res.status(404).send("Nenhum dado encontrado para o servidor.");
+        }
+    }).catch((erro) => {
+        console.log(erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     qtdServidores,
-    qtdAlertas
+    qtdAlertas,
+    listarServidores,
+    dadosMonitoramento
 };

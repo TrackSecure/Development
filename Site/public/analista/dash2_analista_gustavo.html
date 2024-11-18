@@ -12,7 +12,8 @@
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-<body onload="mostrar_nome(), atualizarTotalServidores(), atualizarTotalAlertas(), atualizarGrafico()">
+<body
+    onload="mostrar_nome(), atualizarTotalServidores(), atualizarTotalAlertas(), atualizarGrafico(), carregarServidores()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -80,13 +81,8 @@
                 <div class="esquerda">
                     <h2>Servidores / Linhas</h2>
                     <div class="servidores">
-                        <div class="caixa-esquerda">
-                            <button>TESTE</button>
-                            <button>TESTE</button>
-                            <button>TESTE</button>
-                            <button>TESTE</button>
-                            <button>TESTE</button>
-                            <button>TESTE</button>
+                        <div id="servidores" class="caixa-esquerda">
+
                         </div>
                     </div>
                 </div>
@@ -113,10 +109,10 @@
 
 <script>
 
-function atualizarTotalAlertas() {
+    function atualizarTotalAlertas() {
         // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
         const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
-        
+
         // Faz a requisição para a API
         fetch("/analistaGustavo/qtdAlertas", {
             method: "POST",
@@ -125,30 +121,30 @@ function atualizarTotalAlertas() {
             },
             body: JSON.stringify({ idEmpresa: fkEmpresa })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao obter o total de alertas');
-            }
-            return response.json();
-        })
-        .then(data => {
-            div = document.getElementById("total-alertas");
-            // Atualiza o conteúdo do HTML com o total de servidores
-            document.getElementById("total-alertas").textContent = data.total_alertas;
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao obter o total de alertas');
+                }
+                return response.json();
+            })
+            .then(data => {
+                div = document.getElementById("total-alertas");
+                // Atualiza o conteúdo do HTML com o total de servidores
+                document.getElementById("total-alertas").textContent = data.total_alertas;
 
-            if(data.total_alertas >= 1) {
-                div.style.color = "red";
-            }
-        })
-        .catch(error => {
-            console.error("Erro ao buscar o total de alertas:", error);
-        });
+                if (data.total_alertas >= 1) {
+                    div.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao buscar o total de alertas:", error);
+            });
     }
 
     function atualizarTotalServidores() {
         // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
         const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
-        
+
         // Faz a requisição para a API
         fetch("/analistaGustavo/qtdServidores", {
             method: "POST",
@@ -157,61 +153,148 @@ function atualizarTotalAlertas() {
             },
             body: JSON.stringify({ idEmpresa: fkEmpresa })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao obter o total de servidores');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Atualiza o conteúdo do HTML com o total de servidores
-            document.getElementById("total-servidores").textContent = data.total_servidores;
-        })
-        .catch(error => {
-            console.error("Erro ao buscar o total de servidores:", error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao obter o total de servidores');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Atualiza o conteúdo do HTML com o total de servidores
+                document.getElementById("total-servidores").textContent = data.total_servidores;
+            })
+            .catch(error => {
+                console.error("Erro ao buscar o total de servidores:", error);
+            });
     }
 
-    
+
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         var cargo = sessionStorage.CARGO;
         user.innerHTML = `Olá, ${nome} (${cargo})`;
     }
 
-    var select_componente = document.getElementById('select_componente');
+    async function carregarServidores() {
+        try {
+            const response = await fetch("/analistaGustavo/listarServidores");
+            const servidores = await response.json();
 
-    // Função para atualizar o gráfico
-    function atualizarGrafico() {
-        var componente = select_componente.value; // Pega o valor selecionado
+            const listaServidores = document.getElementById("servidores");
+            listaServidores.innerHTML = ""; // Limpa a lista antes de carregar
 
-        var options = {
-            chart: {
-                type: 'line',
-                height: 350,
-                width: 550,
-            },
-            series: [{
-                name: componente, // Define o nome da série com o valor do select
-                data: [10, 20, 15, 30, 40, 35, 50] // Dados do gráfico
-            }],
-            xaxis: {
-                categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul'],
-            },
-            title: {
-                text: componente, // Define o título do gráfico com o valor do select
-                align: 'center'
-            }
-        };
+            servidores.forEach((servidor) => {
+                const botao = document.createElement("button");
+                botao.textContent = servidor.nome; // Nome do servidor
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+                // Adiciona classes de estilo baseado no alerta
+                if (servidor.temAlerta) {
+                    botao.style.backgroundColor = "red";
+                } else {
+                    botao.style.backgroundColor = "green";
+                }
+
+                // Define uma ação ao clicar no botão
+                botao.addEventListener("click", () => {
+                    console.log(`Servidor selecionado: ${servidor.nome}`);
+
+
+                    carregarMonitoramento(servidor.MacAddress);
+
+                });
+
+                listaServidores.appendChild(botao);
+            });
+        } catch (erro) {
+            console.error("Erro ao carregar servidores:", erro);
+        }
     }
 
-    // Atualiza o gráfico quando o select muda
-    select_componente.addEventListener('change', function () {
-        document.querySelector("#chart").innerHTML = ""; // Limpa o gráfico anterior
-        atualizarGrafico();
-    });
+    function carregarMonitoramento(MacAddress) {
 
+        fetch(`/analistaGustavo/dadosMonitoramento/${MacAddress}`)
+            .then((resposta) => resposta.json())
+            .then((dados) => {
+                console.log("Dados recebidos da API:", dados);
+
+                // Processando os dados
+                const labels = dados.map((dado) => {
+                    const data = new Date(dado.dtHora);
+                    return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); 
+                });
+                const dadosCPU = dados.map((dado) => dado.porcentagemProcessador);
+                const dadosRAM = dados.map((dado) => dado.porcentagemMemoria);
+
+                console.log("Labels:", labels);
+                console.log("Dados CPU:", dadosCPU);
+                console.log("Dados RAM:", dadosRAM);
+
+                if (labels.length === 0 || dadosCPU.length === 0 || dadosRAM.length === 0) {
+                    throw new Error("Os dados para o gráfico estão incorretos ou vazios.");
+                }
+
+                atualizarGrafico(labels, dadosCPU, dadosRAM);
+            })
+            .catch((erro) => console.error("Erro ao carregar monitoramento:", erro));
+    }
+
+    let graficoMonitoramento; // Variável global para o gráfico
+
+    function atualizarGrafico(labels, dadosCPU, dadosRAM) {
+        if (!Array.isArray(dadosCPU) || !Array.isArray(dadosRAM) || dadosCPU.length === 0 || dadosRAM.length === 0) {
+            console.error("Erro: Os dados para o gráfico estão incorretos ou vazios.");
+            return;
+        }
+
+        const options = {
+            chart: {
+                type: "line",
+                height: 350,
+                width: 600,
+                toolbar: {
+                    show: true,
+                },
+            },
+            series: [
+                {
+                    name: "Uso de CPU (%)",
+                    data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
+                },
+                {
+                    name: "Uso de RAM (%)",
+                    data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
+                },
+            ],
+            xaxis: {
+                categories: labels, // Labels do eixo X
+                title: {
+                    text: "Tempo",
+                },
+            },
+            yaxis: {
+                title: {
+                    text: "Uso (%)",
+                },
+            },
+            colors: ["#1E90FF", "#32CD32"],
+            stroke: {
+                curve: "smooth",
+            },
+            title: {
+                text: "Monitoramento de CPU e RAM",
+                align: "center",
+            },
+        };
+
+        if (graficoMonitoramento) {
+            graficoMonitoramento.destroy(); // Destroi o gráfico antigo
+        }
+
+        graficoMonitoramento = new ApexCharts(
+            document.getElementById("chart"),
+            options
+        );
+
+        graficoMonitoramento.render(); // Renderiza o gráfico
+    }
 </script>
