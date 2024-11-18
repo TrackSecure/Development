@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash3_gerente_bizeli.css">
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
@@ -51,26 +52,56 @@
                         <span>Selecione uma Dashboard</span>
                         <select>
                             <option value="0" selected>Up e Downtime</option>
-                            <option value="1">Fluxo de pessoas</option>
-                            <option value="2">Alertas</option>
+                            <option value="1">Análise Geral</option>
+                            <option value="2">Comparação de Problemas</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <div class="esquerda_dash">
+            <div class="topo_dash">
+                <div class="titulo_servidor">
+                    <h3>Servidor 1:</h3>
+                </div>
                 <div class="cards">
                     <div>
-                        <h3 style="color: rgb(75, 117, 175);">Porcentagem de Uptime do servidor 1 nos últimos 365 dias:</h3>
+                        <div class="texto_esquerda_dash1">
+                            <h3 style="color: #1C5C99">Uptime <br> (12 meses):</h3>
+                        </div>
                         <div class="card_ok"><span style="font-size: 1.5rem;">99.94%</span></div>
                     </div>
                     <div>
-                        <h3 style="color: rgb(75, 117, 175);">Quantidade de horas que um componente ficou fora do ar (Downtime) nos últimos 365 dias do servidor 1:</h3>
+                        <div class="texto_esquerda_dash3">
+                            <h3 style="color: #1C5C99">Horas de Downtime <br>(12 meses):</h3>
+                            <select name="componente" id="">
+                                <option selected value="">CPU</option>
+                                <option value="">RAM</option>
+                            </select>
+                        </div>
                         <div class="card_critico"><span>9.4</span></div>
                     </div>
                     <div>
-                        <h3 style="color: rgb(75, 117, 175);">Porcentagem de um possível Downtime no mês atual do servidor 1:</h3>
+                        <div class="texto_esquerda_dash3">
+                            <h3 style="color: #1C5C99">Possível Downtime <br> (mês atual):</h3>
+                        </div>
                         <div class="card_atencao"><span>64.7%</span></div>
+                    </div>
+                </div>
+
+                <div class="graficos">
+                    <div>
+                        <h5 style="text-align: center;">Média de Downtime dos últimos 12 meses:</h5>
+                        <div id="grafico1"></div>
+                    </div>
+                    <div>
+                        <div class="texto_grafico2">
+                            <h5 style="text-align: center;">Média de Downtime dos últimos 12 meses da</h5>
+                            <select name="componente" id="">
+                                <option selected value="">CPU</option>
+                                <option value="">RAM</option>
+                            </select>
+                        </div>
+                        <div id="grafico2"></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +116,224 @@
         var nome = sessionStorage.NOME_USUARIO;
         user.innerHTML = `Olá, ${nome}`;
     }
+
+    var options1 = {
+        series: [
+            {
+                name: 'Actual',
+                data: [
+                    {
+                        x: 'Novembro',
+                        y: 1.0,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Dezembro',
+                        y: 0.4,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Janeiro',
+                        y: 0.7,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Fevereiro',
+                        y: 1.3,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Março',
+                        y: 1.1,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Abril',
+                        y: 1.7,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 13,
+                                strokeWidth: 0,
+                                strokeLineCap: 'round',
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Maio',
+                        y: 0.8,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Junho',
+                        y: 1.0,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Julho',
+                        y: 0.6,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Agosto',
+                        y: 1.3,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Setembro',
+                        y: 1.9,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 13,
+                                strokeWidth: 0,
+                                strokeLineCap: 'round',
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    },
+                    {
+                        x: 'Outubro',
+                        y: 1.2,
+                        goals: [
+                            {
+                                name: 'Expected',
+                                value: 1.5,
+                                strokeHeight: 3,
+                                strokeColor: '#5c93d6'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        chart: {
+            height: 350,
+            width: 400,
+            type: 'bar'
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '60%'
+            }
+        },
+        colors: ['#091e38'],
+        dataLabels: {
+            enabled: false
+        },
+        legend: {
+            show: true,
+            showForSingleSeries: true,
+            customLegendItems: ['Atual', 'Esperado'],
+            markers: {
+                fillColors: ['#091e38', '#5c93d6']
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.getElementById("grafico1"), options1);
+    chart.render();
+
+
+
+    var options2 = {
+        series: [{
+            name: "Desktops",
+            data: [77, 81, 75, 84, 89, 82, 79, 91, 88, 85, 83]
+        }],
+        chart: {
+            height: 350,
+            width: 400,
+            type: 'line',
+            zoom: {
+                enabled: false
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'straight'
+        },
+        grid: {
+            row: {
+                colors: ['#f3f3f3', 'transparent'],
+                opacity: 0.5
+            },
+        },
+        xaxis: {
+            categories: ['Nov', 'Dez', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Out'],
+        }
+    };
+
+    var chart = new ApexCharts(document.getElementById("grafico2"), options2);
+    chart.render();
 
 </script>
 
