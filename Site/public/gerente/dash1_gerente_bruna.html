@@ -40,7 +40,7 @@
                 <h1>Dashboards</h1>
                 <select name="select-dash" id="selectDash">
                     <option id="bruna">Análise Geral</option>
-                    <option id="bruno">Alertas</option>
+                    <option id="bruno">Comparação de Problemas</option>
                     <option id="enzo">Uptime e Downtime</option>
                 </select>
 
@@ -59,7 +59,7 @@
                         <div class="cardSobrecarregado">
                             <div class="cardSobrecarregado1" id="myBtn"><button><strong>?</strong></button></div>
                             <div class="cardSobrecarregado2">
-                                <h1>10</h1>
+                                <h1 id="qtdSobre"></h1>
                             </div>
                         </div>
 
@@ -68,37 +68,12 @@
 
 
                         <div id="myModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close">X</span>
+                            <div class="modal-content" id="modal1content">
+                                <span onclick="fecharModal1()" class="close">X</span>
                                 <br><br>
                                 <h1>Servidores Sobrecarregados na Última Semana</h1>
                                 <br>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
-                                <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% -
-                                        RAM 93%</span></p>
+                                <!-- <p><span id="nomeServe1"></span> - <span id="linha1"></span> - <span id="qtdEsta1"></span> - CPU <span id="cpu1" style="color: red;"></span>% - RAM <span id="ram1" style="color: red;"></span>%</p> -->
                             </div>
                         </div>
 
@@ -116,13 +91,13 @@
                                 <div class="cardCPU">
                                     <div class="cardCritico1" id="myBtn2"><button><strong>?</strong></button></div>
                                     <div class="cardCritico2">
-                                        <h1>10</h1>
+                                        <h1 id="qtdCPU"></h1>
                                     </div>
                                 </div>
                                 <div class="cardRAM">
                                     <div class="cardCritico1" id="myBtn3"><button><strong>?</strong></button></div>
                                     <div class="cardCritico2">
-                                        <h1>11</h1>
+                                        <h1 id="qtdRAM"></h1>
                                     </div>
                                 </div>
                             </div>
@@ -135,30 +110,13 @@
 
 
                     <div id="myModal2" class="modal2">
-                        <div class="modal-content2">
-                            <span class="close2">X</span>
+                        <div class="modal-content2" id="modal2content">
+                            <span onclick="fecharModal2()" class="close2">X</span>
                             <br><br>
                             <h1>Alertas Críticos de CPU na Última Semana</h1>
                             <br>
                             <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
                             </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
-
                         </div>
                     </div>
 
@@ -168,28 +126,13 @@
 
 
                     <div id="myModal3" class="modal3">
-                        <div class="modal-content3">
-                            <span class="close3">X</span>
+                        <div class="modal-content3" id="modal3content">
+                            <span onclick="fecharModal3()" class="close3">X</span>
                             <br><br>
                             <h1>Alertas Críticos de RAM na Última Semana</h1>
                             <br>
                             <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
                             </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
-
                         </div>
                     </div>
 
@@ -222,19 +165,13 @@
 
 
                     <div id="myModal4" class="modal4">
-                        <div class="modal-content4">
-                            <span class="close4">X</span>
+                        <div class="modal-content4" id="modal4content">
+                            <span onclick="fecharModal4()" class="close4">X</span>
                             <br><br>
                             <h1>Servidores com maior <span>Processamento</span></h1>
                             <br>
                             <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
                             </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% </span>
-                            </p>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80% </span>
-                            </p>
-
-
                         </div>
                     </div>
 
@@ -327,6 +264,160 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 <script>
 
+    qtdServidorSobrecarregado(sessionStorage.ID_EMPRESA)
+
+    function qtdServidorSobrecarregado(fkEmpresa) {
+        fetch(`/bruna/qtdServidorSobrecarregado/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO qtdServidorSobrecarregado()!")
+
+            if (resposta.ok) {
+                console.log("Função Contar Servidores Sobrecarregados(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    console.log(dados);
+                    qtdSobre.innerHTML = dados.quantidadeServidores;
+
+                })
+            }
+        })
+    }
+
+    window.onload = () => infoServidorSobrecarregado(sessionStorage.ID_EMPRESA);
+
+    function infoServidorSobrecarregado(fkEmpresa) {
+        fetch(`/bruna/infoServidorSobrecarregado/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO infoServidorSobrecarregado()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Informações dos Servidores Sobrecarregados(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("modal1content").innerHTML += `
+                            <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhaAtendida}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span style="color: red;">CPU ${item.maxPorcentagemProcessador}%</span> - <span style="color: red;">RAM ${item.maxPorcentagemMemoria}%</span></p>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
+
+    qtdAlertaCPU(sessionStorage.ID_EMPRESA)
+
+    function qtdAlertaCPU(fkEmpresa) {
+        fetch(`/bruna/qtdAlertaCPU/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO qtdAlertaCPU()!")
+
+            if (resposta.ok) {
+                console.log("Função Contar Alertas de CPU(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    console.log(dados);
+                    qtdCPU.innerHTML = dados.quantidadeAlertaCPU;
+
+                })
+            }
+        })
+    }
+
+    function infoAlertaCPU(fkEmpresa) {
+        fetch(`/bruna/infoAlertaCPU/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO infoAlertaCPU()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Informações dos Alertas de CPU(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("modal1content").innerHTML += `
+                            <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhaAtendida}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span style="color: red;">CPU ${item.maxPorcentagemProcessador}%</span> - <span style="color: red;">RAM ${item.maxPorcentagemMemoria}%</span></p>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
+
+    qtdAlertaRAM(sessionStorage.ID_EMPRESA)
+
+    function qtdAlertaRAM(fkEmpresa) {
+        fetch(`/bruna/qtdAlertaRAM/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO qtdAlertaRAM()!")
+
+            if (resposta.ok) {
+                console.log("Função Contar Alertas de RAM(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    console.log(dados);
+                    qtdRAM.innerHTML = dados.quantidadeAlertaRAM;
+
+                })
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GRÁFICO BARRAS ################################################################################################################################
+
     var options = {
         series: [{
             data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
@@ -355,8 +446,13 @@
         }
     };
 
+
+
     var chart = new ApexCharts(document.querySelector("#chart"), options);
+
     chart.render();
+
+    // WORD CLOUD ################################################################################################################################
 
     var data = [
         { "x": "learning", value: 80 },
@@ -404,6 +500,8 @@
 
     chart.draw();
 
+    // MENU ################################################################################################################################
+
     function sair() {
         window.location = "../index.html"
     }
@@ -422,11 +520,7 @@
     }
 
 
-
-    // ################################################################################################################################
-
-
-
+    // MODAL SERVIDORES SOBRECARREGADOS ################################################################################################################################
 
     var modal = document.getElementById("myModal");
 
@@ -438,14 +532,11 @@
         modal.style.display = "block";
     }
 
-    span.onclick = function () {
+    function fecharModal1() {
         modal.style.display = "none";
     }
 
-
-
-
-    // ################################################################################################################################
+    // MODAL ALERTA CPU ################################################################################################################################
 
 
     var modal2 = document.getElementById("myModal2");
@@ -458,11 +549,11 @@
         modal2.style.display = "block";
     }
 
-    span2.onclick = function () {
+    function fecharModal2() {
         modal2.style.display = "none";
     }
 
-    // ################################################################################################################################
+    // MODAL ALERTA RAM ################################################################################################################################
 
 
     var modal3 = document.getElementById("myModal3");
@@ -475,11 +566,11 @@
         modal3.style.display = "block";
     }
 
-    span3.onclick = function () {
+    function fecharModal3() {
         modal3.style.display = "none";
     }
 
-    // ################################################################################################################################
+    // MODAL RANKING ################################################################################################################################
 
 
     var modal4 = document.getElementById("myModal4");
@@ -492,11 +583,11 @@
         modal4.style.display = "block";
     }
 
-    span4.onclick = function () {
+    function fecharModal4() {
         modal4.style.display = "none";
     }
 
-    // ################################################################################################################################
+    // MODAL FLUXO DE PASSAGEIROS ################################################################################################################################
 
 
     var modal5 = document.getElementById("myModal5");
@@ -513,7 +604,7 @@
         modal5.style.display = "none";
     }
 
-    // ################################################################################################################################
+    // REDIRECIONAMENTO DE DASHBOARDS ################################################################################################################################
 
     document.getElementById("selectDash").addEventListener("change", function () {
         const opcaoSelecionada = this.options[this.selectedIndex];

@@ -25,7 +25,7 @@ var gustavoRouter = require("./src/routes/analistaGustavo");
 var vitorRouter = require("./src/routes/analistaVitor");
 
 var enzoRouter = require("./src/routes/gerenteEnzo");
-var brunaRouter = require("./src/routes/gerenteBruna");
+var brunaRouter = require("./src/routes/bruna");
 var brunoRouter = require("./src/routes/gerenteBruno");
 
 
@@ -44,7 +44,7 @@ app.use("/analistaPatroni", patroniRouter);
 app.use("/analistaGustavo", gustavoRouter);
 app.use("/analistaVitor", vitorRouter);
 
-app.use("/gerenteBruna", brunaRouter);
+app.use("/bruna", brunaRouter);
 app.use("/gerenteBruno", brunoRouter);
 app.use("/gerenteEnzo", enzoRouter);
 
