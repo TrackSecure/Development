@@ -21,11 +21,11 @@ function cadastrarServidor() {
 }
 
 function frequenciaCpuGrafico(linha, servidor) {
-    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaCpuGrafico():" );
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaCpuGrafico():");
 
     var instrucaoSql = `
        SELECT TIME(R.dtHora) AS hora, 
-       R.porcentagemProcessador * 10 AS porcentagemProcessador
+       R.porcentagemProcessador AS porcentagemProcessador
        FROM Registro R
        JOIN Servidor S ON R.fkServidor = S.MacAddress
        JOIN Estacao E ON E.fkServidor = S.MacAddress
@@ -37,7 +37,7 @@ function frequenciaCpuGrafico(linha, servidor) {
 }
 
 function frequenciaRamGrafico(linha, servidor) {
-    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaRamGrafico():" );
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaRamGrafico():");
 
     var instrucaoSql = `
        SELECT TIME(R.dtHora) AS hora, 
@@ -53,15 +53,31 @@ function frequenciaRamGrafico(linha, servidor) {
 }
 
 function frequenciaDiscoGrafico(linha, servidor) {
-    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaDiscoGrafico():" );
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaDiscoGrafico():");
 
     var instrucaoSql = `
-        SELECT 
-        R.porcentagemDisco AS DiscoUsado, 
-        (100 - R.porcentagemDisco) AS DiscoDisponivel
-        FROM Registro R
-        JOIN Servidor S ON R.fkServidor = S.MacAddress
+        SELECT R.porcentagemDisco as discoUsado, 
+        (100 - R.porcentagemDisco) as discoDisponivel
+        FROM Registro R JOIN Servidor S ON R.fkServidor = S.MacAddress
         ORDER BY R.dtHora DESC LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
+function comparacaoCpuRam(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function comparacaoCpuRam():");
+
+    var instrucaoSql = `
+       SELECT 
+        TIME(R.dtHora) AS hora,
+        R.porcentagemProcessador,
+        R.porcentagemMemoria
+        FROM Registro R
+        JOIN Estacao E ON E.fkServidor = R.fkServidor
+        JOIN Servidor S ON S.MacAddress = R.fkServidor
+        WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
+        ORDER BY R.dtHora DESC LIMIT 8;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
     return database.executar(instrucaoSql, [linha, servidor]);
@@ -72,5 +88,6 @@ module.exports = {
     cadastrarServidor,
     frequenciaCpuGrafico,
     frequenciaRamGrafico,
-    frequenciaDiscoGrafico
+    frequenciaDiscoGrafico,
+    comparacaoCpuRam
 };

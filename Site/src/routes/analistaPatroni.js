@@ -12,15 +12,19 @@ router.get("/cadastrarServidor", function(req, res){
 })
 
 router.get("/frequenciaCpuGrafico", function(req, res){
-    patroniController.frequenciaCpuGrafico(req, res); // Faz a rota dos servidores
+    patroniController.frequenciaCpuGrafico(req, res); // Faz a rota do Grafico de Linha
 })
 
 router.get("/frequenciaRamGrafico", function(req, res){
-    patroniController.frequenciaRamGrafico(req, res); // Faz a rota dos servidores
+    patroniController.frequenciaRamGrafico(req, res); // Faz a rota do Grafico de Ram
 })
 
 router.get("/frequenciaDiscoGrafico", function(req, res){
-    patroniController.frequenciaDiscoGrafico(req, res); // Faz a rota dos servidores
+    patroniController.frequenciaDiscoGrafico(req, res); // Faz a rota do Grafico do Disco
+})
+
+router.get("/comparacaoCpuRam", function(req, res){
+    patroniController.comparacaoCpuRam(req, res); // Faz a rota do Grafico de Comparação
 })
 
 
