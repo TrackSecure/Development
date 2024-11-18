@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br   ">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,8 @@
     <title>Dashboard | Comparação - Mês atual e meses anteriores</title>
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="dash2_gerente_bruno.css">
-    <script src="./js/sessao.js"></script>
+    <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
 <!-- <body onload="listarServidores(), validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista,html')"> -->
@@ -33,15 +34,15 @@
                     <div>
                         <span>Selecione uma linha</span>
                         <select name="linhas" id="select_estacao" onchange="listarServidores()">
-                            <option value="azul">Azul</option>
-                            <option value="verde">Verde</option>
-                            <option value="vermelha">Vermelha</option>
-                            <option value="prata">Prata</option>
+                            <option value="Azul">Azul</option>
+                            <option value="Verde">Verde</option>
+                            <option value="Vermelha">Vermelha</option>
+                            <option value="Prata">Prata</option>
                         </select>
                     </div>
                     <div>
                         <span>Selecione um servidor</span>
-                        <select name="servidores" id="select_servidor" onchange="mostrarQtdAlertas()">
+                        <select id="select_servidor" onchange="mostrarQtdAlertas()">
                         </select>
                     </div>
                 </div>
@@ -53,22 +54,22 @@
             <div class="topo_dash">
                 <div>
                     <span>Aumento/redução de alertas de prioridade
-                      <select name="" id="select_prioridade">
+                      <select name="" id="select_prioridade" onchange="mostrarQtdAlertas()">
                         <option value="High">Alta</option>
                         <option value="Medium">Média</option>
                         <option selected value="Low">Baixa</opWstion>
                     </select>
                     por componente (Servidor 1) em relação a
-                    <select name="" id="select_mes">
-                        <option value="1">Janeiro</option>
-                        <option value="2">Fevereiro</option>
-                        <option value="3">Março</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Maio</option>
-                        <option value="6">Junho</option>
-                        <option value="7">Julho</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Setembro</option>
+                    <select name="" id="select_mes" onchange="mostrarQtdAlertas()">
+                        <option value="01">Janeiro</option>
+                        <option value="02">Fevereiro</option>
+                        <option value="03">Março</option>
+                        <option value="04">Abril</option>
+                        <option value="05">Maio</option>
+                        <option value="06">Junho</option>
+                        <option value="07">Julho</option>
+                        <option value="08">Agosto</option>
+                        <option value="09">Setembro</option>
                         <option selected value="10">Outubro</option>
                     </select>
                     </span>
@@ -76,15 +77,15 @@
                 <div class="cards">
                     <div>
                         <h3 style="color: #1ec9d5;">CPU</h3>
-                        <div id="div_cpu" class=""><span id="card_cpu" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_cpu"><span id="card_cpu" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #218c93;">RAM</h3>
-                        <div id="div_ram" class=""><span id="card_ram" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_ram"><span id="card_ram" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #122178;">Disco</h3>
-                        <div id="div_disco" class=""><span id="card_disco" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_disco"><span id="card_disco" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                 </div>
                 <div class="graficos">
@@ -103,7 +104,6 @@
     </div>
 </body>
 </html>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
     var alertasCpuMesAnterior;
@@ -112,6 +112,8 @@
     var alertasCpuMesRecente;
     var alertasRamMesRecente;
     var alertasDiscoMesRecente;
+
+    var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"];
 
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
@@ -125,6 +127,7 @@
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {
+                    select_servidor.innerHTML = "";
                     select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
                 });
                 });
@@ -161,48 +164,60 @@
             });
     }
 
-    function mostrarQtdAlertas() {
-      listarServidores();
-      buscarQtdAlertas();
+    function atualizarQtdAlertas() {
       var diferencaCpu = alertasCpuMesRecente - alertasCpuMesAnterior;
       var diferencaRam = alertasRamMesRecente - alertasRamMesAnterior;
       var diferencaDisco = alertasDiscoMesRecente - alertasDiscoMesAnterior;
       if (diferencaCpu > 0) {
-        card_cpu.innerHTML = "&#8593;" + diferencaCpu;
-        div_cpu.class = "card_aumento";
+        card_cpu.innerHTML = `&#8593;${diferencaCpu}`;
+        document.getElementById("div_cpu").className = "card_aumento";
       } else {
-        card_cpu.innerHTML = "&#8595;" + Math.abs(diferencaCpu);
-        div_cpu.class = "card_reducao";
+        card_cpu.innerHTML = `&#8595;${Math.abs(diferencaCpu)}`;
+        document.getElementById("div_cpu").className = "card_reducao";
       }
       if (diferencaRam > 0) {
-        card_ram.innerHTML = "&#8593;" + diferencaRam;
-        div_ram.class = "card_aumento";
+        card_ram.innerHTML = `&#8593;${diferencaRam}`;
+        document.getElementById("div_ram").className = "card_aumento";
       } else {
-        card_ram.innerHTML = "&#8595;" + Math.abs(diferencaRam);
-        div_ram.class = "card_reducao";
+        card_ram.innerHTML = `&#8595;${Math.abs(diferencaRam)}`;
+        document.getElementById("div_ram").className = "card_reducao";
       }
       if (diferencaDisco > 0) {
-        card_disco.innerHTML = "&#8593;" + diferencaDisco;
-        div_disco.class = "card_aumento";
+        card_disco.innerHTML = `&#8593;${diferencaDisco}`;
+        document.getElementById("div_disco").className = "card_aumento";
       } else {
-        card_disco.innerHTML = "&#8595;" + Math.abs(diferencaDisco);
-        div_disco.class = "card_reducao";
+        card_disco.innerHTML = `&#8595;${Math.abs(diferencaDisco)}`;
+        document.getElementById("div_disco").className = "card_reducao";
       }
     }
 
-    var options = {
+    function mostrarQtdAlertas() {
+      listarServidores();
+      setTimeout(() => {
+        buscarQtdAlertas();
+      }, 50);
+      setTimeout(() => {
+        atualizarQtdAlertas();
+      }, 300);
+      setTimeout(() => {
+        plotSlopeChart();
+      }, 800);
+    }
+
+    function plotSlopeChart() {
+      var options = {
           colors:['#1ec9d5', '#218c93', '#122178'],
           series: [
           {
             name: 'CPU',
             data: [
               {
-                x: 'Outubro',
-                y: 12,
+                x: meses[Number(select_mes.value)-1],
+                y: alertasCpuMesAnterior,
               },
               {
                 x: 'Novembro',
-                y: 14,
+                y: alertasCpuMesRecente,
               },
             ],
           },
@@ -210,12 +225,12 @@
             name: 'RAM',
             data: [
               {
-                x: 'Outubro',
-                y: 9,
+                x: meses[Number(select_mes.value)-1],
+                y: alertasRamMesAnterior,
               },
               {
                 x: 'Novembro',
-                y: 16,
+                y: alertasRamMesRecente,
               },
             ],
           },
@@ -223,12 +238,12 @@
             name: 'Disco',
             data: [
               {
-                x: 'Outubro',
-                y: 11,
+                x: meses[Number(select_mes.value)-1],
+                y: alertasDiscoMesAnterior,
               },
               {
                 x: 'Novembro',
-                y: 7,
+                y: alertasDiscoMesRecente,
               },
             ],
           },
@@ -253,7 +268,7 @@
 
         var chart1 = new ApexCharts(document.getElementById("grafico1"), options);
         chart1.render();
-
+    }
 
         var options2 = {
           series: [{
