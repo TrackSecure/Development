@@ -11,7 +11,7 @@
 </head>
 
 <!-- <body onload="listarServidores(), validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista,html')"> -->
-<body onload="mostrar_nome()">
+<body onload="mostrar_nome(), mostrarQtdAlertas()">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -32,20 +32,16 @@
                 <div class="selects">
                     <div>
                         <span>Selecione uma linha</span>
-                        <select name="linhas" id="">
-                            <option value="Azul">Azul</option>
-                            <option value="Verde">Verde</option>
-                            <option value="Vermelha">Vermelha</option>
-                            <option value="Prata">Prata</option>
+                        <select name="linhas" id="select_estacao" onchange="listarServidores()">
+                            <option value="azul">Azul</option>
+                            <option value="verde">Verde</option>
+                            <option value="vermelha">Vermelha</option>
+                            <option value="prata">Prata</option>
                         </select>
                     </div>
                     <div>
                         <span>Selecione um servidor</span>
-                        <select name="servidores" id="">
-                            <option value="Servidor 1">Servidor 1</option>
-                            <option value="Servidor 2">Servidor 2</option>
-                            <option value="Servidor 3">Servidor 3</option>
-                            <option value="Servidor 4">Servidor 4</option>
+                        <select name="servidores" id="select_servidor" onchange="mostrarQtdAlertas()">
                         </select>
                     </div>
                 </div>
@@ -56,32 +52,39 @@
             </div>
             <div class="topo_dash">
                 <div>
-                    <span>Aumento/redução de problemas por componente de hardware (Servidor 1) em relação a</span>
-                    <select name="meses" id="">
-                        <option value="">Janeiro</option>
-                        <option value="">Fevereiro</option>
-                        <option value="">Março</option>
-                        <option value="">Abril</option>
-                        <option value="">Maio</option>
-                        <option value="">Junho</option>
-                        <option value="">Julho</option>
-                        <option value="">Agosto</option>
-                        <option value="">Setembro</option>
-                        <option selected value="">Outubro</option>
+                    <span>Aumento/redução de alertas de prioridade
+                      <select name="" id="select_prioridade">
+                        <option value="High">Alta</option>
+                        <option value="Medium">Média</option>
+                        <option selected value="Low">Baixa</opWstion>
                     </select>
+                    por componente (Servidor 1) em relação a
+                    <select name="" id="select_mes">
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option selected value="10">Outubro</option>
+                    </select>
+                    </span>
                 </div>
                 <div class="cards">
                     <div>
                         <h3 style="color: #1ec9d5;">CPU</h3>
-                        <div class="card_aumento"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8593;</span>2</div>
+                        <div id="div_cpu" class=""><span id="card_cpu" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #218c93;">RAM</h3>
-                        <div class="card_aumento"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8593;</span>7</div>
+                        <div id="div_ram" class=""><span id="card_ram" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #122178;">Disco</h3>
-                        <div class="card_reducao"><span style="font-size: 2.5rem; text-decoration: none; font-weight: bolder;">&#8595;</span>4</div>
+                        <div id="div_disco" class=""><span id="card_disco" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                 </div>
                 <div class="graficos">
@@ -103,9 +106,88 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <script>
+    var alertasCpuMesAnterior;
+    var alertasRamMesAnterior;
+    var alertasDiscoMesAnterior;
+    var alertasCpuMesRecente;
+    var alertasRamMesRecente;
+    var alertasDiscoMesRecente;
+
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
         user.innerHTML = `Olá, ${nome}`;
+    }
+
+    function listarServidores() {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((servidor) => {
+                    select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                });
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
+
+    function buscarQtdAlertas() {
+      var fkServidor = select_servidor.value;
+      var prioridade = select_prioridade.value;
+      var mes = select_mes.value;
+
+      fetch(`/gerenteBruno/buscarQtdAlertas/'${fkServidor}'/${prioridade}/${mes}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                  alertasCpuMesAnterior = resposta[0].qtdAlertas;
+                  alertasRamMesAnterior = resposta[1].qtdAlertas;
+                  alertasDiscoMesAnterior = resposta[2].qtdAlertas;
+                  alertasCpuMesRecente = resposta[3].qtdAlertas;
+                  alertasRamMesRecente = resposta[4].qtdAlertas;
+                  alertasDiscoMesRecente = resposta[5].qtdAlertas;
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
+
+    function mostrarQtdAlertas() {
+      listarServidores();
+      buscarQtdAlertas();
+      var diferencaCpu = alertasCpuMesRecente - alertasCpuMesAnterior;
+      var diferencaRam = alertasRamMesRecente - alertasRamMesAnterior;
+      var diferencaDisco = alertasDiscoMesRecente - alertasDiscoMesAnterior;
+      if (diferencaCpu > 0) {
+        card_cpu.innerHTML = "&#8593;" + diferencaCpu;
+        div_cpu.class = "card_aumento";
+      } else {
+        card_cpu.innerHTML = "&#8595;" + Math.abs(diferencaCpu);
+        div_cpu.class = "card_reducao";
+      }
+      if (diferencaRam > 0) {
+        card_ram.innerHTML = "&#8593;" + diferencaRam;
+        div_ram.class = "card_aumento";
+      } else {
+        card_ram.innerHTML = "&#8595;" + Math.abs(diferencaRam);
+        div_ram.class = "card_reducao";
+      }
+      if (diferencaDisco > 0) {
+        card_disco.innerHTML = "&#8593;" + diferencaDisco;
+        div_disco.class = "card_aumento";
+      } else {
+        card_disco.innerHTML = "&#8595;" + Math.abs(diferencaDisco);
+        div_disco.class = "card_reducao";
+      }
     }
 
     var options = {
