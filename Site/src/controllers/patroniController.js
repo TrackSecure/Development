@@ -71,11 +71,27 @@ function comparacaoCpuRam(req, res){
         })
 }
 
+function pacotesRecebidos(req, res){
+
+    var linha = req.body.linhaServer
+    var servidor = req.body.servidorServer
+
+    patroniModel.pacotesRecebidos(linha, servidor)
+        .then(resultado => {
+            if(resultado.length > 0){
+                res.json(resultado)
+            }
+        })
+}
+
+
+
 module.exports = {
   cadastrarLinha,
   cadastrarServidor,
   frequenciaCpuGrafico,
   frequenciaRamGrafico,
   frequenciaDiscoGrafico,
-  comparacaoCpuRam
+  comparacaoCpuRam,
+  pacotesRecebidos
 }

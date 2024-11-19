@@ -332,11 +332,11 @@
     frequenciaDiscoGrafico()
     function frequenciaDiscoGrafico() {
         const atualizarGraficoDISCO = (dados) => {
-            
+
             const discoUsado = dados.map(item => item.discoUsado);
             const discoDisponivel = dados.map(item => item.discoDisponivel);
 
-            console.log("Disco Usado:", discoUsado); 
+            console.log("Disco Usado:", discoUsado);
             console.log("Disco Disponível:", discoDisponivel);
 
             var options = {
@@ -355,7 +355,7 @@
                         }
                     }
                 }]
-                
+
             };
 
             if (!window.chartDisco) {
@@ -382,13 +382,13 @@
     comparacaoCpuRam()
     function comparacaoCpuRam() {
         const atualizarGraficoComparacao = (dados) => {
-            
+
             const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
             const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
             const dataComparacao = dados.map(item => item.hora).reverse();
 
             var options = {
-            series: [{
+                series: [{
                     name: "CPU",
                     data: porcentagemProcessador
                 },
@@ -396,35 +396,35 @@
                     name: "RAM",
                     data: porcentagemMemoria
                 }
-            ],
-            chart: {
-                width: 600,
-                height: 300,
-                type: 'line',
-                zoom: {
-                    enabled: false
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            title: {
-                align: 'left'
-            },
-            grid: {
-                row: {
-                    colors: ['#f3f3f3', 'transparent'],
-                    opacity: 0.5
+                ],
+                chart: {
+                    width: 600,
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
                 },
-            },
-            xaxis: {
-                categories: dataComparacao,
-            },
-            colors: ['#FF4560', '#00E396']
-        };
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: dataComparacao,
+                },
+                colors: ['#FF4560', '#00E396']
+            };
 
             if (!window.chartComparacao) {
                 window.chartComparacao = new ApexCharts(document.querySelector("#chart4"), options);
@@ -445,6 +445,41 @@
         buscarDados();
         setInterval(buscarDados, 2000);
     }
+
+    function pacotesRecebidos() {
+        fetch("/analistaPatroni/pacotesRecebidos", {
+            method: "GET"
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); 
+            } else {
+                throw new Error('Erro ao buscar pacotes recebidos');
+            }
+        })
+        .then(resposta => {
+            console.log('Dados recebidos:', resposta); 
+
+            if (resposta && resposta.pacoteRecebido !== undefined) {
+                document.getElementById('mensagemPacotes').innerHTML = `${resposta.pacoteRecebido}`;
+            } else {
+                document.getElementById('mensagemPacotes').innerHTML = 'Nenhum pacote recebido encontrado.';
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao obter dados:', error);
+            document.getElementById('mensagemPacotes').innerHTML = 'Erro ao carregar os pacotes recebidos.';
+        });
+    }
+
+    setInterval(pacotesRecebidos, 4000);
+
+
+
+
+ 
+
+
 
 
 

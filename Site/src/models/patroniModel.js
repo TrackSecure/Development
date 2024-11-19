@@ -83,11 +83,29 @@ function comparacaoCpuRam(linha, servidor) {
     return database.executar(instrucaoSql, [linha, servidor]);
 }
 
+function pacotesRecebidos(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pacotesRecebidos():");
+
+    var instrucaoSql = `
+        Select R.pacotesRecebidos as PacoteRecebido 
+        from Registro R
+        JOIN Estacao E 
+        ON R.fkServidor = E.fkServidor
+        WHERE E.linha = 'Linha Verde'
+        AND R.fkServidor = '00:00:00:00:00:00'
+        ORDER BY R.dtHora DESC
+        LIMIT 1;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
 module.exports = {
     cadastrarLinha,
     cadastrarServidor,
     frequenciaCpuGrafico,
     frequenciaRamGrafico,
     frequenciaDiscoGrafico,
-    comparacaoCpuRam
+    comparacaoCpuRam,
+    pacotesRecebidos
 };

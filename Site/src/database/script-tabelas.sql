@@ -58,6 +58,7 @@ CREATE TABLE Registro (
   freqProcessador DOUBLE NULL,
   memoriaUsada DOUBLE NULL,
   discoUsado DOUBLE NULL,
+  pacotesRecebidos INT,
   fkServidor CHAR(17) NOT NULL,
   CONSTRAINT fkRegistroServidor FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );
@@ -77,4 +78,12 @@ CREATE TABLE Alerta (
   dtHora DATETIME DEFAULT CURRENT_TIMESTAMP(),
   fkServidor CHAR(17),
   CONSTRAINT fkAlertaServidor FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
+);
+
+CREATE TABLE Processo (
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45),
+usoMemoria INT,
+fkServidor CHAR(17),
+FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );
