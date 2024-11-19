@@ -34,7 +34,7 @@
                 <div class="container">
                     <div class="selectEsquerda">
                         <span>Selecione uma linha</span>
-                        <select>
+                        <select class="select_linha">
                             <option value="0" selected>Azul</option>
                             <option value="1">Vermelha</option>
                             <option value="2">Verde</option>
@@ -42,7 +42,7 @@
                         </select>
 
                         <span>Selecione um servidor</span>
-                        <select>
+                        <select class="select_servidor">
                             <option value="0" selected>Servidor 1</option>
                             <option value="1">Servidor 2</option>
                             <option value="2">Servidor 3</option>
@@ -275,7 +275,7 @@
         ],
         chart: {
             height: 350,
-            width: 400,
+            width: 500,
             type: 'bar'
         },
         plotOptions: {
@@ -308,8 +308,8 @@
             data: [77, 81, 75, 84, 89, 82, 79, 91, 88, 85, 83]
         }],
         chart: {
-            height: 350,
-            width: 400,
+            height: 300,
+            width: 500,
             type: 'line',
             zoom: {
                 enabled: false
