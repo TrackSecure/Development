@@ -100,6 +100,30 @@ function pacotesRecebidos(linha, servidor) {
     return database.executar(instrucaoSql, [linha, servidor]);
 }
 
+function comparacaoDisco(linha, servidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function comparacaoDisco():");
+
+    var instrucaoSql = `
+       SELECT 
+        r.porcentagemDisco AS DiscoUsado,
+        (100 - r.porcentagemDisco) AS DiscoDisponivel,
+        s.nome AS Servidor
+        FROM Registro r
+        JOIN Servidor s ON r.fkServidor = s.MacAddress
+        JOIN Estacao e ON e.fkServidor = s.MacAddress
+        WHERE e.linha = 'Linha Verde'
+        AND r.dtHora = (
+            SELECT MAX(r2.dtHora)
+            FROM Registro r2
+            WHERE r2.fkServidor = r.fkServidor
+        );
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
+    return database.executar(instrucaoSql, [linha, servidor]);
+}
+
+
+
 module.exports = {
     cadastrarLinha,
     cadastrarServidor,
@@ -107,5 +131,6 @@ module.exports = {
     frequenciaRamGrafico,
     frequenciaDiscoGrafico,
     comparacaoCpuRam,
-    pacotesRecebidos
+    pacotesRecebidos,
+    comparacaoDisco
 };

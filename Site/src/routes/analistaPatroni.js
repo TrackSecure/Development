@@ -28,7 +28,11 @@ router.get("/comparacaoCpuRam", function(req, res){
 })
 
 router.get("/pacotesRecebidos", function(req, res){
-    patroniController.pacotesRecebidos(req, res); // Faz a rota do Grafico de Comparação
+    patroniController.pacotesRecebidos(req, res); // Faz a rota dos pacotes
+})
+
+router.get("/comparacaoDisco", function(req, res){
+    patroniController.comparacaoDisco(req, res); // Faz a rota do Grafico de Comparação de Disco
 })
 
 

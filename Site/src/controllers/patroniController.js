@@ -84,6 +84,19 @@ function pacotesRecebidos(req, res){
         })
 }
 
+function comparacaoDisco(req, res){
+
+    var linha = req.body.linhaServer
+    var servidor = req.body.servidorServer
+
+    patroniModel.comparacaoDisco(linha, servidor)
+        .then(resultado => {
+            if(resultado.length > 0){
+                res.json(resultado)
+            }
+        })
+}
+
 
 
 module.exports = {
@@ -93,5 +106,6 @@ module.exports = {
   frequenciaRamGrafico,
   frequenciaDiscoGrafico,
   comparacaoCpuRam,
-  pacotesRecebidos
+  pacotesRecebidos,
+  comparacaoDisco
 }

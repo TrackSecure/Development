@@ -99,18 +99,8 @@
                         <div class="rigth-bottom">
                             <h3>Comparação de Disco dos Servidores</h3>
 
-                            <div id="chart7" class="grafico7"></div>
-                            <div id="chart8" class="grafico8"></div>
-                            <div id="chart9" class="grafico9"></div>
-                            <div id="chart7_2" class="grafico7_2"></div>
-                            <div id="chart8_2" class="grafico8_2"></div>
-                            <div id="chart9_2" class="grafico9_2"></div>
-                            <div id="chart7_3" class="grafico7_3"></div>
-                            <div id="chart8_3" class="grafico8_3"></div>
-                            <div id="chart9_3" class="grafico9_3"></div>
-                            <div id="chart7_4" class="grafico7_4"></div>
-                            <div id="chart8_4" class="grafico8_4"></div>
-                            <div id="chart9_4" class="grafico9_4"></div>
+                            <div id="chart5" class="grafico5"></div>
+
                         </div>
                     </div>
                 </div>
@@ -133,8 +123,8 @@
 
     function cadastrarLinha() {
         fetch("/analistaPatroni/cadastrarLinha", {
-            method: "GET",
-        })
+                method: "GET",
+            })
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -154,8 +144,8 @@
 
     function cadastrarServidor() {
         fetch("/analistaPatroni/cadastrarServidor", {
-            method: "GET"
-        })
+                method: "GET"
+            })
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -212,6 +202,7 @@
     }
 
     frequenciaCpuGrafico()
+
     function frequenciaCpuGrafico() {
         const atualizarGraficoCPU = (dados) => {
             const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
@@ -259,17 +250,18 @@
 
         const buscarDados = () => {
             fetch("/analistaPatroni/frequenciaCpuGrafico", {
-                method: "GET"
-            })
+                    method: "GET"
+                })
                 .then(resposta => resposta.json())
                 .then(atualizarGraficoCPU)
         };
 
         buscarDados();
-        setInterval(buscarDados, 2000);
+        setInterval(buscarDados, 20000);
     }
 
     frequenciaRamGrafico()
+
     function frequenciaRamGrafico() {
         const atualizarGraficoRAM = (dados) => {
             const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
@@ -317,19 +309,20 @@
 
         const buscarDados = () => {
             fetch("/analistaPatroni/frequenciaRamGrafico", {
-                method: "GET"
-            })
+                    method: "GET"
+                })
                 .then(resposta => resposta.json())
                 .then(atualizarGraficoRAM)
         };
 
         buscarDados();
-        setInterval(buscarDados, 2000);
+        setInterval(buscarDados, 20000);
     }
 
 
 
     frequenciaDiscoGrafico()
+
     function frequenciaDiscoGrafico() {
         const atualizarGraficoDISCO = (dados) => {
 
@@ -368,18 +361,19 @@
 
         const buscarDados = () => {
             fetch("/analistaPatroni/frequenciaDiscoGrafico", {
-                method: "GET"
-            })
+                    method: "GET"
+                })
                 .then(resposta => resposta.json())
                 .then(atualizarGraficoDISCO)
         };
 
         buscarDados();
-        setInterval(buscarDados, 2000);
+        setInterval(buscarDados, 20000);
     }
 
 
     comparacaoCpuRam()
+
     function comparacaoCpuRam() {
         const atualizarGraficoComparacao = (dados) => {
 
@@ -389,13 +383,13 @@
 
             var options = {
                 series: [{
-                    name: "CPU",
-                    data: porcentagemProcessador
-                },
-                {
-                    name: "RAM",
-                    data: porcentagemMemoria
-                }
+                        name: "CPU",
+                        data: porcentagemProcessador
+                    },
+                    {
+                        name: "RAM",
+                        data: porcentagemMemoria
+                    }
                 ],
                 chart: {
                     width: 600,
@@ -436,21 +430,22 @@
 
         const buscarDados = () => {
             fetch("/analistaPatroni/comparacaoCpuRam", {
-                method: "GET"
-            })
+                    method: "GET"
+                })
                 .then(resposta => resposta.json())
                 .then(atualizarGraficoComparacao)
         };
 
         buscarDados();
-        setInterval(buscarDados, 2000);
+        setInterval(buscarDados, 20000);
     }
 
     pacotesRecebidos();
+
     function pacotesRecebidos() {
         fetch("/analistaPatroni/pacotesRecebidos", {
-            method: "GET",
-        })
+                method: "GET",
+            })
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -459,13 +454,69 @@
                     mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
                 });
             })
-            setInterval(pacotesRecebidos, 2000);
+        setInterval(pacotesRecebidos, 20000);
+    }
+
+    comparacaoDisco()
+
+    function comparacaoDisco() {
+        const atualizarGraficoComparacaoDisco = (dados) => {
+
+            const discoUsado = dados.map(item => item.DiscoUsado);
+            const discoDisponivel = dados.map(item => item.DiscoDisponivel);
+            const Servidor = dados.map(item => item.Servidor);
+
+            const options = {
+                series: [{
+                    name: 'Disco Usado',
+                    data: discoUsado
+                }, {
+                    name: 'Disco Disponivel',
+                    data: discoDisponivel
+                }],
+                chart: {
+                    type: 'bar',
+                    width: 350,
+                    height: 300,
+                    stacked: true,
+                    stackType: '100%'
+                },
+                xaxis: {
+                    categories: Servidor,
+                },
+                fill: {
+                    opacity: 1
+                },
+            };
+
+
+            if (!window.chartComparacaoDisco) {
+                window.chartComparacaoDisco = new ApexCharts(document.querySelector("#chart5"), options);
+                window.chartComparacaoDisco.render();
+            } else {
+                window.chartComparacaoDisco.updateOptions(options);
+            }
+        };
+
+        const buscarDados = () => {
+            fetch("/analistaPatroni/comparacaoDisco", {
+                    method: "GET"
+                })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoComparacaoDisco)
+        };
+
+        buscarDados();
+        setInterval(buscarDados, 20000);
     }
 
 
 
 
- 
+
+
+
+
 
 
 
