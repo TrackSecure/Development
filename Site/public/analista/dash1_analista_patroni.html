@@ -266,7 +266,7 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 20000);
+        setInterval(buscarDados, 2000);
     }
 
     frequenciaRamGrafico()
@@ -324,7 +324,7 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 20000);
+        setInterval(buscarDados, 2000);
     }
 
 
@@ -375,7 +375,7 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 10000);
+        setInterval(buscarDados, 2000);
     }
 
 
@@ -446,33 +446,21 @@
         setInterval(buscarDados, 2000);
     }
 
+    pacotesRecebidos();
     function pacotesRecebidos() {
         fetch("/analistaPatroni/pacotesRecebidos", {
-            method: "GET"
+            method: "GET",
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json(); 
-            } else {
-                throw new Error('Erro ao buscar pacotes recebidos');
-            }
-        })
-        .then(resposta => {
-            console.log('Dados recebidos:', resposta); 
-
-            if (resposta && resposta.pacoteRecebido !== undefined) {
-                document.getElementById('mensagemPacotes').innerHTML = `${resposta.pacoteRecebido}`;
-            } else {
-                document.getElementById('mensagemPacotes').innerHTML = 'Nenhum pacote recebido encontrado.';
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao obter dados:', error);
-            document.getElementById('mensagemPacotes').innerHTML = 'Erro ao carregar os pacotes recebidos.';
-        });
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                    mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
+                });
+            })
+            setInterval(pacotesRecebidos, 2000);
     }
-
-    setInterval(pacotesRecebidos, 4000);
 
 
 

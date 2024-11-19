@@ -87,7 +87,7 @@ function pacotesRecebidos(linha, servidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pacotesRecebidos():");
 
     var instrucaoSql = `
-        Select R.pacotesRecebidos as PacoteRecebido 
+        Select R.pacotesRecebidos as pacotesRecebidos 
         from Registro R
         JOIN Estacao E 
         ON R.fkServidor = E.fkServidor
