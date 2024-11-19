@@ -18,7 +18,7 @@
 
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
-<body onload="mostrar_nome()">
+<body>
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -115,8 +115,6 @@
                             <br><br>
                             <h1>Alertas Críticos de CPU na Última Semana</h1>
                             <br>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
                         </div>
                     </div>
 
@@ -131,8 +129,6 @@
                             <br><br>
                             <h1>Alertas Críticos de RAM na Última Semana</h1>
                             <br>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">RAM 80%</span>
-                            </p>
                         </div>
                     </div>
 
@@ -264,6 +260,13 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 <script>
 
+    window.onload = () => {
+        infoServidorSobrecarregado(sessionStorage.ID_EMPRESA);
+        infoAlertaCPU(sessionStorage.ID_EMPRESA);
+        infoAlertaRAM(sessionStorage.ID_EMPRESA);
+        mostrar_nome();
+    };
+
     qtdServidorSobrecarregado(sessionStorage.ID_EMPRESA)
 
     function qtdServidorSobrecarregado(fkEmpresa) {
@@ -288,8 +291,6 @@
             }
         })
     }
-
-    window.onload = () => infoServidorSobrecarregado(sessionStorage.ID_EMPRESA);
 
     function infoServidorSobrecarregado(fkEmpresa) {
         fetch(`/bruna/infoServidorSobrecarregado/${fkEmpresa}`, {
@@ -359,8 +360,8 @@
                     var dados = resposta[0];
 
                     resposta.forEach(item => {
-                        document.getElementById("modal1content").innerHTML += `
-                            <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhaAtendida}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span style="color: red;">CPU ${item.maxPorcentagemProcessador}%</span> - <span style="color: red;">RAM ${item.maxPorcentagemMemoria}%</span></p>
+                        document.getElementById("modal2content").innerHTML += `
+                            <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhasAtendidas}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span>Quantidade de Alertas: ${item.registrosAcima80}</span></p>
                         `;
                     });
 
@@ -390,6 +391,33 @@
                     console.log(dados);
                     qtdRAM.innerHTML = dados.quantidadeAlertaRAM;
 
+                })
+            }
+        })
+    }
+
+    function infoAlertaRAM(fkEmpresa) {
+        fetch(`/bruna/infoAlertaRAM/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO infoAlertaRAM()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Informações dos Alertas de RAM(): ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("modal3content").innerHTML += `
+                            <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhasAtendidas}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span>Quantidade de Alertas: ${item.registrosAcima80}</span></p>
+                        `;
+                    });
+
+                    console.log(dados);
                 })
             }
         })
