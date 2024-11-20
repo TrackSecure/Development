@@ -168,6 +168,7 @@ header {
     height: 10%;
     border-radius: 10px;
     text-shadow: -0.4px 0.4px 0.5px #d1dbe7;
+    margin-right: 80px;
 
 }
 
@@ -236,7 +237,7 @@ header {
 .card_critico{
     color: rgb(190, 63, 63);
     border: 0.2rem solid rgb(190, 63, 63);
-    margin-left: 90px;
+    margin-left: 70px;
 }
 
 .card_atencao{
