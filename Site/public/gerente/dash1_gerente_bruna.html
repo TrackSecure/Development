@@ -64,7 +64,6 @@
                         </div>
 
 
-                        <!--  ################################################################################################################################ -->
 
 
                         <div id="myModal" class="modal">
@@ -73,12 +72,9 @@
                                 <br><br>
                                 <h1>Servidores Sobrecarregados na Última Semana</h1>
                                 <br>
-                                <!-- <p><span id="nomeServe1"></span> - <span id="linha1"></span> - <span id="qtdEsta1"></span> - CPU <span id="cpu1" style="color: red;"></span>% - RAM <span id="ram1" style="color: red;"></span>%</p> -->
                             </div>
                         </div>
 
-
-                        <!-- ################################################################################################################################ -->
 
 
                         <h1 class="tituloSobrecarregado">Quantidade de Alertas Críticos</h1>
@@ -105,10 +101,6 @@
                     </div>
 
 
-
-                    <!-- ################################################################################################################################ -->
-
-
                     <div id="myModal2" class="modal2">
                         <div class="modal-content2" id="modal2content">
                             <span onclick="fecharModal2()" class="close2">X</span>
@@ -117,10 +109,6 @@
                             <br>
                         </div>
                     </div>
-
-
-
-                    <!-- ################################################################################################################################ -->
 
 
                     <div id="myModal3" class="modal3">
@@ -133,12 +121,10 @@
                     </div>
 
 
-                    <!-- ################################################################################################################################ -->
-
                     <div class="left-bottom">
                         <select name="select_rank," id="selectRank">
-                            <option value="CPU">CPU</option>
-                            <option value="RAM">RAM</option>
+                            <option id="CPU">CPU</option>
+                            <option id="RAM">RAM</option>
                         </select>
                         <div class="cardRank">
                             <div class="RankTitulo">
@@ -146,19 +132,13 @@
                                     <button><strong>?</strong></button>
                                 </div>
                                 <div class="RankTitulo2">
-                                    <h1>Ranking Pico de Processamento</h1>
+                                    <h1>Ranking Pico de <span>Processamento</span></h1>
                                 </div>
                             </div>
-                            <div class="RankConteudo">
-                                <h1>Servidor 3</h1>
-                                <h1>Servidor 1</h1>
-                                <h1>Servidor 2</h1>
+                            <div class="RankConteudo" id="rankCPUcont">
                             </div>
                         </div>
                     </div>
-
-                    <!-- ################################################################################################################################ -->
-
 
                     <div id="myModal4" class="modal4">
                         <div class="modal-content4" id="modal4content">
@@ -166,24 +146,11 @@
                             <br><br>
                             <h1>Servidores com maior <span>Processamento</span></h1>
                             <br>
-                            <p>Servidor 1 - Linha Verde - Estação Consolação - <span style="color: red;">CPU 80%</span>
-                            </p>
                         </div>
                     </div>
 
-
-                    <!-- ################################################################################################################################ -->
-
                 </div>
                 <div class="right">
-
-                    <!-- ################################################################################################################################ -->
-
-
-
-
-
-                    <!-- ################################################################################################################################ -->
                     <div class="right-top">
                         <div class="titulo-right">
                             <button id="myBtn5"><strong>?</strong></button>
@@ -264,8 +231,11 @@
         infoServidorSobrecarregado(sessionStorage.ID_EMPRESA);
         infoAlertaCPU(sessionStorage.ID_EMPRESA);
         infoAlertaRAM(sessionStorage.ID_EMPRESA);
+        infoRankCPU(sessionStorage.ID_EMPRESA);
         mostrar_nome();
     };
+
+    // SERVIDORES SOBRECARREGADOS ################################################################################################################################
 
     qtdServidorSobrecarregado(sessionStorage.ID_EMPRESA)
 
@@ -319,6 +289,8 @@
         })
     }
 
+    // ALERTAS CPU ################################################################################################################################
+
     qtdAlertaCPU(sessionStorage.ID_EMPRESA)
 
     function qtdAlertaCPU(fkEmpresa) {
@@ -370,6 +342,8 @@
             }
         })
     }
+
+    // ALERTAS RAM ################################################################################################################################
 
     qtdAlertaRAM(sessionStorage.ID_EMPRESA)
 
@@ -423,25 +397,11 @@
         })
     }
 
+    // RANKING ################################################################################################################################
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
     // GRÁFICO BARRAS ################################################################################################################################
