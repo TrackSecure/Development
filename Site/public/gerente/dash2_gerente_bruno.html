@@ -33,7 +33,7 @@
                 <div class="selects">
                     <div>
                         <span>Selecione uma linha</span>
-                        <select name="linhas" id="select_estacao" onchange="listarServidores()">
+                        <select name="linhas" id="select_linha" onchange="listarServidores()">
                             <option value="Azul">Azul</option>
                             <option value="Verde">Verde</option>
                             <option value="Vermelha">Vermelha</option>
@@ -55,9 +55,9 @@
                 <div>
                     <span>Aumento/redução de alertas de prioridade
                       <select name="" id="select_prioridade" onchange="buscarQtdAlertas()">
-                        <option value="High">Alta</option>
+                        <option selected value="High">Alta</option>
                         <option value="Medium">Média</option>
-                        <option selected value="Low">Baixa</opWstion>
+                        <option value="Low">Baixa</opWstion>
                     </select>
                     por componente (Servidor 1) em relação a
                     <select name="" id="select_mes" onchange="buscarQtdAlertas()">
@@ -113,6 +113,9 @@
     var alertasRamMesRecente;
     var alertasDiscoMesRecente;
 
+    var chart1 = null;
+    var plotado = false;
+
     var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"];
 
     function mostrar_nome() {
@@ -122,13 +125,15 @@
 
     function listarServidores() {
         var fkEmpresa = sessionStorage.ID_EMPRESA;
+        select_servidor.innerHTML = "";
 
         fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {
-                    select_servidor.innerHTML = "";
-                    select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                      if (servidor.linha == select_linha.value) {
+                        select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                      }
                 });
                 buscarQtdAlertas();
                 });
@@ -155,7 +160,11 @@
                   alertasCpuMesRecente = resposta[3].qtdAlertas;
                   alertasRamMesRecente = resposta[4].qtdAlertas;
                   alertasDiscoMesRecente = resposta[5].qtdAlertas;
-                  plotSlopeChart();
+                  if (!plotado) {
+                    plotarSlopeChart();
+                  } else {
+                    atualizarSlopeChart();
+                  }
                   atualizarQtdAlertas();
                 });
             } else {
@@ -194,11 +203,77 @@
       }
     }
 
-    function plotSlopeChart() {
+    function plotarSlopeChart() {
+
       var options = {
-          colors:['#1ec9d5', '#218c93', '#122178'],
-          series: [
-          {
+            colors:['#1ec9d5', '#218c93', '#122178'],
+            series: [
+            {
+              name: 'CPU',
+              data: [
+                {
+                  x: meses[Number(select_mes.value)-1],
+                  y: alertasCpuMesAnterior,
+                },
+                {
+                  x: 'Novembro',
+                  y: alertasCpuMesRecente,
+                },
+              ],
+            },
+            {
+              name: 'RAM',
+              data: [
+                {
+                  x: meses[Number(select_mes.value)-1],
+                  y: alertasRamMesAnterior,
+                },
+                {
+                  x: 'Novembro',
+                  y: alertasRamMesRecente,
+                },
+              ],
+            },
+            {
+              name: 'Disco',
+              data: [
+                {
+                  x: meses[Number(select_mes.value)-1],
+                  y: alertasDiscoMesAnterior,
+                },
+                {
+                  x: 'Novembro',
+                  y: alertasDiscoMesRecente,
+                },
+              ],
+            },
+          ],
+            chart: {
+            height: 360,
+            width: 500,
+            type: 'line',
+          },
+          plotOptions: {
+            line: {
+              isSlopeChart: true,
+            },
+          },
+          legend: {
+            show: true,
+            position: 'top',
+            horizontalAlign: 'center',
+            fontSize: "15rem"
+          },
+          };
+  
+          chart1 = new ApexCharts(document.getElementById("grafico1"), options);
+          chart1.render();
+
+          plotado = true;
+    }
+
+    function atualizarSlopeChart() {
+      chart1.updateSeries([{
             name: 'CPU',
             data: [
               {
@@ -236,30 +311,9 @@
                 y: alertasDiscoMesRecente,
               },
             ],
-          },
-        ],
-          chart: {
-          height: 360,
-          width: 500,
-          type: 'line',
-        },
-        plotOptions: {
-          line: {
-            isSlopeChart: true,
-          },
-        },
-        legend: {
-          show: true,
-          position: 'top',
-          horizontalAlign: 'center',
-          fontSize: "15rem"
-        },
-        };
-
-        var chart1 = new ApexCharts(document.getElementById("grafico1"), options);
-        chart1.render();
-        window.dispatchEvent(new Event('resize'));
+          }])
     }
+
 
         var options2 = {
           series: [{
