@@ -18,6 +18,8 @@
 
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
+<!-- COLOCAR NO MODAL FLUXO DE PESSOAS QUE OS DADOS SÂO MUDADOS PELA NOSSA EMPRESA A CADA MES -->
+
 <body>
     <div class="pagina">
         <header>
@@ -123,8 +125,8 @@
 
                     <div class="left-bottom">
                         <select name="select_rank," id="selectRank">
-                            <option id="CPU">CPU</option>
-                            <option id="RAM">RAM</option>
+                            <option id="CPU" value="selectedCPU">CPU</option>
+                            <option id="RAM" value="selectedRAM">RAM</option>
                         </select>
                         <div class="cardRank">
                             <div class="RankTitulo">
@@ -135,7 +137,8 @@
                                     <h1>Ranking Pico de <span>Processamento</span></h1>
                                 </div>
                             </div>
-                            <div class="RankConteudo" id="rankCPUcont">
+                            <div class="RankConteudo" id="rankCont">
+
                             </div>
                         </div>
                     </div>
@@ -144,8 +147,9 @@
                         <div class="modal-content4" id="modal4content">
                             <span onclick="fecharModal4()" class="close4">X</span>
                             <br><br>
-                            <h1>Servidores com maior <span>Processamento</span></h1>
+                            <h1>Servidores com maior <span id="tagRank"></span></h1>
                             <br>
+                            <div id="valuesRank"></div>
                         </div>
                     </div>
 
@@ -216,6 +220,7 @@
                     </div>
                     <div class="right-bottom">
                         <div id="WordCloud"></div>
+
                     </div>
                 </div>
             </div>
@@ -227,11 +232,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
 <script>
 
+    const selectRANK = document.getElementById('selectRank');
+
     window.onload = () => {
         infoServidorSobrecarregado(sessionStorage.ID_EMPRESA);
         infoAlertaCPU(sessionStorage.ID_EMPRESA);
         infoAlertaRAM(sessionStorage.ID_EMPRESA);
-        infoRankCPU(sessionStorage.ID_EMPRESA);
         mostrar_nome();
     };
 
@@ -249,7 +255,7 @@
             console.log("ESTOU NO THEN DO qtdServidorSobrecarregado()!")
 
             if (resposta.ok) {
-                console.log("Função Contar Servidores Sobrecarregados(): ")
+                console.log("Função Contar Servidores Sobrecarregados: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -272,7 +278,7 @@
             console.log("ESTOU NO THEN DO infoServidorSobrecarregado()!")
 
             if (resposta.ok) {
-                console.log("Função Exibir Informações dos Servidores Sobrecarregados(): ")
+                console.log("Função Exibir Informações dos Servidores Sobrecarregados: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -303,7 +309,7 @@
             console.log("ESTOU NO THEN DO qtdAlertaCPU()!")
 
             if (resposta.ok) {
-                console.log("Função Contar Alertas de CPU(): ")
+                console.log("Função Contar Alertas de CPU: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -326,7 +332,7 @@
             console.log("ESTOU NO THEN DO infoAlertaCPU()!")
 
             if (resposta.ok) {
-                console.log("Função Exibir Informações dos Alertas de CPU(): ")
+                console.log("Função Exibir Informações dos Alertas de CPU: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -357,7 +363,7 @@
             console.log("ESTOU NO THEN DO qtdAlertaRAM()!")
 
             if (resposta.ok) {
-                console.log("Função Contar Alertas de RAM(): ")
+                console.log("Função Contar Alertas de RAM: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -380,7 +386,7 @@
             console.log("ESTOU NO THEN DO infoAlertaRAM()!")
 
             if (resposta.ok) {
-                console.log("Função Exibir Informações dos Alertas de RAM(): ")
+                console.log("Função Exibir Informações dos Alertas de RAM: ")
 
                 resposta.json().then(function (resposta) {
                     var dados = resposta[0];
@@ -397,12 +403,141 @@
         })
     }
 
-    // RANKING ################################################################################################################################
+    // RANKING ONCHANGE ################################################################################################################################
 
+    selectRANK.onchange = function () {
+        if (selectRANK.options[selectRANK.selectedIndex].value == "selectedCPU") {
+            rankCPU(sessionStorage.ID_EMPRESA);
+            infoRankCPU(sessionStorage.ID_EMPRESA)
+        } else {
+            rankRAM(sessionStorage.ID_EMPRESA);
+            infoRankRAM(sessionStorage.ID_EMPRESA);
+        }
+    };
 
+    // RANKING CPU ################################################################################################################################
 
-    
+    rankCPU(sessionStorage.ID_EMPRESA)
 
+    function rankCPU(fkEmpresa) {
+        document.getElementById("rankCont").innerHTML = '';
+        fetch(`/bruna/rankCPU/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO rankCPU()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Top3 CPU: ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("rankCont").innerHTML += `
+                        <h1>${item.nomeServidor}</h1>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
+
+    infoRankCPU(sessionStorage.ID_EMPRESA)
+
+    function infoRankCPU(fkEmpresa) {
+        document.getElementById("valuesRank").innerHTML = '';
+        document.getElementById("tagRank").innerHTML = '';
+        document.getElementById("tagRank").innerHTML = 'Processamento';
+        fetch(`/bruna/infoRankCPU/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO infoRankCPU()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Informações do top3 CPU: ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("valuesRank").innerHTML += `
+                        <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhasAtendidas}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span style="color: red;">CPU ${item.maxPorcentagemProcessador}%</span></p>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
+
+    // RANKING RAM ################################################################################################################################
+
+    function rankRAM(fkEmpresa) {
+        document.getElementById("rankCont").innerHTML = '';
+        fetch(`/bruna/rankRAM/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO rankRAM()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Top3 RAM: ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("rankCont").innerHTML += `
+                        <h1>${item.nomeServidor}</h1>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
+
+    function infoRankRAM(fkEmpresa) {
+        document.getElementById("valuesRank").innerHTML = '';
+        document.getElementById("tagRank").innerHTML = '';
+        document.getElementById("tagRank").innerHTML = 'Memória RAM';
+        fetch(`/bruna/infoRankRAM/${fkEmpresa}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO infoRankRAM()!")
+
+            if (resposta.ok) {
+                console.log("Função Exibir Informações do top3 RAM: ")
+
+                resposta.json().then(function (resposta) {
+                    var dados = resposta[0];
+
+                    resposta.forEach(item => {
+                        document.getElementById("valuesRank").innerHTML += `
+                        <p><span>${item.nomeServidor}</span> - <span>Linha ${item.linhasAtendidas}</span> - <span>Quantidade de estações atendidas: ${item.quantidadeEstacoes}</span> - <span style="color: red;">RAM ${item.maxPorcentagemMemoria}%</span></p>
+                        `;
+                    });
+
+                    console.log(dados);
+                })
+            }
+        })
+    }
 
     // GRÁFICO BARRAS ################################################################################################################################
 
