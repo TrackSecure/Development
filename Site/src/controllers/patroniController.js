@@ -10,13 +10,24 @@ function cadastrarLinha(req, res) {
 }
 
 function cadastrarServidor(req, res){
-    patroniModel.cadastrarServidor()
+    var linha = req.params.linha;
+    patroniModel.cadastrarServidor(linha)
         .then(resultado => {
             if(resultado.length > 0){
+                console.log('FK EMPRESA: ', fkEmpresa)
                 res.json(resultado)
             }
-        })
-}
+        }).catch(
+            function (erro) {
+                console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao capturar a linha! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+            }
+        )
+    }
 
 function frequenciaCpuGrafico(req, res){
 

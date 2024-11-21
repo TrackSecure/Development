@@ -4,20 +4,22 @@ function cadastrarLinha() {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarLinha():");
 
     var instrucaoSql = `
-        select idEstacao, linha from Estacao;
+        SELECT MIN(idEstacao) AS idEstacao, linha
+        FROM Estacao
+        GROUP BY linha;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function cadastrarServidor() {
+function cadastrarServidor(linha) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarServidor():");
 
     var instrucaoSql = `
         select S.MacAddress as MacAddress , S.nome as nome
         from Servidor S
         JOIN Estacao E ON E.fkServidor = S.MacAddress
-        WHERE E.linha = 'Linha Azul';
+        WHERE E.linha = ${linha};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -35,8 +37,8 @@ function frequenciaCpuGrafico(linha, servidor) {
        WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
        ORDER BY R.dtHora DESC LIMIT 8;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 function frequenciaRamGrafico(linha, servidor) {
@@ -51,8 +53,8 @@ function frequenciaRamGrafico(linha, servidor) {
        WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
        ORDER BY R.dtHora DESC LIMIT 8;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 function frequenciaDiscoGrafico(linha, servidor) {
@@ -64,8 +66,8 @@ function frequenciaDiscoGrafico(linha, servidor) {
         FROM Registro R JOIN Servidor S ON R.fkServidor = S.MacAddress
         ORDER BY R.dtHora DESC LIMIT 1;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 function comparacaoCpuRam(linha, servidor) {
@@ -82,8 +84,8 @@ function comparacaoCpuRam(linha, servidor) {
         WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
         ORDER BY R.dtHora DESC LIMIT 8;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 function pacotesRecebidos(linha, servidor) {
@@ -99,8 +101,8 @@ function pacotesRecebidos(linha, servidor) {
         ORDER BY R.dtHora DESC
         LIMIT 1;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 function comparacaoDisco(linha, servidor) {
@@ -121,8 +123,8 @@ function comparacaoDisco(linha, servidor) {
             WHERE r2.fkServidor = r.fkServidor
         );
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\nCom parâmetros: linha = ${linha}, servidor = ${servidor}`);
-    return database.executar(instrucaoSql, [linha, servidor]);
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
 }
 
 

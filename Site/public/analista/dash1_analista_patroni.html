@@ -120,7 +120,6 @@
 
 <script>
     cadastrarLinha();
-
     function cadastrarLinha() {
         fetch("/analistaPatroni/cadastrarLinha", {
                 method: "GET",
@@ -141,10 +140,12 @@
     }
 
     cadastrarServidor()
-
-    function cadastrarServidor() {
-        fetch("/analistaPatroni/cadastrarServidor", {
-                method: "GET"
+    function cadastrarServidor(linha) {
+        fetch(`/analistaPatroni/cadastrarServidor/${linha}`, {
+                method: "GET",
+                headers: {
+                "Content-Type": 'application/json'
+            }
             })
             .then(function (resposta) {
                 return resposta.json();
@@ -152,8 +153,7 @@
             .then(function (servidores) {
                 var select_servidor = document.getElementById('select_servidor');
                 servidores.forEach((servidor) => {
-                    select_servidor.innerHTML +=
-                        `<option value="${servidor.MacAddress}">${servidor.nome}</option`;
+                    select_servidor.innerHTML += `<option value="${servidor.MacAddress}">${servidor.nome}</option>`;
                 });
             })
             .catch(function (erro) {
