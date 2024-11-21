@@ -19,6 +19,23 @@ function buscarQtdAlertas(fkServidor, prioridade, mes) {
     return database.executar(instrucaoSql);
 }
 
+function buscarHorasDowntime(fkServidor, mes) {
+
+    var instrucaoSql = `
+    SELECT 10 *
+    (ROUND((SELECT COUNT(*) FROM ServidorStatus WHERE  uptime = 0 AND fkServidor = ${fkServidor} AND dataHora LIKE '%-${mes}-%') / 60, 2)) 
+    AS Horas_Downtime
+    UNION ALL
+    SELECT 10 *
+    (ROUND((SELECT COUNT(*) FROM ServidorStatus WHERE  uptime = 0 AND fkServidor = ${fkServidor} AND dataHora LIKE '%-11-%') / 60, 2)) 
+    AS Horas_Downtime;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    buscarQtdAlertas
+    buscarQtdAlertas,
+    buscarHorasDowntime
 };

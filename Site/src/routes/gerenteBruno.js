@@ -7,4 +7,8 @@ router.get("/buscarQtdAlertas/:fkServidor/:prioridade/:mes", function(req, res) 
     brunoController.buscarQtdAlertas(req, res);
 })
 
+router.get("/buscarHorasDowntime/:fkServidor/:mes", function(req, res) {
+    brunoController.buscarHorasDowntime(req, res);
+})
+
 module.exports = router;

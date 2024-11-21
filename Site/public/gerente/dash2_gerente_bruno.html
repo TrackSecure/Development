@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <span>Selecione um servidor</span>
-                        <select id="select_servidor" onchange="buscarQtdAlertas()">
+                        <select id="select_servidor" onchange="atualizarDashboard()">
                         </select>
                     </div>
                 </div>
@@ -54,13 +54,13 @@
             <div class="topo_dash">
                 <div>
                     <span>Aumento/redução de alertas de prioridade
-                      <select name="" id="select_prioridade" onchange="buscarQtdAlertas()">
+                      <select name="" id="select_prioridade" onchange="atualizarDashboard()">
                         <option selected value="High">Alta</option>
                         <option value="Medium">Média</option>
                         <option value="Low">Baixa</opWstion>
                     </select>
-                    por componente (Servidor 1) em relação a
-                    <select name="" id="select_mes" onchange="buscarQtdAlertas()">
+                    por componente (<span id="span_servidor"></span>) em relação a
+                    <select name="" id="select_mes" onchange="atualizarDashboard()">
                         <option value="01">Janeiro</option>
                         <option value="02">Fevereiro</option>
                         <option value="03">Março</option>
@@ -90,13 +90,13 @@
                 </div>
                 <div class="graficos">
                     <div>
-                        <h5 style="text-align: center;">Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do Servidor 1</h2>
-                        <div id="grafico1"></div>
+                        <h5 id="titulo_slope_chart" style="text-align: center;"></h2>
+                        <div class="quadro" id="grafico1"></div>
                     </div>
                     <hr style="width: 0.2rem; background-color: #092a45;">
                     <div>
-                        <h4 style="text-align: center;">Tempo total de Downtime no Servidor 1</h4>    
-                        <div id="grafico2"></div>
+                        <h4 id="titulo_bar_chart" style="text-align: center;"></h4>    
+                        <div class="quadro" id="grafico2"></div>
                     </div>
                 </div>
             </div>
@@ -113,8 +113,14 @@
     var alertasRamMesRecente;
     var alertasDiscoMesRecente;
 
+    var downtimeMesAnterior;
+    var downtimeMesRecente;
+
     var chart1 = null;
-    var plotado = false;
+    var chart2 = null;
+    var slope_plotado = false;
+    var bar_plotado = false;
+    var nomeServidor = "";
 
     var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"];
 
@@ -135,7 +141,11 @@
                         select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
                       }
                 });
+                titulo_bar_chart.innerHTML = `Tempo total de Downtime no ${select_servidor.options[select_servidor.selectedIndex].text}`;
+                titulo_slope_chart.innerHTML = `Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
+                span_servidor.innerHTML = `${select_servidor.options[select_servidor.selectedIndex].text}`;
                 buscarQtdAlertas();
+                buscarHorasDowntime();
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -160,7 +170,7 @@
                   alertasCpuMesRecente = resposta[3].qtdAlertas;
                   alertasRamMesRecente = resposta[4].qtdAlertas;
                   alertasDiscoMesRecente = resposta[5].qtdAlertas;
-                  if (!plotado) {
+                  if (!slope_plotado) {
                     plotarSlopeChart();
                   } else {
                     atualizarSlopeChart();
@@ -249,7 +259,7 @@
             },
           ],
             chart: {
-            height: 360,
+            height: 340,
             width: 500,
             type: 'line',
           },
@@ -269,7 +279,7 @@
           chart1 = new ApexCharts(document.getElementById("grafico1"), options);
           chart1.render();
 
-          plotado = true;
+          slope_plotado = true;
     }
 
     function atualizarSlopeChart() {
@@ -314,49 +324,95 @@
           }])
     }
 
+    function buscarHorasDowntime() {
+      var fkServidor = select_servidor.value;
+      var mes = select_mes.value;
 
-        var options2 = {
-          series: [{
-          data: [5, 9]
-        }],
-          chart: {
-          type: 'bar',
-          height: 340,
-          width: 500
-        },
-        plotOptions: {
-          bar: {
-            barHeight: '100%',
-            distributed: true,
-            horizontal: true
-          }
-        },
-        dataLabels: {
-                enabled: false
-            },
-        colors: ['#72bbc5', '#194554'
-        ],
-        xaxis: {
-          categories: ['Outubro', 'Novembro'
-          ],
-          title: {
-            text: "Horas"
-          },
-        },
-        yaxis: {
-          labels: {
-            show: false
-          }
-        },
-        legend: {
-            position: "top",
-            fontSize: "19rem",
-            markers: {
-                size: 9
+      fetch(`/gerenteBruno/buscarHorasDowntime/'${fkServidor}'/${mes}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                  downtimeMesAnterior = resposta[0].Horas_Downtime;
+                  downtimeMesRecente = resposta[1].Horas_Downtime;
+                  if (!bar_plotado) {
+                    plotarBarChart();
+                  } else {
+                    atualizarBarChart();
+                  }
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
             }
-        }
-        };
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
 
-        var chart2 = new ApexCharts(document.getElementById("grafico2"), options2);
-        chart2.render();
+    function plotarBarChart() {
+        var options2 = {
+            series: [{
+              name: "Valores",
+              data: [downtimeMesAnterior, downtimeMesRecente]
+          }],
+            chart: {
+            type: 'bar',
+            height: 340,
+            width: 500
+          },
+          plotOptions: {
+            bar: {
+              barHeight: '100%',
+              distributed: true,
+              horizontal: true
+            }
+          },
+          dataLabels: {
+                  enabled: false
+              },
+          colors: ['#72bbc5', '#194554'
+          ],
+          xaxis: {
+            categories: [meses[Number(select_mes.value)-1], 'Novembro'
+            ],
+            title: {
+              text: "Horas"
+            },
+          },
+          yaxis: {
+            labels: {
+              show: false
+            }
+          },
+          legend: {
+              position: "top",
+              fontSize: "19rem",
+              markers: {
+                  size: 9
+              }
+          }
+          };
+
+          chart2 = new ApexCharts(document.getElementById("grafico2"), options2);
+          chart2.render();
+
+          bar_plotado = true;
+      }
+
+      function atualizarBarChart() {
+        chart2.updateOptions({
+          series: [{
+              name: "Valores",
+              data: [downtimeMesAnterior, downtimeMesRecente]
+          }],
+          xaxis: {
+            categories: [meses[Number(select_mes.value)-1], 'Novembro'
+            ]
+          }
+        })
+      }
+
+      function atualizarDashboard() {
+        buscarQtdAlertas(); 
+        buscarHorasDowntime();
+      }
 </script>
