@@ -349,7 +349,24 @@
                     mensagem.innerHTML = `${dado.nome}`;
                 });
             })
-        setInterval(pacotesRecebidos, 20000);
+        setInterval(tempoUptime, 20000);
+    }
+
+    tempoDowntime();
+
+    function tempoDowntime() {
+        fetch("/gerenteEnzo/tempoDowntime", {
+                method: "GET",
+            })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                    mensagem.innerHTML = `${dado.nome}`;
+                });
+            })
+        setInterval(tempoDowntime, 20000);
     }
 
 </script>

@@ -9,6 +9,16 @@ function tempoUptime(req, res) {
         })
 }
 
+function tempoDowntime(req, res) {
+    enzoModel.tempoDowntime()
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.json(resultado);
+            } 
+        })
+}
+
 module.exports = {
-  tempoUptime
+  tempoUptime,
+  tempoDowntime
 }
