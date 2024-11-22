@@ -14,7 +14,7 @@ function cadastrarServidor(req, res){
     patroniModel.cadastrarServidor(linha)
         .then(resultado => {
             if(resultado.length > 0){
-                console.log('FK EMPRESA: ', fkEmpresa)
+                console.log('FK EMPRESA: ', linha)
                 res.json(resultado)
             }
         }).catch(

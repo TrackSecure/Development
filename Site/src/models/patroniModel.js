@@ -4,9 +4,7 @@ function cadastrarLinha() {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarLinha():");
 
     var instrucaoSql = `
-        SELECT MIN(idEstacao) AS idEstacao, linha
-        FROM Estacao
-        GROUP BY linha;
+       select distinct linha from Estacao;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -16,10 +14,11 @@ function cadastrarServidor(linha) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarServidor():");
 
     var instrucaoSql = `
-        select S.MacAddress as MacAddress , S.nome as nome
-        from Servidor S
+        SELECT S.MacAddress AS MacAddress, S.nome AS nome
+        FROM Servidor S
         JOIN Estacao E ON E.fkServidor = S.MacAddress
-        WHERE E.linha = ${linha};
+        WHERE E.linha LIKE '%${linha}%';
+
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
