@@ -19,6 +19,18 @@ function buscarQtdAlertas(fkServidor, prioridade, mes) {
     return database.executar(instrucaoSql);
 }
 
+function buscarQtdAlertas(fkServidor, prioridade) {
+
+    var instrucaoSql = `
+    SELECT MONTH(dtHora), descricao, COUNT(*) AS qtdAlerta FROM alerta
+    WHERE fkServidor = ${fkServidor} AND tipo = '${prioridade}'
+    GROUP BY MONTH(dtHora), descricao ORDER BY MONTH(dtHora);
+     `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function buscarHorasDowntime(fkServidor, mes) {
 
     var instrucaoSql = `

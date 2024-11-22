@@ -324,6 +324,23 @@
           }])
     }
 
+    function buscarHistoricoAlertas() {
+      var fkServidor = select_servidor.value;
+      var prioridade = select_prioridade.value;
+
+      fetch(`/gerenteBruno/buscarQtdAlertas/'${fkServidor}'/${prioridade}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
+
     function buscarHorasDowntime() {
       var fkServidor = select_servidor.value;
       var mes = select_mes.value;

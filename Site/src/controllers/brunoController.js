@@ -20,6 +20,25 @@ function buscarQtdAlertas(req, res) {
     });
 }
 
+function buscarHistoricoAlertas(req, res) {
+    var fkServidor = req.params.fkServidor;
+    var prioridade = req.params.prioridade;
+
+    console.log(`Recuperando a quantidade de alertas nos últimos meses`);
+
+    brunoModel.buscarHistoricoAlertas(fkServidor, prioridade).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function buscarHorasDowntime(req, res) {
     var fkServidor = req.params.fkServidor;
     var mes = req.params.mes;
@@ -41,5 +60,6 @@ function buscarHorasDowntime(req, res) {
 
 module.exports = {
     buscarQtdAlertas,
+    buscarHistoricoAlertas,
     buscarHorasDowntime
 }
