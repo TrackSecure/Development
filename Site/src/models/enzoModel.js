@@ -1,4 +1,3 @@
-const { tempoDowntime } = require("../controllers/enzoController");
 var database = require("../database/config")
 
 function tempoUptime() {
