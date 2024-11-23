@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
-<body onload="mostrar_nome(), mostrarGrafico()">
+<body onload="mostrar_nome(), mostrarGrafico(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -71,7 +71,7 @@
                     <div id="chart"></div>
                 </div>
 
-                <div class="barra-vertical"></div> <!-- Barra vertical adicionada -->
+                <div class="barra-vertical"></div>
 
                 <div class="processos">
                     <div class="card-processos">
@@ -85,21 +85,138 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script>
+        let chart = null; // Variável global para armazenar a instância do gráfico
 
-        function mostrarGrafico() {
+        async function buscarProcessosMaliciosos() {
+        try {
+            const response = await fetch("/analistaVitor/buscarProcessosMaliciosos", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
 
-            // Gráfico de top 5 processos com o mairo consumo de memoria ram 
-            var options = {
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Nomes dos processos maliciosos retornados da API:", data);
+
+                // Filtra os processos que são svchost.exe, explorer.exe ou taskhost.exe
+                const processosMaliciosos = data.filter(processo => 
+                    processo.nome_processo === "svchost.exe" || 
+                    processo.nome_processo === "explorer.exe" || 
+                    processo.nome_processo === "taskhost.exe"
+                );
+
+                if (processosMaliciosos.length > 0) {
+                    // Exibe os processos maliciosos encontrados na div 'mensagemProcessos'
+                    document.getElementById("mensagemProcessos").innerHTML = 
+                        "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
+                } else {
+                    document.getElementById("mensagemProcessos").innerHTML = "Nenhum processo malicioso detectado.";
+                }
+            } else {
+                console.error("Erro ao buscar os processos maliciosos. Status:", response.status);
+                document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
+            }
+        } catch (error) {
+            console.error("Erro na requisição da API:", error);
+            document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
+        }
+    }
+
+        async function contarProcessosAcima() {
+        try {
+            const response = await fetch("/analistaVitor/contarProcessosAcima", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Quantidade de processos acima de 20% de memória:", data);
+                // Exibe a quantidade de processos acima de 20% de memória na div com id 'mensagemAlertaAcima'
+                document.getElementById("mensagemAlertaAcima").innerHTML = data.quantidade_processos_acima_20;
+            } else {
+                console.error("Erro ao contar processos acima de 20% de memória. Status:", response.status);
+                document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima de 20% de memória.";
+            }
+        } catch (error) {
+            console.error("Erro na requisição da API:", error);
+            document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima de 20% de memória.";
+        }
+    }
+
+        async function contarProcessos() {
+            try {
+                const response = await fetch("/analistaVitor/contarProcessos", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Quantidade de processos:", data);
+                    // Exibe a quantidade de processos na div com id 'mensagemAlerta'
+                    document.getElementById("mensagemAlerta").innerHTML = data.quantidade_processos;
+                } else {
+                    console.error("Erro ao contar processos. Status:", response.status);
+                    document.getElementById("mensagemAlerta").innerHTML = "Erro ao contar processos.";
+                }
+            } catch (error) {
+                console.error("Erro na requisição da API:", error);
+                document.getElementById("mensagemAlerta").innerHTML = "Erro ao contar processos.";
+            }
+        }
+        async function buscarMetricasTop5() {
+            try {
+                const response = await fetch("/analistaVitor/graficoTopProcessos", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Dados retornados da API:", data); // Log dos dados da API
+                    return data; // Retorna os dados do backend
+                } else {
+                    console.error("Erro ao buscar as métricas do top 5 processos. Status:", response.status);
+                    return [];
+                }
+            } catch (error) {
+                console.error("Erro na requisição da API:", error);
+                return [];
+            }
+        }
+
+        async function mostrarGrafico() {
+            const metricas = await buscarMetricasTop5();
+
+            if (metricas.length === 0) {
+                document.getElementById("chart").innerHTML =
+                    "<p style='color: red;'>Nenhum dado encontrado para exibir o gráfico.</p>";
+                return;
+            }
+
+            const processos = metricas.map(item => item.nome_processo);
+            const usosRAM = metricas.map(item => item.uso_memoria);
+
+            const options = {
                 chart: {
                     type: 'bar',
                     height: 250,
                 },
                 series: [{
                     name: 'Uso RAM',
-                    data: []
+                    data: usosRAM
                 }],
                 xaxis: {
-                    categories: ['Processo1', 'Processo2', 'Processo3', 'Processo4', 'Processo5']
+                    categories: processos
                 },
                 plotOptions: {
                     bar: {
@@ -109,81 +226,13 @@
                 },
                 colors: ['#091e38'],
             };
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
-            chart.render();
 
-
-
-            //Criando as variaveis para cada metrica
-
-
-            //Varivel para total de processos e processos acima do esperado
-            let totalProcessos = document.getElementById('mensagemAlerta');
-            let totalProcessosAcima = document.getElementById('mensagemAlertaAcima');
-
-            let servidor1TotalProcessos = 120;
-            let servidor1TotalProcessosAcima = "&#8593;5";
-
-            let servidor2TotalProcessos = 102;
-            let servidor2TotalProcessosAcima = "&#8593;0";
-
-            let servidor3TotalProcessos = 130;
-            let servidor3TotalProcessosAcima = "&#8593;3";
-
-            let servidor4TotalProcessos = 130;
-            let servidor4TotalProcessosAcima = "&#8593;8";
-
-
-            //Variaveis com os valores de RAM do top 5 processos
-            let servidor1Ram = [6, 6, 5.5, 3.8, 2];
-            let servidor2Ram = [9, 6, 4.5, 3.8, 2];
-            let servidor3Ram = [4, 4, 3.5, 3.3, 1];
-            let servidor4Ram = [16, 10.8, 10.2, 4.6, 1];
-
-
-            //Variaveis para os processos maliciosos
-            let processosMaliciosos = document.getElementById('mensagemProcessos');
-            let servidor1ProcessosMaliciosos = ["new.rar", "worm.exe", "phishing.bat","explorer.bat"];
-            let servidor2ProcessosMaliciosos = ["explorer.bat", "worm.exe", "phishing.bat","new.exe"];
-            let servidor3ProcessosMaliciosos = ["jir.rar", "kos.exe", "xpto.txt","explorer.bat"];
-            let servidor4ProcessosMaliciosos = ["js.txt", "worm.exe", "sxf.exe","expanse.jar"];
-
-
-            //select do servidor 
-            const selectValue = document.getElementById('select_servidor').value;
-
-
-            // Atualizando todos valores conforme o servidor selecionado
-            if (selectValue == 0) {
-                chart.updateSeries([{
-                    data: servidor1Ram
-                }]);
-                processosMaliciosos.innerHTML = servidor1ProcessosMaliciosos;
-                totalProcessos.innerHTML = servidor1TotalProcessos;
-                totalProcessosAcima.innerHTML = servidor1TotalProcessosAcima;
-
-            } else if (selectValue == 1) {
-                chart.updateSeries([{
-                    data: servidor2Ram
-                }]);
-                processosMaliciosos.innerHTML = servidor2ProcessosMaliciosos
-                totalProcessos.innerHTML = servidor2TotalProcessos;
-                totalProcessosAcima.innerHTML = servidor2TotalProcessosAcima;
-            } else if (selectValue == 2) {
-                chart.updateSeries([{
-                    data: servidor3Ram
-                }]);
-                processosMaliciosos.innerHTML = servidor3ProcessosMaliciosos
-                totalProcessos.innerHTML = servidor3TotalProcessos;
-                totalProcessosAcima.innerHTML = servidor3TotalProcessosAcima;
-            } else if (selectValue == 3) {
-                chart.updateSeries([{
-                    data: servidor4Ram
-                }]);
-                processosMaliciosos.innerHTML = servidor4ProcessosMaliciosos
-                totalProcessos.innerHTML = servidor4TotalProcessos;
-                totalProcessosAcima.innerHTML = servidor4TotalProcessosAcima;
+            if (chart) {
+                chart.destroy(); // Destroi o gráfico anterior antes de renderizar o novo
             }
+
+            chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
         }
 
         function mostrar_nome() {
@@ -191,8 +240,6 @@
             var cargo = sessionStorage.CARGO;
             user.innerHTML = `Olá, ${nome} (${cargo})`;
         }
-
-
     </script>
 </body>
 
