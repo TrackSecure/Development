@@ -11,7 +11,7 @@ router.get("/cadastrarServidor/:linha", function(req, res){
     patroniController.cadastrarServidor(req, res); // Faz a rota dos servidores
 })
 
-router.get("/frequenciaCpuGrafico", function(req, res){
+router.get("/frequenciaCpuGrafico/:linha/:fkServidor", function(req, res){
     patroniController.frequenciaCpuGrafico(req, res); // Faz a rota do Grafico de Linha
 })
 

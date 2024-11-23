@@ -18,26 +18,26 @@ function cadastrarServidor(linha) {
         FROM Servidor S
         JOIN Estacao E ON E.fkServidor = S.MacAddress
         WHERE E.linha LIKE '%${linha}%';
-
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function frequenciaCpuGrafico(linha, servidor) {
+function frequenciaCpuGrafico(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaCpuGrafico():");
-
+    
     var instrucaoSql = `
-       SELECT TIME(R.dtHora) AS hora, 
-       R.porcentagemProcessador AS porcentagemProcessador
-       FROM Registro R
-       JOIN Servidor S ON R.fkServidor = S.MacAddress
-       JOIN Estacao E ON E.fkServidor = S.MacAddress
-       WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
-       ORDER BY R.dtHora DESC LIMIT 8;
+        SELECT TIME(R.dtHora) AS hora, 
+        R.porcentagemProcessador AS porcentagemProcessador
+        FROM Registro R
+        JOIN Servidor S ON R.fkServidor = S.MacAddress
+        JOIN Estacao E ON E.fkServidor = S.MacAddress
+        WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
+        ORDER BY R.dtHora DESC LIMIT 8;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
-    return database.executar(instrucaoSql);
+    if (linha !== undefined)
+        return database.executar(instrucaoSql);
 }
 
 function frequenciaRamGrafico(linha, servidor) {

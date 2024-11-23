@@ -14,7 +14,7 @@
 
 <body>
 
-    <body onload="mostrar_nome(), mostrarGrafico2()">
+    <body onload="mostrar_nome()">
         <div class="dashboard">
             <header>
                 <div class="perfil">
@@ -40,11 +40,10 @@
                 <div class="container">
                     <h2>Dashboard</h2>
                     <p class="Servidor">Selecione uma Linha!</p>
-                    <select id="select_Linha" onchange="cadastrarServidor(this.value)">
-                    </select>
+                    <select id="select_Linha" onchange="cadastrarServidor(this.value);"></select>
 
                     <p class="Servidor">Selecione um Servidor!</p>
-                    <select id="select_servidor">
+                    <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value)">
                     </select>
 
                     <p class="selecionarDash">Selecione uma Dashboard!</p>
@@ -77,9 +76,9 @@
                             </select>
                         </h4>
 
-                        <div id="chart1" class="grafico1"></div>
-                        <div id="chart2" class="grafico2"></div>
-                        <div id="chart3" class="grafico3"></div>
+                        <div id="chart1" class="grafico1" style="display: block;"></div>
+                        <div id="chart2" class="grafico2" style="display: none;"></div>
+                        <div id="chart3" class="grafico3" style="display: none;"></div>
 
 
                     </div>
@@ -121,6 +120,8 @@
 
 
 <script>
+    setInterval(atualizarGraficoSelecionado, 2000);
+
     cadastrarLinha();
     function cadastrarLinha() {
         fetch("/analistaPatroni/cadastrarLinha", {
@@ -142,10 +143,9 @@
             });
     }
 
-   
-    
+
+
     cadastrarServidor('Azul')
-    cadastrarServidor(linha)
     function cadastrarServidor(linha) {
         fetch(`/analistaPatroni/cadastrarServidor/${linha}`, {
             method: "GET",
@@ -157,9 +157,10 @@
                 if (resposta.ok) {
                     resposta.json().then(function (resposta) {
                         var dados = resposta[0];
-                        document.getElementById("select_servidor").innerHTML ='';
+                        document.getElementById("select_servidor").innerHTML = '';
                         resposta.forEach(item => {
-                            document.getElementById("select_servidor").innerHTML += `<option value="${item.MacAddress}">${item.nome}</option>`;
+                            document.getElementById("select_servidor").innerHTML +=
+                                `<option value="${item.MacAddress}">${item.nome}</option>`;
                         });
                     })
                         .catch(function (erro) {
@@ -169,7 +170,6 @@
                 }
             })
     }
-
 
     function selecionarDash() {
         var selecionarDash = select_dash.value
@@ -187,6 +187,9 @@
     }
 
     function mostrarGrafico2() {
+        const linha = select_Linha.value;
+        const fkServidor = select_servidor.value;
+
         const selectValue = document.getElementById('select_grafico_linha').value;
 
         const grafico1 = document.getElementsByClassName('grafico1')[0];
@@ -199,7 +202,7 @@
 
         if (selectValue == 0) {
             grafico1.style.display = 'block';
-            frequenciaCpuGrafico();
+            frequenciaCpuGrafico(linha, fkServidor);
         } else if (selectValue == 1) {
             grafico2.style.display = 'block';
             frequenciaRamGrafico();
@@ -207,11 +210,10 @@
             grafico3.style.display = 'block';
             frequenciaDiscoGrafico();
         }
+
     }
 
-    frequenciaCpuGrafico()
-
-    function frequenciaCpuGrafico() {
+    function frequenciaCpuGrafico(linha, fkServidor) {
         const atualizarGraficoCPU = (dados) => {
             const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
             const dataCPU = dados.map(item => item.hora).reverse();
@@ -247,7 +249,6 @@
                 },
             };
 
-
             if (!window.chartCPU) {
                 window.chartCPU = new ApexCharts(document.querySelector("#chart1"), options);
                 window.chartCPU.render();
@@ -257,7 +258,7 @@
         };
 
         const buscarDados = () => {
-            fetch("/analistaPatroni/frequenciaCpuGrafico", {
+            fetch(`/analistaPatroni/frequenciaCpuGrafico/${linha}/${fkServidor}`, {
                 method: "GET"
             })
                 .then(resposta => resposta.json())
@@ -265,11 +266,26 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 20000);
+    };
+
+    function atualizarGraficoSelecionado() {
+        const linha = document.getElementById("select_Linha").value;
+        const fkServidor = document.getElementById("select_servidor").value;
+        const selectValue = document.getElementById("select_grafico_linha").value;
+
+        if (selectValue == 0 && document.getElementById("chart1").style.display == "block") {
+            frequenciaCpuGrafico(linha, fkServidor);
+        } //else if (selectValue == 1 && document.getElementById("chart2").style.display == "block") {
+        //     frequenciaRamGrafico();
+        // } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
+        //     frequenciaDiscoGrafico();
+        // }
     }
 
-    frequenciaRamGrafico()
+    
 
+
+    frequenciaRamGrafico()
     function frequenciaRamGrafico() {
         const atualizarGraficoRAM = (dados) => {
             const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
