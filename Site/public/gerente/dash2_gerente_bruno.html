@@ -24,7 +24,7 @@
                 <div class="container">
                     <button onclick="window.location='../cadastro_estacao.html'">Cadastros</button>
                     <button onclick="window.location='../dashboard_inicial_gerente.html'">Início</button>
-                    <button onclick="sair()">Sair</button>
+                    <button onclick="window.location='../index.html'">Sair</button>
                 </div>
             </div>
         </header>
@@ -45,6 +45,14 @@
                         <select id="select_servidor" onchange="atualizarDashboard()">
                         </select>
                     </div>
+                    <div>
+                        <span>Ir para outra Dashboard</span>
+                        <select id="select_dash" onchange="mudarDashboard()">
+                            <option selected >Comparação de Problemas</option>
+                            <option value="0">Up e Downtime</option>
+                            <option value="1">Análise Geral</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="logo">
                     <img src="../imgs/logo.png" alt="logo" class="logo-img">
@@ -54,7 +62,7 @@
             <div class="topo_dash">
                 <div>
                     <span>Aumento/redução de alertas de prioridade
-                      <select name="" id="select_prioridade" onchange="atualizarDashboard()">
+                      <select name="" id="select_prioridade" onchange="buscarQtdAlertas(), buscarHistoricoAlertas()">
                         <option selected value="High">Alta</option>
                         <option value="Medium">Média</option>
                         <option value="Low">Baixa</opWstion>
@@ -77,25 +85,29 @@
                 <div class="cards">
                     <div>
                         <h3 style="color: #1ec9d5;">CPU</h3>
-                        <div id="div_cpu"><span id="card_cpu" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_cpu"><span id="card_cpu" style="font-size: 1.7rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #218c93;">RAM</h3>
-                        <div id="div_ram"><span id="card_ram" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_ram"><span id="card_ram" style="font-size: 1.7rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                     <div>
                         <h3 style="color: #122178;">Disco</h3>
-                        <div id="div_disco"><span id="card_disco" style="font-size: 2rem; text-decoration: none; font-weight: bolder;"></span></div>
+                        <div id="div_disco"><span id="card_disco" style="font-size: 1.7rem; text-decoration: none; font-weight: bolder;"></span></div>
                     </div>
                 </div>
+                <div style='height: 1rem; width: 80vw; border-bottom: 0.1rem solid black;'></div>
                 <div class="graficos">
                     <div>
                         <h5 id="titulo_slope_chart" style="text-align: center;"></h2>
+                        <button id="btn_troca" onclick="trocarGrafico()">Mostrar como histórico</button>
                         <div class="quadro" id="grafico1"></div>
+                        <div style="display: none;" class="quadro" id="grafico3"></div>
                     </div>
                     <hr style="width: 0.2rem; background-color: #092a45;">
                     <div>
-                        <h4 id="titulo_bar_chart" style="text-align: center;"></h4>    
+                        <h5 id="titulo_bar_chart" style="text-align: center;"></h5>
+                        <button onclick="irParaDashUptime()">Ver mais detalhes</button>    
                         <div class="quadro" id="grafico2"></div>
                     </div>
                 </div>
@@ -113,14 +125,23 @@
     var alertasRamMesRecente;
     var alertasDiscoMesRecente;
 
+    var dados_alertas_cpu;
+    var dados_alertas_ram;
+    var dados_alertas_disco;
+
     var downtimeMesAnterior;
     var downtimeMesRecente;
 
     var chart1 = null;
     var chart2 = null;
+    var chart3 = null;
     var slope_plotado = false;
     var bar_plotado = false;
+    var historico_plotado = false;
     var nomeServidor = "";
+
+    var slope_mostrado = true;
+    var historico_mostrado = false;
 
     var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"];
 
@@ -142,9 +163,10 @@
                       }
                 });
                 titulo_bar_chart.innerHTML = `Tempo total de Downtime no ${select_servidor.options[select_servidor.selectedIndex].text}`;
-                titulo_slope_chart.innerHTML = `Gráfico de inclinação do aumento/redução <br> da quantidade de problemas por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
+                titulo_slope_chart.innerHTML = `Gráfico de inclinação do aumento/redução <br> da quantidade de alertas por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
                 span_servidor.innerHTML = `${select_servidor.options[select_servidor.selectedIndex].text}`;
                 buscarQtdAlertas();
+                buscarHistoricoAlertas();
                 buscarHorasDowntime();
                 });
             } else {
@@ -324,23 +346,6 @@
           }])
     }
 
-    function buscarHistoricoAlertas() {
-      var fkServidor = select_servidor.value;
-      var prioridade = select_prioridade.value;
-
-      fetch(`/gerenteBruno/buscarQtdAlertas/'${fkServidor}'/${prioridade}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
-            });
-    }
-
     function buscarHorasDowntime() {
       var fkServidor = select_servidor.value;
       var mes = select_mes.value;
@@ -368,7 +373,6 @@
     function plotarBarChart() {
         var options2 = {
             series: [{
-              name: "Valores",
               data: [downtimeMesAnterior, downtimeMesRecente]
           }],
             chart: {
@@ -378,7 +382,7 @@
           },
           plotOptions: {
             bar: {
-              barHeight: '100%',
+              barHeight: '80%',
               distributed: true,
               horizontal: true
             }
@@ -397,15 +401,16 @@
           },
           yaxis: {
             labels: {
-              show: false
+              style: {
+                  colors: [],
+                  fontSize: '1.1vw',
+                  fontWeight: 'bold',
+                  cssClass: 'apexcharts-yaxis-label',
+              }
             }
           },
           legend: {
-              position: "top",
-              fontSize: "19rem",
-              markers: {
-                  size: 9
-              }
+            show: false
           }
           };
 
@@ -428,8 +433,146 @@
         })
       }
 
+      function buscarHistoricoAlertas() {
+        var fkServidor = select_servidor.value;
+        var prioridade = select_prioridade.value;
+
+        fetch(`/gerenteBruno/buscarHistoricoAlertas/'${fkServidor}'/${prioridade}`, { cache: 'no-store' }).then(function (response) {
+              if (response.ok) {
+                  response.json().then(function (resposta) {
+                    dados_alertas_cpu = [];
+                    dados_alertas_ram = [];
+                    dados_alertas_disco = [];
+                    resposta.forEach((registro) => {
+                      if (registro.descricao.indexOf("CPU") != -1) {
+                        dados_alertas_cpu.push(registro.qtdAlerta);
+                      } else if (registro.descricao.indexOf("RAM") != -1) {
+                        dados_alertas_ram.push(registro.qtdAlerta);
+                      } else if (registro.descricao.indexOf("Disco") != -1) {
+                        dados_alertas_disco.push(registro.qtdAlerta);
+                      }
+                  })
+                  if (historico_plotado) {
+                    atualizarHistoricoAlertas();
+                  } else {
+                    plotarHistoricoAlertas();
+                  }
+                  });
+              } else {
+                  console.error('Nenhum dado encontrado ou erro na API');
+              }
+          })
+              .catch(function (error) {
+                  console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+              });
+      }
+
+      function plotarHistoricoAlertas() {
+        var options3 = {
+            colors:['#1ec9d5', '#218c93', '#122178'],
+            series: [{
+              name: "CPU",
+              data: dados_alertas_cpu
+          },
+          {
+              name: "RAM",
+              data: dados_alertas_ram
+          },
+          {
+              name: "Disco",
+              data: dados_alertas_disco
+          }],
+            chart: {
+            height: 347,
+            width: 500,
+            type: 'line',
+            zoom: {
+              enabled: false
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          stroke: {
+            curve: 'straight'
+          },
+          grid: {
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            },
+          },
+          xaxis: {
+            categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'],
+            title: {
+              text: "Meses"
+            }
+          },
+          legend: {
+            show: true,
+            position: 'top',
+            horizontalAlign: 'center',
+            fontSize: "15rem"
+          }
+          };
+
+          chart3 = new ApexCharts(document.getElementById("grafico3"), options3);
+          chart3.render();
+
+          historico_plotado = true;
+      }
+
+      function atualizarHistoricoAlertas() {
+        chart3.updateOptions({
+          series: [{
+              name: "CPU",
+              data: dados_alertas_cpu
+          },
+          {
+              name: "RAM",
+              data: dados_alertas_ram
+          },
+          {
+              name: "Disco",
+              data: dados_alertas_disco
+          }],
+        })
+      }
+
+      function trocarGrafico() {
+        if (slope_mostrado) {
+          document.getElementById("grafico1").style = "display: none";
+          document.getElementById("grafico3").style = "display: block";
+          slope_mostrado = false;
+          historico_mostrado = true;
+          btn_troca.innerHTML = "< Voltar";
+          titulo_slope_chart.innerHTML = `Gráfico de linha do histórico de alertas <br> por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
+        } else {
+          document.getElementById("grafico1").style = "display: block";
+          document.getElementById("grafico3").style = "display: none";
+          slope_mostrado = true;
+          historico_mostrado = false;
+          btn_troca.innerHTML = "Mostrar como histórico";
+          titulo_slope_chart.innerHTML = `Gráfico de inclinação do aumento/redução <br> da quantidade de alertas por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
+        }
+      }
+
+      function mudarDashboard() {
+        var dash = select_dash.value;
+        if (dash == "0") {
+          window.location = "dash3_gerente_bizeli.html";
+        } else if (dash == "1") {
+          window.location = "dash1_gerente_bruna.html";
+        }
+      }
+
+      function irParaDashUptime() {
+        window.location = 'dash3_gerente_bizeli.html';
+      }
+
       function atualizarDashboard() {
-        buscarQtdAlertas(); 
+        buscarQtdAlertas();
+        buscarHistoricoAlertas(); 
         buscarHorasDowntime();
       }
 </script>

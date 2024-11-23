@@ -19,7 +19,7 @@ function buscarQtdAlertas(fkServidor, prioridade, mes) {
     return database.executar(instrucaoSql);
 }
 
-function buscarQtdAlertas(fkServidor, prioridade) {
+function buscarHistoricoAlertas(fkServidor, prioridade) {
 
     var instrucaoSql = `
     SELECT MONTH(dtHora), descricao, COUNT(*) AS qtdAlerta FROM alerta
@@ -49,5 +49,6 @@ function buscarHorasDowntime(fkServidor, mes) {
 
 module.exports = {
     buscarQtdAlertas,
-    buscarHorasDowntime
+    buscarHorasDowntime,
+    buscarHistoricoAlertas
 };
