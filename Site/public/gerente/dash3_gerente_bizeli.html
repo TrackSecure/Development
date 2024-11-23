@@ -66,9 +66,9 @@
                 <div class="cards">
                     <div>
                         <div class="texto_esquerda_dash1">
-                            <h3 style="color: #1C5C99">Porcentagem de Uptime <br> (12 meses):</h3>
+                            <h3 style="color: #1C5C99">Horas de Uptime <br> (12 meses):</h3>
                         </div>
-                        <div class="card_ok"><span style="font-size: 1.5rem;"><div id="mensagem"></div></span></div>
+                        <div class="card_ok"><span style="font-size: 1.5rem;"><div id="mensagemUptime"></div></span></div>
                     </div>
                     <div>
                         <div class="texto_esquerda_dash3">
@@ -78,7 +78,7 @@
                                 <option value="">RAM</option>
                             </select> -->
                         </div>
-                        <div class="card_critico"><span>9.4</span></div>
+                        <div class="card_critico"><span><div id="mensagemDowntime"></div></span></div>
                     </div>
                     <div>
                         <div class="texto_esquerda_dash3">
@@ -90,12 +90,12 @@
 
                 <div class="graficos">
                     <div>
-                        <h5 style="text-align: center;">Média de Downtime dos últimos 12 meses:</h5>
+                        <h5 style="text-align: center;">Média de horas de Downtime dos últimos 12 meses:</h5>
                         <div id="grafico1"></div>
                     </div>
                     <div>
                         <div class="texto_grafico2">
-                            <h5 style="text-align: center;">Média de Downtime dos últimos 12 meses da</h5>
+                            <h5 style="text-align: center;">Média mensal de Downtime da <br> (12 meses)</h5>
                             <select name="componente" id="">
                                 <option selected value="">CPU</option>
                                 <option value="">RAM</option>
@@ -117,188 +117,73 @@
         user.innerHTML = `Olá, ${nome}`;
     }
 
-    var options1 = {
-        series: [
-            {
-                name: 'Actual',
-                data: [
-                    {
-                        x: 'Novembro',
-                        y: 1.0,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Dezembro',
-                        y: 0.4,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Janeiro',
-                        y: 0.7,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Fevereiro',
-                        y: 1.3,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Março',
-                        y: 1.1,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Abril',
-                        y: 1.7,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 13,
-                                strokeWidth: 0,
-                                strokeLineCap: 'round',
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Maio',
-                        y: 0.8,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Junho',
-                        y: 1.0,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Julho',
-                        y: 0.6,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Agosto',
-                        y: 1.3,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Setembro',
-                        y: 1.9,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 13,
-                                strokeWidth: 0,
-                                strokeLineCap: 'round',
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    },
-                    {
-                        x: 'Outubro',
-                        y: 1.2,
-                        goals: [
-                            {
-                                name: 'Expected',
-                                value: 1.5,
-                                strokeHeight: 3,
-                                strokeColor: '#5c93d6'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        chart: {
-            height: 350,
-            width: 500,
-            type: 'bar'
-        },
-        plotOptions: {
-            bar: {
-                columnWidth: '60%'
-            }
-        },
-        colors: ['#091e38'],
-        dataLabels: {
-            enabled: false
-        },
-        legend: {
-            show: true,
-            showForSingleSeries: true,
-            customLegendItems: ['Atual', 'Esperado'],
-            markers: {
-                fillColors: ['#091e38', '#5c93d6']
-            }
+    graficoMediaHoras()
+
+    function graficoMediaHoras() {
+    const atualizarGrafico = (dados) => {
+        const meses = [
+            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", 
+            "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"
+        ];
+
+        // Mapeando os valores para cada mês
+        const data = meses.map((mes, index) => ({
+            x: mes,
+            y: dados[index]?.qtdHoras || 0,
+            goals: [
+                {
+                    name: "Expected",
+                    value: 3.0,
+                    strokeHeight: 3,
+                    strokeColor: "#5c93d6",
+                },
+            ],
+        }));
+
+        var options1 = {
+            series: [{ name: "Atual", data }],
+            chart: {
+                height: 350,
+                width: 500,
+                type: "bar",
+            },
+            plotOptions: {
+                bar: { columnWidth: "60%" },
+            },
+            colors: ["#091e38"],
+            dataLabels: { enabled: false },
+            legend: {
+                show: true,
+                showForSingleSeries: true,
+                customLegendItems: ["Atual", "Esperado"],
+                markers: {
+                    fillColors: ["#091e38", "#5c93d6"],
+                },
+            },
+        };
+
+        if (!window.chartDiaHora) {
+            window.chartDiaHora = new ApexCharts(
+                document.querySelector("#grafico1"),
+                options1
+            );
+            window.chartDiaHora.render();
+        } else {
+            window.chartDiaHora.updateOptions(options1);
         }
     };
 
-    var chart = new ApexCharts(document.getElementById("grafico1"), options1);
-    chart.render();
+    const buscarDados = () => {
+        fetch("/gerenteEnzo/graficoMediaHoras", { method: "GET" })
+            .then((resposta) => resposta.json())
+            .then(atualizarGrafico)
+            .catch((erro) => console.error("Erro ao buscar dados:", erro));
+    };
+
+    buscarDados();
+    setInterval(buscarDados, 20000); 
+}
+
 
 
 
@@ -346,10 +231,11 @@
             })
             .then(function (dados) {
                 dados.forEach((dado) => {
-                    mensagem.innerHTML = `${dado.nome}`;
+                    // if(dado.Horas_Uptime > ){}
+                    mensagemUptime.innerHTML = `${dado.Horas_Uptime}`;
                 });
             })
-        setInterval(tempoUptime, 20000);
+        setInterval(tempoUptime, 2000000);
     }
 
     tempoDowntime();
@@ -363,10 +249,10 @@
             })
             .then(function (dados) {
                 dados.forEach((dado) => {
-                    mensagem.innerHTML = `${dado.nome}`;
+                    mensagemDowntime.innerHTML = `${dado.Horas_Downtime}`;
                 });
             })
-        setInterval(tempoDowntime, 20000);
+        setInterval(tempoDowntime, 2000000);
     }
 
 </script>

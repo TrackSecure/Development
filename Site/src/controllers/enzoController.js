@@ -18,7 +18,27 @@ function tempoDowntime(req, res) {
         })
 }
 
+function graficoMediaHoras(req, res) {
+    enzoModel.graficoMediaHoras()
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.json(resultado);
+            } 
+        })
+}
+
+function graficoMensalDowntime(req, res) {
+    enzoModel.graficoMensalDowntime()
+        .then(resultado => {
+            if (resultado.length > 0) {
+                res.json(resultado);
+            } 
+        })
+}
+
 module.exports = {
   tempoUptime,
-  tempoDowntime
+  tempoDowntime,
+  graficoMediaHoras,
+  graficoMensalDowntime
 }

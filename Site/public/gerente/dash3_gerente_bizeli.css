@@ -275,8 +275,14 @@ header {
 }
 
 .texto_grafico2{
-    width: 20rem;
-    margin-left: 70px;
+    width: 30rem;
+    margin-left: 80px;
     display: flex;
     flex-direction: row;
+}
+
+.texto_grafico2 select{
+    display: flex;
+    margin-left: 10px;
+    margin-bottom: 15px;
 }
