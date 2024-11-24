@@ -43,10 +43,11 @@
                     <select id="select_Linha" onchange="cadastrarServidor(this.value);"></select>
 
                     <p class="Servidor">Selecione um Servidor!</p>
-                    <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value), 
+                    <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value)
                     frequenciaRamGrafico(select_Linha.value, this.value)
                     frequenciaDiscoGrafico(select_Linha.value, this.value)
-                    comparacaoCpuRam(select_Linha.value, this.value)">
+                    comparacaoCpuRam(select_Linha.value, this.value)
+                    pacotesRecebidos(select_Linha.value, this.value)">
                     </select>
 
                     <p class="selecionarDash">Selecione uma Dashboard!</p>
@@ -547,21 +548,24 @@
     setInterval(atualizarGraficoSelecionado, 2000);
 
 
-    // pacotesRecebidos();
-    // function pacotesRecebidos() {
-    //     fetch("/analistaPatroni/pacotesRecebidos", {
-    //         method: "GET",
-    //     })
-    //         .then(function (resposta) {
-    //             return resposta.json();
-    //         })
-    //         .then(function (dados) {
-    //             dados.forEach((dado) => {
-    //                 mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
-    //             });
-    //         })
-    //     setInterval(pacotesRecebidos, 20000);
-    // }
+    pacotesRecebidos("Azul", "00:00:00:00:00:00");
+    function pacotesRecebidos(linha, fkServidor) {
+        fetch(`/analistaPatroni/pacotesRecebidos/${linha}/${fkServidor}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                    mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
+                });
+            })
+        setInterval(pacotesRecebidos, 20000);
+    }
 
     // comparacaoDisco()
 

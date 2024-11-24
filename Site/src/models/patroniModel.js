@@ -90,16 +90,15 @@ function comparacaoCpuRam(linha, fkServidor) {
     return database.executar(instrucaoSql);
 }
 
-function pacotesRecebidos(linha, servidor) {
+function pacotesRecebidos(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function pacotesRecebidos():");
 
     var instrucaoSql = `
         Select R.pacotesRecebidos as pacotesRecebidos 
         from Registro R
-        JOIN Estacao E 
-        ON R.fkServidor = E.fkServidor
-        WHERE E.linha = 'Linha Verde'
-        AND R.fkServidor = '00:00:00:00:00:00'
+        JOIN Estacao E ON R.fkServidor = E.fkServidor
+		JOIN Servidor S ON R.fkServidor = S.MacAddress
+		WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
         ORDER BY R.dtHora DESC
         LIMIT 1;
     `;
