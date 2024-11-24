@@ -160,23 +160,23 @@
                             <button id="myBtn5"><strong>?</strong></button>
                             <h1>Fluxo de pessoas na linha</h1>
                             <select name="select_linha" id="selectLinha">
-                                <option value="azul">Azul</option>
-                                <option value="verde">Verde</option>
-                                <option value="vermelha">Vermelha</option>
-                                <option value="prata">Prata</option>
+                                <option value="Azul" selected>Azul</option>
+                                <option value="Verde">Verde</option>
+                                <option value="Vermelha">Vermelha</option>
+                                <option value="Prata">Prata</option>
                             </select>
                             <h1>no mês:</h1>
                             <select name="select_mes" id="selectMes">
-                                <option value="janeiro">Janeiro</option>
-                                <option value="fevereiro">Fevereriro</option>
-                                <option value="março">Março</option>
-                                <option value="abril">Abril</option>
-                                <option value="maio">Maio</option>
-                                <option value="junho">Junho</option>
-                                <option value="julho">Julho</option>
-                                <option value="agosto">Agosto</option>
-                                <option value="setembro">Setembro</option>
-                                <option value="outubro">Outubro</option>
+                                <option value="1" selected>Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
                             </select>
                         </div>
                         <div class="conteudo-right">
@@ -239,6 +239,8 @@
         infoAlertaCPU(sessionStorage.ID_EMPRESA);
         infoAlertaRAM(sessionStorage.ID_EMPRESA);
         mostrar_nome();
+        inicializarGraficoInicial();
+        inicializarWordCloudInicial();
     };
 
     // SERVIDORES SOBRECARREGADOS ################################################################################################################################
@@ -541,87 +543,172 @@
 
     // GRÁFICO BARRAS ################################################################################################################################
 
-    var options = {
-        series: [{
-            data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
-        }],
-        chart: {
-            type: 'bar',
-            height: 300
-        },
-        plotOptions: {
-            bar: {
-                borderRadius: 4,
-                borderRadiusApplication: 'end',
-                horizontal: true,
+    let chart;
+
+    function obterDadosBarras(linha, mes) {
+        fetch(`/bruna/grafico/${linha}/${mes}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+
+                        if (chart && chart.destroy) {
+                            chart.destroy();
+                        }
+
+                        plotarGraficoBarra(resposta);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarGraficoBarra(resposta) {
+        console.log('Iniciando a plotagem do gráfico...');
+
+        let labels = [];
+        let dados = [];
+
+        resposta.forEach((registro) => {
+            labels.push(registro.estacao);
+            dados.push(registro.quantidade_pessoas);
+        });
+
+        const options = {
+            series: [{
+                data: dados
+            }],
+            chart: {
+                type: 'bar',
+                height: 300
+            },
+            plotOptions: {
+                bar: {
+                    borderRadius: 4,
+                    borderRadiusApplication: 'end',
+                    horizontal: true
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: labels
             }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        xaxis: {
-            categories: ['Tucuruvi', 'Parada Inglesa', 'Jardim São Paulo',
-                'Santana', 'Carandiru', 'Portuguesa Tiête', 'Armênia', 'Tiradentes',
-                'Luz', 'São Bento', 'Sé', 'Liberdade', 'São Joaquim', 'Vergueiro',
-                'Paraiso', 'Ana Rosa', 'Vila Mariana', 'Santa Cruz', 'Praça da Árvore',
-                'Saúde', 'São Judas', 'Conceição', 'Jabaquara'
-            ],
-        }
-    };
+        };
 
+        chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    }
 
+    function inicializarGraficoInicial() {
+        const linhaInicial = 'Azul';
+        const mesInicial = 1;
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+        obterDadosBarras(linhaInicial, mesInicial);
+    }
 
-    chart.render();
+    document.getElementById("selectLinha").addEventListener("change", function () {
+        const linhaSelecionada = this.value;
+        const mesSelecionado = document.getElementById("selectMes").value;
+        obterDadosBarras(linhaSelecionada, mesSelecionado);
+    });
+
+    document.getElementById("selectMes").addEventListener("change", function () {
+        const mesSelecionado = this.value;
+        const linhaSelecionada = document.getElementById("selectLinha").value;
+        obterDadosBarras(linhaSelecionada, mesSelecionado);
+    });
 
     // WORD CLOUD ################################################################################################################################
 
-    var data = [
-        { "x": "learning", value: 80 },
-        { "x": "includes", value: 56 },
-        { "x": "lists", value: 44 },
-        { "x": "meaning", value: 40 },
-        { "x": "useful", value: 36 },
-        { "x": "different", value: 32 },
-        { "x": "grammar", value: 28 },
-        { "x": "teaching", value: 24 },
-        { "x": "example", value: 20 },
-        { "x": "thing", value: 12 },
-    ];
+    // COLOCAR ROTA DIFERENTE PARA WORD CLOUD -> LIMIT 5
 
-    chart = anychart.tagCloud(data);
+    let wordCloudChart;
 
-    var customColorScale = anychart.scales.linearColor();
-    customColorScale.colors(["#698cbe", "#091e38"]);
+    function obterDadosWordCloud(linha, mes) {
+        fetch(`/bruna/grafico/${linha}/${mes}`, { cache: 'no-store' })
+            .then(function (response) {
+                if (response.ok) {
+                    response.json().then(function (resposta) {
+                        console.log(`Dados recebidos para Word Cloud: ${JSON.stringify(resposta)}`);
 
-    chart.colorScale(customColorScale);
+                        if (wordCloudChart && wordCloudChart.destroy) {
+                            wordCloudChart.destroy();
+                        }
 
-    chart.colorRange().enabled(true);
-    chart.colorRange().length("90%");
+                        plotarWordCloud(resposta);
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ Word Cloud: ${error.message}`);
+            });
+    }
 
-    chart.width("700px");
-    chart.height("250px");
+    function plotarWordCloud(resposta) {
+        console.log('Iniciando a plotagem da Word Cloud...');
 
-    chart.tooltip().useHtml(true);
+        let data = resposta.map((registro) => ({
+            "x": registro.estacao,
+            value: registro.quantidade_pessoas
+        }));
 
-    chart.tooltip().format(function () {
-        var percentOfTotal = (this.getData("value") * 100) / this.getStat("sum");
-        if (percentOfTotal < 7)
-            return percentOfTotal.toFixed(1) +
-                "%<br></br><br></br>"
-        if (percentOfTotal > 15)
-            return "<span style='font-size:26'>" +
-                percentOfTotal.toFixed(1) +
-                "%</span><br><br>"
-        return "<span style='font-size:18'>" +
-            percentOfTotal.toFixed(1) +
-            "%</span><br><br>"
+        wordCloudChart = anychart.tagCloud(data);
+        document.getElementById("WordCloud").innerHTML = '';
+
+        var customColorScale = anychart.scales.linearColor();
+        customColorScale.colors(["#698cbe", "#091e38"]);
+
+        wordCloudChart.colorScale(customColorScale);
+        wordCloudChart.colorRange().enabled(true);
+        wordCloudChart.colorRange().length("90%");
+
+        wordCloudChart.width("700px");
+        wordCloudChart.height("250px");
+
+        wordCloudChart.tooltip().useHtml(true);
+        wordCloudChart.tooltip().format(function () {
+            var percentOfTotal = (this.getData("value") * 100) / this.getStat("sum");
+            if (percentOfTotal < 7)
+                return percentOfTotal.toFixed(1) + "%<br></br><br></br>";
+            if (percentOfTotal > 15)
+                return "<span style='font-size:26'>" + percentOfTotal.toFixed(1) + "%</span><br><br>";
+            return "<span style='font-size:18'>" + percentOfTotal.toFixed(1) + "%</span><br><br>";
+        });
+
+        wordCloudChart.container("WordCloud");
+        wordCloudChart.draw();
+    }
+
+    function inicializarWordCloudInicial() {
+        const linhaInicial = 'Azul';
+        const mesInicial = 1;
+
+        obterDadosWordCloud(linhaInicial, mesInicial);
+    }
+
+    document.getElementById("selectLinha").addEventListener("change", function () {
+        const linhaSelecionada = this.value;
+        const mesSelecionado = document.getElementById("selectMes").value;
+        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);  
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado); 
     });
 
-    chart.container("WordCloud");
+    document.getElementById("selectMes").addEventListener("change", function () {
+        const mesSelecionado = this.value;
+        const linhaSelecionada = document.getElementById("selectLinha").value;
+        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);  
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado); 
+    });
 
-    chart.draw();
+
 
     // MENU ################################################################################################################################
 

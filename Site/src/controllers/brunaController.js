@@ -220,6 +220,30 @@ function infoRankRAM(req, res) {
     )
 }
 
+function grafico(req, res) {
+
+    var linha = req.params.linha;
+    var mes = req.params.mes
+
+    brunaModel.grafico(linha,mes)
+    .then(
+        function (resultado) {
+            console.log('LINHA: ', linha)
+            console.log('MES:', mes)
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+                console.log(
+                    "\nHouve um erro ao capturar as informações dos gráficos! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+        }
+    )
+}
+
 module.exports = {
     qtdServidorSobrecarregado,
     infoServidorSobrecarregado,
@@ -230,5 +254,6 @@ module.exports = {
     rankCPU,
     infoRankCPU,
     rankRAM,
-    infoRankRAM
+    infoRankRAM,
+    grafico
 }

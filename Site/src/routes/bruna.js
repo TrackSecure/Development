@@ -43,4 +43,8 @@ router.get("/infoRankRAM/:fkEmpresa", function (req, res) {
     brunaController.infoRankRAM(req, res);
 });
 
+router.get("/grafico/:linha/:mes", function (req, res) {
+    brunaController.grafico(req, res);
+});
+
 module.exports = router;

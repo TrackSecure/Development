@@ -219,6 +219,17 @@ function infoRankRAM(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function grafico(linha,mes) {
+    var instrucaoSql = `
+        SELECT estacao, quantidade_pessoas
+        FROM webcrawler
+        WHERE linha = '${linha}'
+        AND mes = ${mes};
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 
 module.exports = {
@@ -231,5 +242,6 @@ module.exports = {
     rankCPU,
     infoRankCPU,
     rankRAM,
-    infoRankRAM
+    infoRankRAM,
+    grafico
 };
