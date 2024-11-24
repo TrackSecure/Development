@@ -47,7 +47,8 @@
                     frequenciaRamGrafico(select_Linha.value, this.value)
                     frequenciaDiscoGrafico(select_Linha.value, this.value)
                     comparacaoCpuRam(select_Linha.value, this.value)
-                    pacotesRecebidos(select_Linha.value, this.value)">
+                    pacotesRecebidos(select_Linha.value, this.value)
+                    comparacaoDisco(select_Linha.value, this.value)">
                     </select>
 
                     <p class="selecionarDash">Selecione uma Dashboard!</p>
@@ -527,26 +528,7 @@
         buscarDados();
     }
 
-    //######################################################################################################################
-
-    function atualizarGraficoSelecionado() {
-        const linha = document.getElementById("select_Linha").value;
-        const fkServidor = document.getElementById("select_servidor").value;
-        const selectValue = document.getElementById("select_grafico_linha").value;
-
-        if (selectValue == 0 && document.getElementById("chart1").style.display == "block") {
-            frequenciaCpuGrafico(linha, fkServidor);
-        } else if (selectValue == 1 && document.getElementById("chart2").style.display == "block") {
-            frequenciaRamGrafico(linha, fkServidor);
-        } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
-            frequenciaDiscoGrafico(linha, fkServidor);
-        } else if (document.getElementById("chart4").style.display == "block"){
-            comparacaoCpuRam(linha, fkServidor)
-        }
-    }
-
-    setInterval(atualizarGraficoSelecionado, 2000);
-
+//######################################################################################################################
 
     pacotesRecebidos("Azul", "00:00:00:00:00:00");
     function pacotesRecebidos(linha, fkServidor) {
@@ -567,60 +549,78 @@
         setInterval(pacotesRecebidos, 20000);
     }
 
-    // comparacaoDisco()
+//##########################################################################################################################
 
-    // function comparacaoDisco() {
-    //     const atualizarGraficoComparacaoDisco = (dados) => {
+    comparacaoDisco("Azul", "00:00:00:00:00:00")
+    function comparacaoDisco(linha, fkServidor) {
+        const atualizarGraficoComparacaoDisco = (dados) => {
+            const discoUsado = dados.map(item => item.DiscoUsado);
+            const discoDisponivel = dados.map(item => item.DiscoDisponivel);
+            const Servidor = dados.map(item => item.Servidor);
 
-    //         const discoUsado = dados.map(item => item.DiscoUsado);
-    //         const discoDisponivel = dados.map(item => item.DiscoDisponivel);
-    //         const Servidor = dados.map(item => item.Servidor);
+            const options = {
+                series: [{
+                    name: 'Disco Usado',
+                    data: discoUsado
+                }, {
+                    name: 'Disco Disponivel',
+                    data: discoDisponivel
+                }],
+                chart: {
+                    type: 'bar',
+                    width: 350,
+                    height: 300,
+                    stacked: true,
+                    stackType: '100%'
+                },
+                xaxis: {
+                    categories: Servidor,
+                },
+                fill: {
+                    opacity: 1
+                },
+            };
 
-    //         const options = {
-    //             series: [{
-    //                 name: 'Disco Usado',
-    //                 data: discoUsado
-    //             }, {
-    //                 name: 'Disco Disponivel',
-    //                 data: discoDisponivel
-    //             }],
-    //             chart: {
-    //                 type: 'bar',
-    //                 width: 350,
-    //                 height: 300,
-    //                 stacked: true,
-    //                 stackType: '100%'
-    //             },
-    //             xaxis: {
-    //                 categories: Servidor,
-    //             },
-    //             fill: {
-    //                 opacity: 1
-    //             },
-    //         };
+            if (!window.chartComparacaoDisco) {
+                window.chartComparacaoDisco = new ApexCharts(document.querySelector("#chart5"), options);
+                window.chartComparacaoDisco.render();
+            } else {
+                window.chartComparacaoDisco.updateOptions(options);
+            }
+        };
 
+        const buscarDados = () => {
+            fetch(`/analistaPatroni/comparacaoDisco/${linha}/${fkServidor}`, {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoComparacaoDisco)
+        };
 
-    //         if (!window.chartComparacaoDisco) {
-    //             window.chartComparacaoDisco = new ApexCharts(document.querySelector("#chart5"), options);
-    //             window.chartComparacaoDisco.render();
-    //         } else {
-    //             window.chartComparacaoDisco.updateOptions(options);
-    //         }
-    //     };
+        buscarDados();
+    }
 
-    //     const buscarDados = () => {
-    //         fetch("/analistaPatroni/comparacaoDisco", {
-    //             method: "GET"
-    //         })
-    //             .then(resposta => resposta.json())
-    //             .then(atualizarGraficoComparacaoDisco)
-    //     };
+//############################################################################################################################
 
-    //     buscarDados();
-    //     setInterval(buscarDados, 20000);
-    // }
+function atualizarGraficoSelecionado() {
+        const linha = document.getElementById("select_Linha").value;
+        const fkServidor = document.getElementById("select_servidor").value;
+        const selectValue = document.getElementById("select_grafico_linha").value;
 
+        if (selectValue == 0 && document.getElementById("chart1").style.display == "block") {
+            frequenciaCpuGrafico(linha, fkServidor);
+        } else if (selectValue == 1 && document.getElementById("chart2").style.display == "block") {
+            frequenciaRamGrafico(linha, fkServidor);
+        } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
+            frequenciaDiscoGrafico(linha, fkServidor);
+        } else if (document.getElementById("chart4").style.display == "block"){
+            comparacaoCpuRam(linha, fkServidor)
+        } else if (document.getElementById("chart4").style.display == "block"){
+            comparacaoDisco(linha, fkServidor)
+        }
+    }
 
+    setInterval(atualizarGraficoSelecionado, 2000);
 
 
 

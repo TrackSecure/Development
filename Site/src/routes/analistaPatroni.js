@@ -31,7 +31,7 @@ router.get("/pacotesRecebidos/:linha/:fkServidor", function(req, res){
     patroniController.pacotesRecebidos(req, res); // Faz a rota dos pacotes
 })
 
-router.get("/comparacaoDisco", function(req, res){
+router.get("/comparacaoDisco/:linha/:fkServidor", function(req, res){
     patroniController.comparacaoDisco(req, res); // Faz a rota do Grafico de Comparação de Disco
 })
 

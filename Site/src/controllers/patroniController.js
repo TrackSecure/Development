@@ -143,19 +143,28 @@ function pacotesRecebidos(req, res) {
         )
 }
 
-
 function comparacaoDisco(req, res) {
+    var linha = req.params.linha;
+    var fkServidor = req.params.fkServidor
 
-    var linha = req.body.linhaServer
-    var servidor = req.body.servidorServer
-
-    patroniModel.comparacaoDisco(linha, servidor)
+    patroniModel.comparacaoDisco(linha, fkServidor)
         .then(resultado => {
             if (resultado.length > 0) {
+                console.log('Linha e FKServidor:', linha, fkServidor)
                 res.json(resultado)
             }
-        })
+        }).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao capturar a CPU! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
 }
+
 
 
 

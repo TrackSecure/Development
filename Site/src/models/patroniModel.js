@@ -106,18 +106,18 @@ function pacotesRecebidos(linha, fkServidor) {
     return database.executar(instrucaoSql);
 }
 
-function comparacaoDisco(linha, servidor) {
+function comparacaoDisco(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function comparacaoDisco():");
 
     var instrucaoSql = `
-       SELECT 
+        SELECT 
         r.porcentagemDisco AS DiscoUsado,
         (100 - r.porcentagemDisco) AS DiscoDisponivel,
         s.nome AS Servidor
         FROM Registro r
         JOIN Servidor s ON r.fkServidor = s.MacAddress
         JOIN Estacao e ON e.fkServidor = s.MacAddress
-        WHERE e.linha = 'Linha Verde'
+        WHERE E.linha LIKE '%${linha}%'
         AND r.dtHora = (
             SELECT MAX(r2.dtHora)
             FROM Registro r2
