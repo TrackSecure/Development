@@ -43,7 +43,9 @@
                     <select id="select_Linha" onchange="cadastrarServidor(this.value);"></select>
 
                     <p class="Servidor">Selecione um Servidor!</p>
-                    <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value), frequenciaRamGrafico(select_Linha.value, this.value)">
+                    <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value), 
+                    frequenciaRamGrafico(select_Linha.value, this.value)
+                    frequenciaDiscoGrafico(select_Linha.value, this.value)">
                     </select>
 
                     <p class="selecionarDash">Selecione uma Dashboard!</p>
@@ -69,16 +71,19 @@
                     <div class="left-top">
 
                         <h4 style="width: 50%;"> <b>Percentual de Uso RAM X CPU (P/Hora)</b>
-                            <select id="select_grafico_linha" onchange="mostrarGrafico2(), frequenciaCpuGrafico(select_Linha.value, select_servidor.value), frequenciaRamGrafico(select_Linha.value, select_servidor.value)">
-                                <option value="0"selected>CPU</option>
+                            <select id="select_grafico_linha" onchange="mostrarGrafico2(), 
+                            frequenciaCpuGrafico(select_Linha.value, select_servidor.value), 
+                            frequenciaRamGrafico(select_Linha.value, select_servidor.value)
+                            frequenciaDiscoGrafico(select_Linha.value, select_servidor.value)">
+                                <option value="0" selected>CPU</option>
                                 <option value="1">RAM</option>
                                 <option value="2">DISCO</option>
                             </select>
                         </h4>
 
-                        <div id="chart1" class="grafico1" style="display: block;">FELIPE</div>
-                        <div id="chart2" class="grafico2" style="display: none;">PATRONI</div>
-                        <div id="chart3" class="grafico3"></div>
+                        <div id="chart1" class="grafico1" style="display: block;"></div>
+                        <div id="chart2" class="grafico2" style="display: none;"></div>
+                        <div id="chart3" class="grafico3" style="display: none;"></div>
 
 
                     </div>
@@ -120,9 +125,8 @@
 
 
 <script>
-    
-
     cadastrarLinha();
+
     function cadastrarLinha() {
         fetch("/analistaPatroni/cadastrarLinha", {
             method: "GET",
@@ -144,6 +148,7 @@
     }
 
     cadastrarServidor('Azul')
+
     function cadastrarServidor(linha) {
         fetch(`/analistaPatroni/cadastrarServidor/${linha}`, {
             method: "GET",
@@ -193,9 +198,11 @@
 
         const grafico1 = document.getElementsByClassName('grafico1')[0];
         const grafico2 = document.getElementsByClassName('grafico2')[0];
+        const grafico3 = document.getElementsByClassName('grafico3')[0];
 
         grafico1.style.display = 'none';
         grafico2.style.display = 'none';
+        grafico3.style.display = 'none';
 
         if (selectValue == 0) {
             grafico1.style.display = 'block';
@@ -203,11 +210,15 @@
         } else if (selectValue == 1) {
             grafico2.style.display = 'block';
             frequenciaRamGrafico(linha, fkServidor);
-        } 
+        } else if (selectValue == 2) {
+            grafico3.style.display = 'block';
+            frequenciaDiscoGrafico(linha, fkServidor);
+        }
 
     }
 
     frequenciaCpuGrafico("Azul", "00:00:00:00:00:00")
+
     function frequenciaCpuGrafico(linha, fkServidor) {
         const atualizarGraficoCPU = (dados) => {
             const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
@@ -264,6 +275,7 @@
     };
 
     frequenciaRamGrafico("Azul", "00:00:00:00:00:00")
+
     function frequenciaRamGrafico(linha, fkServidor) {
         const atualizarGraficoRAM = (dados) => {
             const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
@@ -317,56 +329,134 @@
         buscarDadosRAM();
     }
 
+    frequenciaDiscoGrafico("Azul", "00:00:00:00:00:00")
 
+    function frequenciaDiscoGrafico(linha, fkServidor) {
+        const atualizarGraficoDISCO = (dados) => {
 
-    // frequenciaDiscoGrafico()
-    // function frequenciaDiscoGrafico() {
-    //     const atualizarGraficoDISCO = (dados) => {
+            const discoUsado = dados.map(item => item.discoUsado);
+            const discoDisponivel = dados.map(item => item.discoDisponivel);
 
-    //         const discoUsado = dados.map(item => item.discoUsado);
-    //         const discoDisponivel = dados.map(item => item.discoDisponivel);
+            console.log("Disco Usado:", discoUsado);
+            console.log("Disco Disponível:", discoDisponivel);
 
-    //         console.log("Disco Usado:", discoUsado);
-    //         console.log("Disco Disponível:", discoDisponivel);
+            var options = {
+                series: [
+                    {
+                        name: '% Do Disco',
+                        data: [
+                            {
+                                x: 'Disco Usado',
+                                y: discoUsado,
+                            },
+                            {
+                                x: 'Disco Disponível',
+                                y: discoDisponivel, 
+                            },
+                        ],
+                    },
+                ],
+                chart: {
+                    height: 350,
+                    width: 600,
+                    type: 'line',
+                    animations: {
+                        enabled: true, 
+                    },
+                },
+                plotOptions: {
+                    line: {
+                        isSlopeChart: true,
+                        curve: 'smooth', 
+                        dataLabels: {
+                            enabled: true, 
+                            style: {
+                                fontSize: '14px',
+                                fontWeight: 'bold',
+                                colors: ['#ffffff'],
+                            },
+                        },
+                    },
+                },
+                colors: ['#28a745', '#dc3545'], 
+                markers: {
+                    size: 5, 
+                    colors: ['#ffffff', '#ffffff'], 
+                    strokeColor: '#000', 
+                    strokeWidth: 2, 
+                },
+                xaxis: {
+                    categories: ['Disco Disponível', 'Disco Usado'],
+                    labels: {
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            colors: ['#333333'], 
+                        },
+                    },
+                },
+                yaxis: {
+                    labels: {
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            colors: ['#333333'], 
+                        },
+                    },
+                },
+                grid: {
+                    borderColor: '#ddd',
+                    strokeDashArray: 5, 
+                },
+                title: {
+                    text: 'Uso do Disco (%)',
+                    align: 'center',
+                    style: {
+                        fontSize: '18px',
+                        fontWeight: 'bold',
+                        color: '#333333', 
+                    },
+                },
+                tooltip: {
+                    theme: 'dark', 
+                    x: {
+                        show: true, 
+                    },
+                    y: {
+                        formatter: function (val) {
+                            return val.toFixed(2) + '%'; 
+                        },
+                    },
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'center',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    labels: {
+                        colors: '#333', 
+                    },
+                },
+            };
 
-    //         var options = {
-    //             series: [discoUsado[0], discoDisponivel[0]],
-    //             chart: {
-    //                 type: 'donut',
-    //                 width: 600,
-    //                 height: 250
-    //             },
-    //             labels: ['Disco Usado', 'Disco Disponível'],
-    //             responsive: [{
-    //                 options: {
-    //                     chart: {},
-    //                     legend: {
-    //                         position: 'bottom'
-    //                     }
-    //                 }
-    //             }]
+            if (!window.chartDisco) {
+                window.chartDisco = new ApexCharts(document.querySelector("#chart3"), options);
+                window.chartDisco.render();
+            } else {
+                window.chartDisco.updateOptions(options);
+            }
+        };
 
-    //         };
+        const buscarDados = () => {
+            fetch(`/analistaPatroni/frequenciaDiscoGrafico/${linha}/${fkServidor}`, {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoDISCO)
+        };
 
-    //         if (!window.chartDisco) {
-    //             window.chartDisco = new ApexCharts(document.querySelector("#chart3"), options);
-    //             window.chartDisco.render();
-    //         } else {
-    //             window.chartDisco.updateOptions(options);
-    //         }
-    //     };
-
-    //     const buscarDados = () => {
-    //         fetch("/analistaPatroni/frequenciaDiscoGrafico", {
-    //             method: "GET"
-    //         })
-    //             .then(resposta => resposta.json())
-    //             .then(atualizarGraficoDISCO)
-    //     };
-
-    //     buscarDados();
-    //     setInterval(buscarDados, 20000);
-    // }
+        buscarDados();
+    }
 
     function atualizarGraficoSelecionado() {
         const linha = document.getElementById("select_Linha").value;
@@ -377,10 +467,13 @@
             frequenciaCpuGrafico(linha, fkServidor);
         } else if (selectValue == 1 && document.getElementById("chart2").style.display == "block") {
             frequenciaRamGrafico(linha, fkServidor);
-        } 
+        } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
+            frequenciaDiscoGrafico(linha, fkServidor);
+        }
     }
 
     setInterval(atualizarGraficoSelecionado, 2000);
+
     //#############################################################################################################################################
 
     // comparacaoCpuRam()
