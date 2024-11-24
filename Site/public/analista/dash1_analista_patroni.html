@@ -45,7 +45,8 @@
                     <p class="Servidor">Selecione um Servidor!</p>
                     <select id="select_servidor" onchange="frequenciaCpuGrafico(select_Linha.value, this.value), 
                     frequenciaRamGrafico(select_Linha.value, this.value)
-                    frequenciaDiscoGrafico(select_Linha.value, this.value)">
+                    frequenciaDiscoGrafico(select_Linha.value, this.value)
+                    comparacaoCpuRam(select_Linha.value, this.value)">
                     </select>
 
                     <p class="selecionarDash">Selecione uma Dashboard!</p>
@@ -330,7 +331,6 @@
     }
 
     frequenciaDiscoGrafico("Azul", "00:00:00:00:00:00")
-
     function frequenciaDiscoGrafico(linha, fkServidor) {
         const atualizarGraficoDISCO = (dados) => {
 
@@ -351,7 +351,7 @@
                             },
                             {
                                 x: 'Disco Disponível',
-                                y: discoDisponivel, 
+                                y: discoDisponivel,
                             },
                         ],
                     },
@@ -361,15 +361,15 @@
                     width: 600,
                     type: 'line',
                     animations: {
-                        enabled: true, 
+                        enabled: true,
                     },
                 },
                 plotOptions: {
                     line: {
                         isSlopeChart: true,
-                        curve: 'smooth', 
+                        curve: 'smooth',
                         dataLabels: {
-                            enabled: true, 
+                            enabled: true,
                             style: {
                                 fontSize: '14px',
                                 fontWeight: 'bold',
@@ -378,12 +378,12 @@
                         },
                     },
                 },
-                colors: ['#28a745', '#dc3545'], 
+                colors: ['#28a745', '#dc3545'],
                 markers: {
-                    size: 5, 
-                    colors: ['#ffffff', '#ffffff'], 
-                    strokeColor: '#000', 
-                    strokeWidth: 2, 
+                    size: 5,
+                    colors: ['#ffffff', '#ffffff'],
+                    strokeColor: '#000',
+                    strokeWidth: 2,
                 },
                 xaxis: {
                     categories: ['Disco Disponível', 'Disco Usado'],
@@ -391,7 +391,7 @@
                         style: {
                             fontSize: '14px',
                             fontWeight: 'bold',
-                            colors: ['#333333'], 
+                            colors: ['#333333'],
                         },
                     },
                 },
@@ -400,13 +400,13 @@
                         style: {
                             fontSize: '14px',
                             fontWeight: 'bold',
-                            colors: ['#333333'], 
+                            colors: ['#333333'],
                         },
                     },
                 },
                 grid: {
                     borderColor: '#ddd',
-                    strokeDashArray: 5, 
+                    strokeDashArray: 5,
                 },
                 title: {
                     text: 'Uso do Disco (%)',
@@ -414,17 +414,17 @@
                     style: {
                         fontSize: '18px',
                         fontWeight: 'bold',
-                        color: '#333333', 
+                        color: '#333333',
                     },
                 },
                 tooltip: {
-                    theme: 'dark', 
+                    theme: 'dark',
                     x: {
-                        show: true, 
+                        show: true,
                     },
                     y: {
                         formatter: function (val) {
-                            return val.toFixed(2) + '%'; 
+                            return val.toFixed(2) + '%';
                         },
                     },
                 },
@@ -434,7 +434,7 @@
                     fontSize: '14px',
                     fontWeight: 'bold',
                     labels: {
-                        colors: '#333', 
+                        colors: '#333',
                     },
                 },
             };
@@ -458,6 +458,76 @@
         buscarDados();
     }
 
+    //#############################################################################################################################################
+
+    comparacaoCpuRam("Azul", "00:00:00:00:00:00")
+    function comparacaoCpuRam(linha, fkServidor) {
+        const atualizarGraficoComparacao = (dados) => {
+
+            const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
+            const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
+            const dataComparacao = dados.map(item => item.hora).reverse();
+
+            var options = {
+                series: [{
+                    name: "CPU",
+                    data: porcentagemProcessador
+                },
+                {
+                    name: "RAM",
+                    data: porcentagemMemoria
+                }
+                ],
+                chart: {
+                    width: 600,
+                    height: 300,
+                    type: 'line',
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    curve: 'straight'
+                },
+                title: {
+                    align: 'left'
+                },
+                grid: {
+                    row: {
+                        colors: ['#f3f3f3', 'transparent'],
+                        opacity: 0.5
+                    },
+                },
+                xaxis: {
+                    categories: dataComparacao,
+                },
+                colors: ['#FF4560', '#00E396']
+            };
+
+            if (!window.chartComparacao) {
+                window.chartComparacao = new ApexCharts(document.querySelector("#chart4"), options);
+                window.chartComparacao.render();
+            } else {
+                window.chartComparacao.updateOptions(options);
+            }
+        };
+
+        const buscarDados = () => {
+            fetch(`/analistaPatroni/comparacaoCpuRam/${linha}/${fkServidor}`, {
+                method: "GET"
+            })
+                .then(resposta => resposta.json())
+                .then(atualizarGraficoComparacao)
+        };
+
+        buscarDados();
+    }
+
+    //######################################################################################################################
+
     function atualizarGraficoSelecionado() {
         const linha = document.getElementById("select_Linha").value;
         const fkServidor = document.getElementById("select_servidor").value;
@@ -469,79 +539,12 @@
             frequenciaRamGrafico(linha, fkServidor);
         } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
             frequenciaDiscoGrafico(linha, fkServidor);
+        } else if (document.getElementById("chart4").style.display == "block"){
+            comparacaoCpuRam(linha, fkServidor)
         }
     }
 
     setInterval(atualizarGraficoSelecionado, 2000);
-
-    //#############################################################################################################################################
-
-    // comparacaoCpuRam()
-    // function comparacaoCpuRam() {
-    //     const atualizarGraficoComparacao = (dados) => {
-
-    //         const porcentagemMemoria = dados.map(item => item.porcentagemMemoria).reverse();
-    //         const porcentagemProcessador = dados.map(item => item.porcentagemProcessador).reverse();
-    //         const dataComparacao = dados.map(item => item.hora).reverse();
-
-    //         var options = {
-    //             series: [{
-    //                 name: "CPU",
-    //                 data: porcentagemProcessador
-    //             },
-    //             {
-    //                 name: "RAM",
-    //                 data: porcentagemMemoria
-    //             }
-    //             ],
-    //             chart: {
-    //                 width: 600,
-    //                 height: 300,
-    //                 type: 'line',
-    //                 zoom: {
-    //                     enabled: false
-    //                 }
-    //             },
-    //             dataLabels: {
-    //                 enabled: false
-    //             },
-    //             stroke: {
-    //                 curve: 'straight'
-    //             },
-    //             title: {
-    //                 align: 'left'
-    //             },
-    //             grid: {
-    //                 row: {
-    //                     colors: ['#f3f3f3', 'transparent'],
-    //                     opacity: 0.5
-    //                 },
-    //             },
-    //             xaxis: {
-    //                 categories: dataComparacao,
-    //             },
-    //             colors: ['#FF4560', '#00E396']
-    //         };
-
-    //         if (!window.chartComparacao) {
-    //             window.chartComparacao = new ApexCharts(document.querySelector("#chart4"), options);
-    //             window.chartComparacao.render();
-    //         } else {
-    //             window.chartComparacao.updateOptions(options);
-    //         }
-    //     };
-
-    //     const buscarDados = () => {
-    //         fetch("/analistaPatroni/comparacaoCpuRam", {
-    //             method: "GET"
-    //         })
-    //             .then(resposta => resposta.json())
-    //             .then(atualizarGraficoComparacao)
-    //     };
-
-    //     buscarDados();
-    //     setInterval(buscarDados, 20000);
-    // }
 
 
     // pacotesRecebidos();

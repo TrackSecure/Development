@@ -23,7 +23,7 @@ router.get("/frequenciaDiscoGrafico/:linha/:fkServidor", function(req, res){
     patroniController.frequenciaDiscoGrafico(req, res); // Faz a rota do Grafico do Disco
 })
 
-router.get("/comparacaoCpuRam", function(req, res){
+router.get("/comparacaoCpuRam/:linha/:fkServidor", function(req, res){
     patroniController.comparacaoCpuRam(req, res); // Faz a rota do Grafico de Comparação
 })
 
