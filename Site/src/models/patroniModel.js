@@ -40,7 +40,7 @@ function frequenciaCpuGrafico(linha, fkServidor) {
         return database.executar(instrucaoSql);
 }
 
-function frequenciaRamGrafico(linha, servidor) {
+function frequenciaRamGrafico(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function frequenciaRamGrafico():");
 
     var instrucaoSql = `
@@ -49,7 +49,7 @@ function frequenciaRamGrafico(linha, servidor) {
        FROM Registro R
        JOIN Servidor S ON R.fkServidor = S.MacAddress
        JOIN Estacao E ON E.fkServidor = S.MacAddress
-       WHERE E.linha = 'Linha Verde' AND S.nome = 'Servidor 1'
+       WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
        ORDER BY R.dtHora DESC LIMIT 8;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);

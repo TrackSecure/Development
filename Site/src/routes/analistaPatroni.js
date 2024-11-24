@@ -15,7 +15,7 @@ router.get("/frequenciaCpuGrafico/:linha/:fkServidor", function(req, res){
     patroniController.frequenciaCpuGrafico(req, res); // Faz a rota do Grafico de Linha
 })
 
-router.get("/frequenciaRamGrafico", function(req, res){
+router.get("/frequenciaRamGrafico/:linha/:fkServidor", function(req, res){
     patroniController.frequenciaRamGrafico(req, res); // Faz a rota do Grafico de Ram
 })
 
