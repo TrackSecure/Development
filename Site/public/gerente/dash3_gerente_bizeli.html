@@ -24,8 +24,8 @@
             <div class="botao">
                 <div class="container">
                     <button onclick="window.location='../cadastro_estacao.html'">Cadastros</button>
-                    <button onclick="inicio()">Início</button>
-                    <button onclick="sair()">Sair</button>
+                    <button onclick="window.location='dash1_gerente_bruna.html'">Início</button>
+                    <button onclick="window.location='../index.html'">Sair</button>
                 </div>
             </div>
         </header>
@@ -50,7 +50,7 @@
                         </select>
 
                         <span>Selecione uma Dashboard</span>
-                        <select>
+                        <select id="selectDash">
                             <option value="0" selected>Up e Downtime</option>
                             <option value="1">Análise Geral</option>
                             <option value="2">Comparação de Problemas</option>
@@ -254,6 +254,23 @@
             })
         setInterval(tempoDowntime, 2000000);
     }
+
+
+
+    document.getElementById("selectDash").addEventListener("change", function() {
+        var value = this.value; 
+        var url = "";
+
+        if (value == "0") {
+            url = "pagina1.html";
+        } else if (value == "1") {
+            url = "pagina2.html";
+        } else if (value == "2") {
+            url = "pagina3.html";
+        }
+
+        window.location.href = url;
+    });
 
 </script>
 

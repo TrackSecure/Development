@@ -545,7 +545,7 @@
 
     let chart;
 
-    function obterDadosBarras(linha, mes) {
+    function obterDadosBarras(linha, mes, corLinha1) {
         fetch(`/bruna/grafico/${linha}/${mes}`, { cache: 'no-store' })
             .then(function (response) {
                 if (response.ok) {
@@ -556,7 +556,7 @@
                             chart.destroy();
                         }
 
-                        plotarGraficoBarra(resposta);
+                        plotarGraficoBarra(resposta, corLinha1);
                     });
                 } else {
                     console.error('Nenhum dado encontrado ou erro na API');
@@ -567,7 +567,7 @@
             });
     }
 
-    function plotarGraficoBarra(resposta) {
+    function plotarGraficoBarra(resposta, corLinha1) {
         console.log('Iniciando a plotagem do gráfico...');
 
         let labels = [];
@@ -590,7 +590,11 @@
                 bar: {
                     borderRadius: 4,
                     borderRadiusApplication: 'end',
-                    horizontal: true
+                    horizontal: true,
+                    colors: {
+                        backgroundBarColors: ['#f2f2f2'],
+                        backgroundBarOpacity: 0.5
+                    }
                 }
             },
             dataLabels: {
@@ -598,7 +602,8 @@
             },
             xaxis: {
                 categories: labels
-            }
+            },
+            colors: [corLinha1]
         };
 
         chart = new ApexCharts(document.querySelector("#chart"), options);
@@ -609,26 +614,71 @@
         const linhaInicial = 'Azul';
         const mesInicial = 1;
 
-        obterDadosBarras(linhaInicial, mesInicial);
+        let corLinha1;
+        switch (linhaInicial) {
+            case "Azul":
+                corLinha1 = "#00008B";
+                break;
+        }
+
+        obterDadosBarras(linhaInicial, mesInicial, corLinha1);
     }
 
     document.getElementById("selectLinha").addEventListener("change", function () {
-        const linhaSelecionada = this.value;
         const mesSelecionado = document.getElementById("selectMes").value;
-        obterDadosBarras(linhaSelecionada, mesSelecionado);
+        const linhaSelecionada = this.value;
+
+        let corLinha1;
+        switch (linhaSelecionada) {
+            case "Azul":
+                corLinha1 = "#00008B";
+                break;
+            case "Verde":
+                corLinha1 = "#006400";
+                break;
+            case "Vermelha":
+                corLinha1 = "#E84D4D";
+                break;
+            case "Prata":
+                corLinha1 = "#B0B0B0";
+                break;
+            default:
+                corLinha1 = "#CCCCCC"; 
+        }
+
+        obterDadosBarras(linhaSelecionada, mesSelecionado, corLinha1);
     });
 
     document.getElementById("selectMes").addEventListener("change", function () {
         const mesSelecionado = this.value;
         const linhaSelecionada = document.getElementById("selectLinha").value;
-        obterDadosBarras(linhaSelecionada, mesSelecionado);
+
+        let corLinha1;
+        switch (linhaSelecionada) {
+            case "Azul":
+                corLinha1 = "#00008B";
+                break;
+            case "Verde":
+                corLinha1 = "#006400";
+                break;
+            case "Vermelha":
+                corLinha1 = "#E84D4D";
+                break;
+            case "Prata":
+                corLinha1 = "#B0B0B0";
+                break;
+            default:
+                corLinha1 = "#CCCCCC"; 
+        }
+
+        obterDadosBarras(linhaSelecionada, mesSelecionado, corLinha1);
     });
 
     // WORD CLOUD ################################################################################################################################
 
     let wordCloudChart;
 
-    function obterDadosWordCloud(linha, mes) {
+    function obterDadosWordCloud(linha, mes, corLinha) {
         fetch(`/bruna/wordCloud/${linha}/${mes}`, { cache: 'no-store' })
             .then(function (response) {
                 if (response.ok) {
@@ -639,7 +689,7 @@
                             wordCloudChart.destroy();
                         }
 
-                        plotarWordCloud(resposta);
+                        plotarWordCloud(resposta, corLinha);
                     });
                 } else {
                     console.error('Nenhum dado encontrado ou erro na API');
@@ -650,7 +700,7 @@
             });
     }
 
-    function plotarWordCloud(resposta) {
+    function plotarWordCloud(resposta, corLinha) {
         console.log('Iniciando a plotagem da Word Cloud...');
 
         let data = resposta.map((registro) => ({
@@ -659,13 +709,13 @@
         }));
 
         if (wordCloudChart) {
-            wordCloudChart.dispose(); 
+            wordCloudChart.dispose();
         }
 
         wordCloudChart = anychart.tagCloud(data);
 
         var customColorScale = anychart.scales.linearColor();
-        customColorScale.colors(["#698cbe", "#091e38"]);
+        customColorScale.colors(corLinha);
 
         wordCloudChart.colorScale(customColorScale);
         wordCloudChart.colorRange().enabled(true);
@@ -695,21 +745,50 @@
         const linhaInicial = 'Azul';
         const mesInicial = 1;
 
-        obterDadosWordCloud(linhaInicial, mesInicial);
+        let corLinha;
+        if (linhaInicial === "Azul") {
+            corLinha = ["#698cbe", "#091e38"];
+        }
+
+        obterDadosWordCloud(linhaInicial, mesInicial, corLinha);
     }
 
     document.getElementById("selectLinha").addEventListener("change", function () {
         const linhaSelecionada = this.value;
         const mesSelecionado = document.getElementById("selectMes").value;
+
+        let corLinha;
+        if (linhaSelecionada === "Azul") {
+            corLinha = ["#698cbe", "#091e38"];
+        } else if (linhaSelecionada === "Verde") {
+            corLinha = ["#7ACB6F", "#0A381B"];
+        } else if (linhaSelecionada === "Vermelha") {
+            corLinha = ["#E84D4D", "#610000"];
+        } else if (linhaSelecionada === "Prata") {
+            corLinha = ["#B0B0B0", "#4F4F4F"];
+        }
+
         console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);
-        obterDadosWordCloud(linhaSelecionada, mesSelecionado);
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado, corLinha);
     });
 
     document.getElementById("selectMes").addEventListener("change", function () {
         const mesSelecionado = this.value;
         const linhaSelecionada = document.getElementById("selectLinha").value;
+
+        let corLinha;
+        if (linhaSelecionada === "Azul") {
+            corLinha = ["#698cbe", "#091e38"];
+        } else if (linhaSelecionada === "Verde") {
+            corLinha = ["#7ACB6F", "#0A381B"];
+        } else if (linhaSelecionada === "Vermelha") {
+            corLinha = ["#E84D4D", "#610000"];
+        } else if (linhaSelecionada === "Prata") {
+            corLinha = ["#B0B0B0", "#4F4F4F"];
+        }
+
         console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);
-        obterDadosWordCloud(linhaSelecionada, mesSelecionado);
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado, corLinha);
     });
 
 
