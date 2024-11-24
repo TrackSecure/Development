@@ -236,7 +236,31 @@ function grafico(req, res) {
         function (erro) {
             console.log(erro);
                 console.log(
-                    "\nHouve um erro ao capturar as informações dos gráficos! Erro: ",
+                    "\nHouve um erro ao capturar as informações dos gráfico de barras! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+        }
+    )
+}
+
+function wordCloud(req, res) {
+
+    var linha = req.params.linha;
+    var mes = req.params.mes
+
+    brunaModel.wordCloud(linha,mes)
+    .then(
+        function (resultado) {
+            console.log('LINHA: ', linha)
+            console.log('MES:', mes)
+            res.json(resultado);
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+                console.log(
+                    "\nHouve um erro ao capturar as informações do word cloud! Erro: ",
                     erro.sqlMessage
                 );
                 res.status(500).json(erro.sqlMessage);
@@ -255,5 +279,6 @@ module.exports = {
     infoRankCPU,
     rankRAM,
     infoRankRAM,
-    grafico
+    grafico,
+    wordCloud
 }

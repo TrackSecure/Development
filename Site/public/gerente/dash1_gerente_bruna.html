@@ -626,12 +626,10 @@
 
     // WORD CLOUD ################################################################################################################################
 
-    // COLOCAR ROTA DIFERENTE PARA WORD CLOUD -> LIMIT 5
-
     let wordCloudChart;
 
     function obterDadosWordCloud(linha, mes) {
-        fetch(`/bruna/grafico/${linha}/${mes}`, { cache: 'no-store' })
+        fetch(`/bruna/wordCloud/${linha}/${mes}`, { cache: 'no-store' })
             .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (resposta) {
@@ -660,8 +658,11 @@
             value: registro.quantidade_pessoas
         }));
 
+        if (wordCloudChart) {
+            wordCloudChart.dispose(); 
+        }
+
         wordCloudChart = anychart.tagCloud(data);
-        document.getElementById("WordCloud").innerHTML = '';
 
         var customColorScale = anychart.scales.linearColor();
         customColorScale.colors(["#698cbe", "#091e38"]);
@@ -672,6 +673,9 @@
 
         wordCloudChart.width("700px");
         wordCloudChart.height("250px");
+
+        wordCloudChart.angles([0]);
+        wordCloudChart.scale(anychart.scales.linear());
 
         wordCloudChart.tooltip().useHtml(true);
         wordCloudChart.tooltip().format(function () {
@@ -697,15 +701,15 @@
     document.getElementById("selectLinha").addEventListener("change", function () {
         const linhaSelecionada = this.value;
         const mesSelecionado = document.getElementById("selectMes").value;
-        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);  
-        obterDadosWordCloud(linhaSelecionada, mesSelecionado); 
+        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado);
     });
 
     document.getElementById("selectMes").addEventListener("change", function () {
         const mesSelecionado = this.value;
         const linhaSelecionada = document.getElementById("selectLinha").value;
-        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);  
-        obterDadosWordCloud(linhaSelecionada, mesSelecionado); 
+        console.log(`Linha selecionada: ${linhaSelecionada}, Mês selecionado: ${mesSelecionado}`);
+        obterDadosWordCloud(linhaSelecionada, mesSelecionado);
     });
 
 

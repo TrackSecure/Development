@@ -224,7 +224,21 @@ function grafico(linha,mes) {
         SELECT estacao, quantidade_pessoas
         FROM webcrawler
         WHERE linha = '${linha}'
-        AND mes = ${mes};
+        AND mes = ${mes}
+        ORDER BY quantidade_pessoas DESC;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function wordCloud(linha,mes) {
+    var instrucaoSql = `
+        SELECT estacao, quantidade_pessoas
+        FROM webcrawler
+        WHERE linha = '${linha}'
+        AND mes = ${mes}
+        ORDER BY quantidade_pessoas DESC
+        LIMIT 10;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -243,5 +257,6 @@ module.exports = {
     infoRankCPU,
     rankRAM,
     infoRankRAM,
-    grafico
+    grafico,
+    wordCloud
 };

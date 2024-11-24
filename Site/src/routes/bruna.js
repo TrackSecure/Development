@@ -47,4 +47,8 @@ router.get("/grafico/:linha/:mes", function (req, res) {
     brunaController.grafico(req, res);
 });
 
+router.get("/wordCloud/:linha/:mes", function (req, res) {
+    brunaController.wordCloud(req, res);
+});
+
 module.exports = router;
