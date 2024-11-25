@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
-<body onload="listarServidores(), mostrar_nome(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos()">
+<body onload="listarServidores(); mostrar_nome();">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -38,7 +38,7 @@
                     <option>Prata</option>
                 </select>
                 <p class="Servidor">Selecione um Servidor</p>
-                <select id="select_servidor" onchange="mostrarGrafico()">
+                <select id="select_servidor" onchange="buscarMetricasTop5()">
                 </select>
                 <p class="Servidor">Selecione uma Dashboard!</p>
                 <select id="select_dash" onchange="selecionarDash()">
@@ -54,7 +54,7 @@
         </div>
 
         <div class="conteudo">
-            <h2>Quantidade de processos acima do esperado em Memoria RAM - Servidor1 (p/hora)</h2>
+            <h2>Quantidade de processos acima do esperado em Memória RAM - Servidor 1 (p/hora)</h2>
 
             <div class="informacoes-central">
                 <div class="card-central">
@@ -85,173 +85,141 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script>
-
         let chart = null;
 
         function listarServidores() {
-        var fkEmpresa = sessionStorage.ID_EMPRESA;
-        select_servidor.innerHTML = "";
+            const fkEmpresa = sessionStorage.ID_EMPRESA;
+            console.log("fkEmpresa:", fkEmpresa);
 
-        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
-            if (response.ok) {
-                response.json().then(function (resposta) {
-                    resposta.forEach((servidor) => {
-                      if (servidor.linha == select_linha.value) {
-                        select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
-                      }
-                });
-                buscarMetricasTop5();
-                });
-            } else {
-                console.error('Nenhum dado encontrado ou erro na API');
-            }
-        })
-            .catch(function (error) {
-                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
-            });
-    }
+            select_servidor.innerHTML = "";
+
+            fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error('Erro ao listar servidores');
+                        return [];
+                    }
+                })
+                .then(data => {
+                    data.forEach(servidor => {
+                        if (servidor.linha === select_linha.value) {
+                            select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                        }
+                    });
+                    buscarMetricasTop5();
+                    contarProcessos();
+                    contarProcessosAcima();
+                    buscarProcessosMaliciosos();
+                    mostrarGrafico();
+                })
+                .catch(error => console.error('Erro ao listar servidores:', error));
+        }
 
 
         function mostrar_nome() {
-            var nome = sessionStorage.NOME_USUARIO;
-            var cargo = sessionStorage.CARGO;
+            const nome = sessionStorage.NOME_USUARIO;
+            const cargo = sessionStorage.CARGO;
             user.innerHTML = `Olá, ${nome} (${cargo})`;
         }
 
-
         function selecionarDash() {
-            var selecionarDash = select_dash.value
+            const selecionarDash = select_dash.value;
 
             if (selecionarDash == 0) {
-                window.location = '../analista/dash1_analista_gustavo.html'
+                window.location = '../analista/dash1_analista_gustavo.html';
             } else if (selecionarDash == 1) {
-                window.location = '../analista/dash3_analista_patroni.html'
+                window.location = '../analista/dash3_analista_patroni.html';
             }
         }
 
-        async function buscarProcessosMaliciosos() {
-            try {
-                const response = await fetch("/analistaVitor/buscarProcessosMaliciosos", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+        function buscarProcessosMaliciosos() {
+            const fkServidor = select_servidor.value;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Nomes dos processos maliciosos retornados da API:", data);
+            fetch(`/analistaVitor/buscarProcessosMaliciosos/${fkServidor}`)
+                .then((response) => response.ok ? response.json() : Promise.reject(response))
+                .then((data) => {
+                    console.log("Processos retornados:", data);
 
-                    // Filtra possiveis processos maliciosos 
+                    // Lista de processos "maliciosos"
+                    const listaMaliciosos = ["snapd", "cupsd", "thermald",];
+
+                    // Filtra os processos retornados para identificar os maliciosos
                     const processosMaliciosos = data.filter(processo =>
-                        processo.nome_processo === "snapd" ||
-                        processo.nome_processo === "cupsd" ||
-                        processo.nome_processo === "thermald"
+                        listaMaliciosos.includes(processo.nome_processo)
                     );
 
                     if (processosMaliciosos.length > 0) {
-                        // Exibe os processos maliciosos 
                         document.getElementById("mensagemProcessos").innerHTML =
                             "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
                     } else {
                         document.getElementById("mensagemProcessos").innerHTML = "Nenhum processo malicioso detectado.";
                     }
-                } else {
-                    console.error("Erro ao buscar os processos maliciosos. Status:", response.status);
-                    document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
-                }
-            } catch (error) {
-                console.error("Erro na requisição da API:", error);
-                document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
-            }
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar processos maliciosos:", error);
+                    document.getElementById("mensagemProcessos").innerHTML =
+                        "Erro ao buscar processos. Tente novamente mais tarde.";
+                });
         }
 
-        async function contarProcessosAcima() {
-            try {
-                const response = await fetch("/analistaVitor/contarProcessosAcima", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+        function contarProcessosAcima() {
+            const fkServidor = select_servidor.value;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Quantidade de processos acima do esperado:", data);
+            fetch(`/analistaVitor/contarProcessosAcima/'${fkServidor}'`)
+                .then(response => response.ok ? response.json() : Promise.reject(response))
+                .then(data => {
                     document.getElementById("mensagemAlertaAcima").innerHTML = "&#8593;" + data.quantidade_processos_acima;
-                } else {
-                    console.error("Erro ao contar processos acima do esperado. Status:", response.status);
-                    document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima do esperado.";
-                }
-            } catch (error) {
-                console.error("Erro na requisição da API:", error);
-                document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima do esperado.";
-            }
+                })
+                .catch(error => console.error('Erro ao contar processos acima:', error));
         }
 
-        async function contarProcessos() {
-            try {
-                const response = await fetch("/analistaVitor/contarProcessos", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+        function contarProcessos() {
+            const fkServidor = select_servidor.value;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Quantidade de processos:", data);
+            fetch(`/analistaVitor/contarProcessos/'${fkServidor}'`)
+                .then(response => response.ok ? response.json() : Promise.reject(response))
+                .then(data => {
                     document.getElementById("mensagemAlerta").innerHTML = data.quantidade_processos;
-                } else {
-                    console.error("Erro ao contar processos. Status:", response.status);
-                    document.getElementById("mensagemAlerta").innerHTML = "Erro ao contar processos.";
-                }
-            } catch (error) {
-                console.error("Erro na requisição da API:", error);
-                document.getElementById("mensagemAlerta").innerHTML = "Erro ao contar processos.";
-            }
+                })
+                .catch(error => console.error('Erro ao contar processos:', error));
         }
 
         function buscarMetricasTop5() {
+            const fkServidor = select_servidor.value;
 
-            var fkServidor = select_servidor.value;
-        
-                fetch(`/analistaVitor/graficoTopProcessos/'${fkServidor}'`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then(function (response) {
-                    if (response.ok) {
-                        const data = response.json();
-                        console.log("Dados retornados da API:", data);
-                        mostrarGrafico(data);
-                    } else {
-                        console.error("Erro ao buscar as métricas do top 5 processos. Status:", response.status);
-                    }
-                }).catch(function (error) {
-                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
-            });
+            fetch(`/analistaVitor/graficoTopProcessos/'${fkServidor}'`)
+                .then(response => response.ok ? response.json() : Promise.reject(response))
+                .then(data => mostrarGrafico(data))
+                .catch(error => console.error('Erro ao buscar métricas top 5:', error));
         }
 
         function mostrarGrafico(dados) {
-            if (dados === undefined) {
-                document.getElementById("chart").innerHTML =
-                    "<p style='color: red;'>Nenhum dado encontrado para exibir o gráfico.</p>";
-                return;
-            }
 
-            alert(dados[0].nome_processo);
+            const processos = [
+                dados[0].nome_processo, dados[1].nome_processo, dados[2].nome_processo,
+                dados[3].nome_processo, dados[4].nome_processo
+            ];
 
+            const usosRAM = [
+                parseFloat(dados[0].uso_memoria),
+                parseFloat(dados[1].uso_memoria),
+                parseFloat(dados[2].uso_memoria),
+                parseFloat(dados[3].uso_memoria),
+                parseFloat(dados[4].uso_memoria)
+            ];
+
+            // Configuração do gráfico 
             const options = {
                 chart: {
                     type: 'bar',
-                    height: 250,
+                    height: 250
                 },
                 series: [{
-                    name: 'Uso RAM',
+                    name: 'Uso de Memória (MB)',
                     data: usosRAM
                 }],
                 xaxis: {
@@ -260,16 +228,18 @@
                 plotOptions: {
                     bar: {
                         horizontal: true,
-                        barHeight: '70%',
+                        barHeight: '70%'
                     }
                 },
-                colors: ['#091e38'],
+                colors: ['#091e38']
             };
 
+            // Destruir o gráfico existente antes de criar outro
             if (chart) {
-                chart.destroy(); // Destroi o gráfico anterior antes de renderizar o novo
+                chart.destroy();
             }
 
+            // Renderizar novo gráfico
             chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
         }
