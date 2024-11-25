@@ -76,7 +76,7 @@ function comparacaoCpuRam(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function comparacaoCpuRam():");
 
     var instrucaoSql = `
-       SELECT 
+        SELECT 
         TIME(R.dtHora) AS hora,
         R.porcentagemProcessador,
         R.porcentagemMemoria
@@ -85,6 +85,21 @@ function comparacaoCpuRam(linha, fkServidor) {
         JOIN Servidor S ON S.MacAddress = R.fkServidor
         WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
         ORDER BY R.dtHora DESC LIMIT 8;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
+}
+
+function cpuMaxMin(linha, fkServidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cpuMaxMin():");
+
+    var instrucaoSql = `
+        Select MAX(R.porcentagemProcessador) AS MaxPorcentagemProcessador,
+        MIN(R.porcentagemProcessador) AS MinPorcentagemProcessador
+        FROM Registro R
+        JOIN Estacao E ON E.fkServidor = R.fkServidor
+        JOIN Servidor S ON S.MacAddress = R.fkServidor
+		WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
     return database.executar(instrucaoSql);
@@ -137,6 +152,7 @@ module.exports = {
     frequenciaRamGrafico,
     frequenciaDiscoGrafico,
     comparacaoCpuRam,
+    cpuMaxMin,
     pacotesRecebidos,
     comparacaoDisco
 };

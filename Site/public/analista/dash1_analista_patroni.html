@@ -102,29 +102,29 @@
                         <div class="card-1">
 
                             <div class="card-1-1">
-                            <h5 class="titulo3">Quantidade de Pacotes Recebidos</h5>
-                            <div id="mensagemPacotes"></div>
+                                <h5 class="titulo3">MIN | MAX - RAM</h5>
+                                <div id="mensagemRAM"></div>
                             </div>
 
                             <div class="card-1-2">
-                                <h5 class="titulo3">Quantidade de Pacotes Recebidos</h5>
-                                
+                                <h5 class="titulo3">MIN | MAX - CPU</h5>
+                                <div id="mensagemCPU"></div>
                             </div>
                         </div>
 
                         <div class="card-2">
 
                             <div class="card-2-1">
-                            <h5 class="titulo3">Quantidade de Pacotes Recebidos</h5>
-                            
+                                <h5 class="titulo3">Quantidade de Pacotes Recebidos</h5>
+                                <div id="mensagemPacotes"></div>
                             </div>
 
                             <div class="card-2-2">
-                                <h5 class="titulo3">Quantidade de Pacotes Recebidos</h5>
-                                
+                                <h5 class="titulo3">DISCO - ALERTA</h5>
+                                <div id="mensagemDISCO"></div>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <div class="rigth-bottom">
@@ -551,7 +551,26 @@
         buscarDados();
     }
 
-//######################################################################################################################
+    //######################################################################################################################
+
+    cpuMaxMin("Azul", "00:00:00:00:00:00");
+    function cpuMaxMin(linha, fkServidor) {
+        fetch(`/analistaPatroni/cpuMaxMin/${linha}/${fkServidor}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                    mensagemCPU.innerHTML = `${dado.MinPorcentagemProcessador} | ${dado.MaxPorcentagemProcessador}`;
+                });
+            })
+        setInterval(cpuMaxMin, 200000);
+    }
 
     pacotesRecebidos("Azul", "00:00:00:00:00:00");
     function pacotesRecebidos(linha, fkServidor) {
@@ -569,10 +588,10 @@
                     mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
                 });
             })
-        setInterval(pacotesRecebidos, 2000);
+        setInterval(pacotesRecebidos, 200000);
     }
 
-//##########################################################################################################################
+    //##########################################################################################################################
 
     comparacaoDisco("Azul", "00:00:00:00:00:00")
     function comparacaoDisco(linha, fkServidor) {
@@ -623,9 +642,9 @@
         buscarDados();
     }
 
-//############################################################################################################################
+    //############################################################################################################################
 
-function atualizarGraficoSelecionado() {
+    function atualizarGraficoSelecionado() {
         const linha = document.getElementById("select_Linha").value;
         const fkServidor = document.getElementById("select_servidor").value;
         const selectValue = document.getElementById("select_grafico_linha").value;
@@ -636,9 +655,9 @@ function atualizarGraficoSelecionado() {
             frequenciaRamGrafico(linha, fkServidor);
         } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
             frequenciaDiscoGrafico(linha, fkServidor);
-        } else if (document.getElementById("chart4").style.display == "block"){
+        } else if (document.getElementById("chart4").style.display == "block") {
             comparacaoCpuRam(linha, fkServidor)
-        } else if (document.getElementById("chart4").style.display == "block"){
+        } else if (document.getElementById("chart4").style.display == "block") {
             comparacaoDisco(linha, fkServidor)
         }
     }
