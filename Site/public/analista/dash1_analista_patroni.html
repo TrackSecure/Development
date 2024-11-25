@@ -50,6 +50,7 @@
                     ramMaxMin(select_Linha.value, this.value)
                     cpuMaxMin(select_Linha.value, this.value)
                     pacotesRecebidos(select_Linha.value, this.value)
+                    alertaDisco(select_Linha.value, this.value)
                     comparacaoDisco(select_Linha.value, this.value)">
                     </select>
 
@@ -610,6 +611,29 @@
                 });
             })
         setInterval(pacotesRecebidos, 200000);
+    }
+
+    alertaDisco("Azul", "00:00:00:00:00:00");
+    function alertaDisco(linha, fkServidor) {
+        fetch(`/analistaPatroni/alertaDisco/${linha}/${fkServidor}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                if(dado.alertaDisco <=50){
+                    mensagemDISCO.innerHTML = `Disco normal`;
+                } else {
+                    mensagemDISCO.innerHTML = `<span style="color: red; font-size: 15px;">Disco(s) Acima do esperado</span>`;
+                }
+                });
+            })
+        setInterval(alertaDisco, 200000);
     }
 
     //##########################################################################################################################
