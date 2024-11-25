@@ -325,4 +325,13 @@ header {
     color:#2c90ea
 }
 
+#mensagemRAM {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color:#2c90ea
+}
+
 

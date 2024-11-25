@@ -90,6 +90,21 @@ function comparacaoCpuRam(linha, fkServidor) {
     return database.executar(instrucaoSql);
 }
 
+function ramMaxMin(linha, fkServidor) {
+    console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ramMaxMin():");
+
+    var instrucaoSql = `
+        Select MAX(R.porcentagemMemoria) AS MaxPorcentagemMemoria,
+        MIN(R.porcentagemMemoria) AS MinPorcentagemMemoria
+        FROM Registro R
+        JOIN Estacao E ON E.fkServidor = R.fkServidor
+        JOIN Servidor S ON S.MacAddress = R.fkServidor
+		WHERE E.linha LIKE '%${linha}%' AND S.MacAddress = '${fkServidor}'
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
+    return database.executar(instrucaoSql);
+}
+
 function cpuMaxMin(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cpuMaxMin():");
 
@@ -152,6 +167,7 @@ module.exports = {
     frequenciaRamGrafico,
     frequenciaDiscoGrafico,
     comparacaoCpuRam,
+    ramMaxMin,
     cpuMaxMin,
     pacotesRecebidos,
     comparacaoDisco

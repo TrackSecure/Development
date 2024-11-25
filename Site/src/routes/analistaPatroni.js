@@ -27,6 +27,10 @@ router.get("/comparacaoCpuRam/:linha/:fkServidor", function(req, res){
     patroniController.comparacaoCpuRam(req, res); // Faz a rota do Grafico de Comparação
 })
 
+router.get("/ramMaxMin/:linha/:fkServidor", function(req, res){
+    patroniController.ramMaxMin(req, res); // Faz a rota dos valores Maximo e minimo da RAM
+})
+
 router.get("/cpuMaxMin/:linha/:fkServidor", function(req, res){
     patroniController.cpuMaxMin(req, res); // Faz a rota dos valores Maximo e minimo da CPU
 })

@@ -47,6 +47,8 @@
                     frequenciaRamGrafico(select_Linha.value, this.value)
                     frequenciaDiscoGrafico(select_Linha.value, this.value)
                     comparacaoCpuRam(select_Linha.value, this.value)
+                    ramMaxMin(select_Linha.value, this.value)
+                    cpuMaxMin(select_Linha.value, this.value)
                     pacotesRecebidos(select_Linha.value, this.value)
                     comparacaoDisco(select_Linha.value, this.value)">
                     </select>
@@ -552,6 +554,25 @@
     }
 
     //######################################################################################################################
+
+    ramMaxMin("Azul", "00:00:00:00:00:00");
+    function ramMaxMin(linha, fkServidor) {
+        fetch(`/analistaPatroni/ramMaxMin/${linha}/${fkServidor}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(function (resposta) {
+                return resposta.json();
+            })
+            .then(function (dados) {
+                dados.forEach((dado) => {
+                    mensagemRAM.innerHTML = `${dado.MinPorcentagemMemoria} | ${dado.MaxPorcentagemMemoria}`;
+                });
+            })
+        setInterval(ramMaxMin, 200000);
+    }
 
     cpuMaxMin("Azul", "00:00:00:00:00:00");
     function cpuMaxMin(linha, fkServidor) {
