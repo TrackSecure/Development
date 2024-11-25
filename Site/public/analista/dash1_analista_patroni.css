@@ -232,17 +232,70 @@ header {
     width: 100%;
     height: 54%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
-.card-rigth-top {
+.card-1 {
     display: flex;
     flex-direction: column;
-    background-color: rgb(208, 208, 208);
+    align-items: center;
+    width: 35vh;
+    height: 40vh;
+    border-radius: 30px;
+    justify-content: space-around;
+}
+
+.card-1-1{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(179, 192, 247);
     align-items: center;
     justify-content: center;
-    height: 35vh;
+    width: 35vh;
+    height: 15vh;
+    border-radius: 30px;
+}
+
+.card-1-2{
+    display: flex;
+    flex-direction: column;
+    background-color:  rgb(179, 192, 247);
+    align-items: center;
+    justify-content: center;
+    width: 35vh;
+    height: 15vh;
+    border-radius: 30px;
+}
+
+.card-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 35vh;
+    height: 40vh;
+    border-radius: 30px;
+}
+
+.card-2-1{
+    display: flex;
+    flex-direction: column;
+    background-color:  rgb(179, 192, 247);
+    align-items: center;
+    justify-content: center;
+    width: 35vh;
+    height: 15vh;
+    border-radius: 30px;
+}
+
+.card-2-2{
+    display: flex;
+    flex-direction: column;
+    background-color:  rgb(179, 192, 247);;
+    align-items: center;
+    justify-content: center;
+    width: 35vh;
+    height: 15vh;
     border-radius: 30px;
 }
 
@@ -259,7 +312,7 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: 80px;
+    font-size: 40px;
     color:#2c90ea
 }
 
