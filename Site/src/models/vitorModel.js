@@ -31,12 +31,12 @@ function contarProcessos() {
 
 function contarProcessosAcima() {
     var instrucaoSql = `
-        SELECT COUNT(*) AS quantidade_processos_acima_20
+        SELECT COUNT(*) AS quantidade_processos_acima
         FROM Processo
-        WHERE fkServidor = '00:00:00:00:00:00' AND usoMemoria > 20;
+        WHERE fkServidor = '00:00:00:00:00:00' AND usoMemoria > 5;
     `;
 
-    console.log("Executando a instrução SQL para contar processos com mais de 20% de memória: \n" + instrucaoSql);
+    console.log("Executando a instrução SQL para contar processos com mais de 5% de memória: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 

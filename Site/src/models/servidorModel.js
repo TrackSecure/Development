@@ -12,7 +12,8 @@ function cadastrar(nome, mac_addr, so, disco, memoria, cpu, fkEmpresa) {
 
 function listarServidores(fkEmpresa) {
 
-    var instrucaoSql = `SELECT DISTINCT(MacAddress), Servidor.nome, linha FROM Servidor JOIN estacao ON MacAddress = fkServidor WHERE fkEmpresa = ${fkEmpresa};`;
+    var instrucaoSql = `
+    SELECT DISTINCT(MacAddress), Servidor.nome, linha FROM Servidor JOIN Estacao ON MacAddress = fkServidor WHERE fkEmpresa = ${fkEmpresa};`;
   
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

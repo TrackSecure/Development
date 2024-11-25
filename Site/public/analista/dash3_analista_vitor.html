@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
-<body onload="mostrar_nome(), mostrarGrafico(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos()">
+<body onload="mostrar_nome(), mostrarGrafico(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos(), listarServidores()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -31,7 +31,7 @@
             <div class="container">
                 <h2>Dashboard - Processos</h2>
                 <p class="Servidor">Selecione uma linha</p>
-                <select class="select_linha" id="select_linha">
+                <select class="select_linha" id="select_linha" onchange="listarServidores()">
                     <option>Azul</option>
                     <option>Vermelha</option>
                     <option>Verde</option>
@@ -39,10 +39,12 @@
                 </select>
                 <p class="Servidor">Selecione um Servidor</p>
                 <select class="select_servidor" id="select_servidor" onchange="mostrarGrafico()">
-                    <option value="0">Servidor 1</option>
-                    <option value="1">Servidor 2</option>
-                    <option value="2">Servidor 3</option>
-                    <option value="3">Servidor 4</option>
+                </select>
+                <p class="Servidor">Selecione uma Dashboard!</p>
+                <select id="select_dash" onchange="selecionarDash()">
+                    <option value="0" selected>Dashboard inicial</option>
+                    <option value="1">Dashboard detalhada</option>
+                    <option value="2">Dashboard de processos</option>
                 </select>
             </div>
             <div class="logo">
@@ -85,68 +87,108 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script>
-        let chart = null; // Variável global para armazenar a instância do gráfico
+
+        let chart = null;
+
+        function listarServidores() {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+        select_servidor.innerHTML = "";
+
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((servidor) => {
+                      if (servidor.linha == select_linha.value) {
+                        select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                      }
+                });
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
+
+
+        function mostrar_nome() {
+            var nome = sessionStorage.NOME_USUARIO;
+            var cargo = sessionStorage.CARGO;
+            user.innerHTML = `Olá, ${nome} (${cargo})`;
+        }
+
+
+        function selecionarDash() {
+            var selecionarDash = select_dash.value
+
+            if (selecionarDash == 0) {
+                window.location = '../analista/dash1_analista_gustavo.html'
+            } else if (selecionarDash == 1) {
+                window.location = '../analista/dash3_analista_patroni.html'
+            }
+        }
 
         async function buscarProcessosMaliciosos() {
-        try {
-            const response = await fetch("/analistaVitor/buscarProcessosMaliciosos", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+            try {
+                const response = await fetch("/analistaVitor/buscarProcessosMaliciosos", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Nomes dos processos maliciosos retornados da API:", data);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Nomes dos processos maliciosos retornados da API:", data);
 
-                // Filtra os processos que são svchost.exe, explorer.exe ou taskhost.exe
-                const processosMaliciosos = data.filter(processo => 
-                    processo.nome_processo === "svchost.exe" || 
-                    processo.nome_processo === "explorer.exe" || 
-                    processo.nome_processo === "taskhost.exe"
-                );
+                    // Filtra possiveis processos maliciosos 
+                    const processosMaliciosos = data.filter(processo =>
+                        processo.nome_processo === "snapd" ||
+                        processo.nome_processo === "cupsd" ||
+                        processo.nome_processo === "thermald"
+                    );
 
-                if (processosMaliciosos.length > 0) {
-                    // Exibe os processos maliciosos encontrados na div 'mensagemProcessos'
-                    document.getElementById("mensagemProcessos").innerHTML = 
-                        "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
+                    if (processosMaliciosos.length > 0) {
+                        // Exibe os processos maliciosos 
+                        document.getElementById("mensagemProcessos").innerHTML =
+                            "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
+                    } else {
+                        document.getElementById("mensagemProcessos").innerHTML = "Nenhum processo malicioso detectado.";
+                    }
                 } else {
-                    document.getElementById("mensagemProcessos").innerHTML = "Nenhum processo malicioso detectado.";
+                    console.error("Erro ao buscar os processos maliciosos. Status:", response.status);
+                    document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
                 }
-            } else {
-                console.error("Erro ao buscar os processos maliciosos. Status:", response.status);
+            } catch (error) {
+                console.error("Erro na requisição da API:", error);
                 document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
             }
-        } catch (error) {
-            console.error("Erro na requisição da API:", error);
-            document.getElementById("mensagemProcessos").innerHTML = "Erro ao buscar os processos.";
         }
-    }
 
         async function contarProcessosAcima() {
-        try {
-            const response = await fetch("/analistaVitor/contarProcessosAcima", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+            try {
+                const response = await fetch("/analistaVitor/contarProcessosAcima", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Quantidade de processos acima de 20% de memória:", data);
-                // Exibe a quantidade de processos acima de 20% de memória na div com id 'mensagemAlertaAcima'
-                document.getElementById("mensagemAlertaAcima").innerHTML = data.quantidade_processos_acima_20;
-            } else {
-                console.error("Erro ao contar processos acima de 20% de memória. Status:", response.status);
-                document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima de 20% de memória.";
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Quantidade de processos acima do esperado:", data);
+                    document.getElementById("mensagemAlertaAcima").innerHTML = "&#8593;" + data.quantidade_processos_acima;
+                } else {
+                    console.error("Erro ao contar processos acima do esperado. Status:", response.status);
+                    document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima do esperado.";
+                }
+            } catch (error) {
+                console.error("Erro na requisição da API:", error);
+                document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima do esperado.";
             }
-        } catch (error) {
-            console.error("Erro na requisição da API:", error);
-            document.getElementById("mensagemAlertaAcima").innerHTML = "Erro ao contar processos acima de 20% de memória.";
         }
-    }
 
         async function contarProcessos() {
             try {
@@ -160,7 +202,6 @@
                 if (response.ok) {
                     const data = await response.json();
                     console.log("Quantidade de processos:", data);
-                    // Exibe a quantidade de processos na div com id 'mensagemAlerta'
                     document.getElementById("mensagemAlerta").innerHTML = data.quantidade_processos;
                 } else {
                     console.error("Erro ao contar processos. Status:", response.status);
@@ -171,7 +212,9 @@
                 document.getElementById("mensagemAlerta").innerHTML = "Erro ao contar processos.";
             }
         }
+
         async function buscarMetricasTop5() {
+            
             try {
                 const response = await fetch("/analistaVitor/graficoTopProcessos", {
                     method: "GET",
@@ -182,8 +225,8 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Dados retornados da API:", data); // Log dos dados da API
-                    return data; // Retorna os dados do backend
+                    console.log("Dados retornados da API:", data); 
+                    return data; 
                 } else {
                     console.error("Erro ao buscar as métricas do top 5 processos. Status:", response.status);
                     return [];
@@ -235,11 +278,6 @@
             chart.render();
         }
 
-        function mostrar_nome() {
-            var nome = sessionStorage.NOME_USUARIO;
-            var cargo = sessionStorage.CARGO;
-            user.innerHTML = `Olá, ${nome} (${cargo})`;
-        }
     </script>
 </body>
 
