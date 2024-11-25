@@ -1,6 +1,6 @@
 var database = require("../database/config");
 
-function graficoTopProcessos() {
+function graficoTopProcessos(fkServidor) {
     var instrucaoSql = `
         SELECT 
             nome AS nome_processo, 
@@ -8,7 +8,7 @@ function graficoTopProcessos() {
         FROM 
             Processo
         WHERE 
-            fkServidor = '00:00:00:00:00:00'
+            fkServidor = ${fkServidor}
         ORDER BY 
             usoMemoria DESC
         LIMIT 5;

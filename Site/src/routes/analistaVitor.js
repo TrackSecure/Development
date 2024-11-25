@@ -4,7 +4,7 @@ var router = express.Router();
 var vitorController = require("../controllers/vitorController");
 
 // Rota para pegar os top 5 processos com mais consumo de ram 
-router.get("/graficoTopProcessos", function (req, res) {
+router.get("/graficoTopProcessos/:fkServidor", function (req, res) {
     vitorController.graficoTopProcessos(req, res);
 });
 

@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 
-<body onload="mostrar_nome(), mostrarGrafico(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos(), listarServidores()">
+<body onload="listarServidores(), mostrar_nome(), contarProcessos(), contarProcessosAcima(), buscarProcessosMaliciosos()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -38,7 +38,7 @@
                     <option>Prata</option>
                 </select>
                 <p class="Servidor">Selecione um Servidor</p>
-                <select class="select_servidor" id="select_servidor" onchange="mostrarGrafico()">
+                <select id="select_servidor" onchange="mostrarGrafico()">
                 </select>
                 <p class="Servidor">Selecione uma Dashboard!</p>
                 <select id="select_dash" onchange="selecionarDash()">
@@ -102,6 +102,7 @@
                         select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
                       }
                 });
+                buscarMetricasTop5();
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
@@ -213,41 +214,36 @@
             }
         }
 
-        async function buscarMetricasTop5() {
-            
-            try {
-                const response = await fetch("/analistaVitor/graficoTopProcessos", {
+        function buscarMetricasTop5() {
+
+            var fkServidor = select_servidor.value;
+        
+                fetch(`/analistaVitor/graficoTopProcessos/'${fkServidor}'`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
                     }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log("Dados retornados da API:", data); 
-                    return data; 
-                } else {
-                    console.error("Erro ao buscar as métricas do top 5 processos. Status:", response.status);
-                    return [];
-                }
-            } catch (error) {
-                console.error("Erro na requisição da API:", error);
-                return [];
-            }
+                }).then(function (response) {
+                    if (response.ok) {
+                        const data = response.json();
+                        console.log("Dados retornados da API:", data);
+                        mostrarGrafico(data);
+                    } else {
+                        console.error("Erro ao buscar as métricas do top 5 processos. Status:", response.status);
+                    }
+                }).catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
         }
 
-        async function mostrarGrafico() {
-            const metricas = await buscarMetricasTop5();
-
-            if (metricas.length === 0) {
+        function mostrarGrafico(dados) {
+            if (dados === undefined) {
                 document.getElementById("chart").innerHTML =
                     "<p style='color: red;'>Nenhum dado encontrado para exibir o gráfico.</p>";
                 return;
             }
 
-            const processos = metricas.map(item => item.nome_processo);
-            const usosRAM = metricas.map(item => item.uso_memoria);
+            alert(dados[0].nome_processo);
 
             const options = {
                 chart: {

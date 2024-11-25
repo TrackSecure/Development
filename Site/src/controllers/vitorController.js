@@ -1,7 +1,10 @@
 var vitorModel = require("../models/vitorModel");
 
 function graficoTopProcessos(req, res) {
-    vitorModel.graficoTopProcessos()
+
+    var fkServidor = req.params.fkServidor;
+
+    vitorModel.graficoTopProcessos(fkServidor)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
