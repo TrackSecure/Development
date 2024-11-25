@@ -117,7 +117,7 @@ function comparacaoDisco(linha, fkServidor) {
         FROM Registro r
         JOIN Servidor s ON r.fkServidor = s.MacAddress
         JOIN Estacao e ON e.fkServidor = s.MacAddress
-        WHERE e.linha LIKE '%${linha}%'
+        WHERE E.linha LIKE '%${linha}%'
         AND r.dtHora = (
             SELECT MAX(r2.dtHora)
             FROM Registro r2
