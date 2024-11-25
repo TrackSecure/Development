@@ -27,8 +27,8 @@ function graficoMediaHoras(req, res) {
         })
 }
 
-function graficoMensalDowntime(req, res) {
-    enzoModel.graficoMensalDowntime()
+function graficoUpDown(req, res) {
+    enzoModel.graficoUpDown()
         .then(resultado => {
             if (resultado.length > 0) {
                 res.json(resultado);
@@ -40,5 +40,5 @@ module.exports = {
   tempoUptime,
   tempoDowntime,
   graficoMediaHoras,
-  graficoMensalDowntime
+  graficoUpDown
 }

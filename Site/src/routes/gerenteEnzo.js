@@ -15,8 +15,8 @@ router.get("/graficoMediaHoras", function (req, res) {
     enzoController.graficoMediaHoras(req, res); // Grafico media hora
 })
 
-router.get("/graficoMensalDowntime", function (req, res) {
-    enzoController.graficoMensalDowntime(req, res); // Grafico mensal downtime
+router.get("/graficoUpDown", function (req, res) {
+    enzoController.graficoUpDown(req, res); // Grafico Uptime x Downtime
 })
 
 

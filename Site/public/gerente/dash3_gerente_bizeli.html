@@ -66,41 +66,41 @@
                 <div class="cards">
                     <div>
                         <div class="texto_esquerda_dash1">
-                            <h3 style="color: #1C5C99">Horas de Uptime <br> (12 meses):</h3>
+                            <h3 style="color: #1C5C99">Horas de Uptime <br> (Ano Atual):</h3>
                         </div>
-                        <div class="card_ok"><span style="font-size: 1.5rem;"><div id="mensagemUptime"></div></span></div>
+                        <div class="card_ok"><span style="font-size: 1.5rem;">
+                                <div id="mensagemUptime"></div>
+                            </span></div>
                     </div>
                     <div>
                         <div class="texto_esquerda_dash3">
-                            <h3 style="color: #1C5C99">Horas de Downtime <br>(12 meses):</h3>
+                            <h3 style="color: #1C5C99">Horas de Downtime <br>(Ano Atual):</h3>
                             <!-- <select name="componente" id="">
                                 <option selected value="">CPU</option>
                                 <option value="">RAM</option>
                             </select> -->
                         </div>
-                        <div class="card_critico"><span><div id="mensagemDowntime"></div></span></div>
+                        <div class="card_critico"><span>
+                                <div id="mensagemDowntime"></div>
+                            </span></div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <div class="texto_esquerda_dash3">
                             <h3 style="color: #1C5C99">Possível Downtime <br> (mês atual):</h3>
                         </div>
                         <div class="card_atencao"><span>64.7%</span></div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="graficos">
                     <div>
-                        <h5 style="text-align: center;">Média de horas de Downtime dos últimos 12 meses:</h5>
+                        <h5 style="text-align: center;">Média de horas de Downtime do ano atual:</h5>
                         <div id="grafico1"></div>
                     </div>
                     <div>
-                        <div class="texto_grafico2">
-                            <h5 style="text-align: center;">Média mensal de Downtime da <br> (12 meses)</h5>
-                            <select name="componente" id="">
-                                <option selected value="">CPU</option>
-                                <option value="">RAM</option>
-                            </select>
-                        </div>
+                        <!-- <div class="texto_grafico2"> -->
+                        <h5>Uptime x Downtime</h5>
+                        <!-- </div> -->
                         <div id="grafico2"></div>
                     </div>
                 </div>
@@ -120,112 +120,123 @@
     graficoMediaHoras()
 
     function graficoMediaHoras() {
-    const atualizarGrafico = (dados) => {
-        const meses = [
-            "Janeiro", "Fevereiro", "Março", "Abril", "Maio", 
-            "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"
-        ];
+        const atualizarGrafico = (dados) => {
+            const meses = [
+                "Janeiro", "Fevereiro", "Março", "Abril", "Maio",
+                "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"
+            ];
 
-        // Mapeando os valores para cada mês
-        const data = meses.map((mes, index) => ({
-            x: mes,
-            y: dados[index]?.qtdHoras || 0,
-            goals: [
-                {
-                    name: "Expected",
-                    value: 3.0,
-                    strokeHeight: 3,
-                    strokeColor: "#5c93d6",
-                },
-            ],
-        }));
+            const data = meses.map((mes, index) => ({
+                x: mes,
+                y: dados[index]?.qtdHoras || 0,
+                goals: [
+                    {
+                        name: "Expected",
+                        value: 3.0,
+                        strokeHeight: 3,
+                        strokeColor: "#5c93d6",
+                    },
+                ],
+            }));
 
-        var options1 = {
-            series: [{ name: "Atual", data }],
-            chart: {
-                height: 350,
-                width: 500,
-                type: "bar",
-            },
-            plotOptions: {
-                bar: { columnWidth: "60%" },
-            },
-            colors: ["#091e38"],
-            dataLabels: { enabled: false },
-            legend: {
-                show: true,
-                showForSingleSeries: true,
-                customLegendItems: ["Atual", "Esperado"],
-                markers: {
-                    fillColors: ["#091e38", "#5c93d6"],
+            var options1 = {
+                series: [{ name: "Atual", data }],
+                chart: {
+                    height: 360,
+                    width: 500,
+                    type: "bar",
                 },
-            },
+                plotOptions: {
+                    bar: { columnWidth: "60%" },
+                },
+                colors: ["#091e38"],
+                dataLabels: { enabled: false },
+                legend: {
+                    show: true,
+                    showForSingleSeries: true,
+                    customLegendItems: ["Atual", "Esperado"],
+                    markers: {
+                        fillColors: ["#091e38", "#5c93d6"],
+                    },
+                },
+            };
+
+            if (!window.chartDiaHora) {
+                window.chartDiaHora = new ApexCharts(
+                    document.querySelector("#grafico1"),
+                    options1
+                );
+                window.chartDiaHora.render();
+            } else {
+                window.chartDiaHora.updateOptions(options1);
+            }
         };
 
-        if (!window.chartDiaHora) {
-            window.chartDiaHora = new ApexCharts(
-                document.querySelector("#grafico1"),
-                options1
-            );
-            window.chartDiaHora.render();
-        } else {
-            window.chartDiaHora.updateOptions(options1);
-        }
-    };
+        const buscarDados = () => {
+            fetch("/gerenteEnzo/graficoMediaHoras", { method: "GET" })
+                .then((resposta) => resposta.json())
+                .then(atualizarGrafico)
+                .catch((erro) => console.error("Erro ao buscar dados:", erro));
+        };
 
-    const buscarDados = () => {
-        fetch("/gerenteEnzo/graficoMediaHoras", { method: "GET" })
-            .then((resposta) => resposta.json())
-            .then(atualizarGrafico)
-            .catch((erro) => console.error("Erro ao buscar dados:", erro));
-    };
-
-    buscarDados();
-    setInterval(buscarDados, 20000); 
-}
+        buscarDados();
+        setInterval(buscarDados, 20000);
+    }
 
 
 
+    graficoUpDown()
+    function graficoUpDown() {
+        const atualizarGrafico = (dados) => {
 
-    var options2 = {
-        series: [{
-            name: "Desktops",
-            data: [77, 81, 75, 84, 89, 82, 79, 91, 88, 85, 83]
-        }],
-        chart: {
-            height: 300,
-            width: 500,
-            type: 'line',
-            zoom: {
-                enabled: false
-            }
+            const upTime = dados.map(item => item.porcentagem_uptime)
+            const downTime = dados.map(item => item.porcentagem_downtime)
+
+            var options2 = {
+          series: [upTime, downTime],
+          chart: {
+          width: 380,
+          type: 'pie',
         },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            curve: 'straight'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'],
-                opacity: 0.5
+        labels: ['Uptime', 'Downtime'],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
             },
-        },
-        xaxis: {
-            categories: ['Nov', 'Dez', 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Out'],
-        }
-    };
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
 
-    var chart = new ApexCharts(document.getElementById("grafico2"), options2);
-    chart.render();
+            if (!window.chartDisco) {
+                window.chartDisco = new ApexCharts(document.querySelector("#grafico2"), options2);
+                window.chartDisco.render();
+            } else {
+                window.chartDisco.updateOptions(options2);
+            }
+        };
+        const buscarDados = () => {
+            fetch("/gerenteEnzo/graficoUpDown", { method: "GET" })
+                .then((resposta) => resposta.json())
+                .then(atualizarGrafico)
+                .catch((erro) => console.error("Erro ao buscar dados:", erro));
+        };
+
+        buscarDados();
+        setInterval(buscarDados, 2000);
+    }
+
 
     tempoUptime();
 
     function tempoUptime() {
         fetch("/gerenteEnzo/tempoUptime", {
-                method: "GET",
-            })
+            method: "GET",
+        })
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -242,8 +253,8 @@
 
     function tempoDowntime() {
         fetch("/gerenteEnzo/tempoDowntime", {
-                method: "GET",
-            })
+            method: "GET",
+        })
             .then(function (resposta) {
                 return resposta.json();
             })
@@ -257,8 +268,8 @@
 
 
 
-    document.getElementById("selectDash").addEventListener("change", function() {
-        var value = this.value; 
+    document.getElementById("selectDash").addEventListener("change", function () {
+        var value = this.value;
         var url = "";
 
         if (value == "0") {

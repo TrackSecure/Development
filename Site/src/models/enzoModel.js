@@ -37,11 +37,26 @@ GROUP BY MONTH(dataHora) ORDER BY MONTH(dataHora);
     return database.executar(instrucaoSql);
 }
 
-function graficoMensalDowntime() {
+function graficoUpDown() {
     console.log("");
 
     var instrucaoSql = `
-        
+        SELECT 
+    s.nome AS servidor_nome,
+    ROUND(
+        (SUM(CASE WHEN ss.uptime = 1 THEN TIMESTAMPDIFF(SECOND, ss.dataHora, NOW()) ELSE 0 END) / 
+         NULLIF(SUM(TIMESTAMPDIFF(SECOND, ss.dataHora, NOW())), 0)) * 100, 2
+    ) AS porcentagem_uptime,
+    ROUND(
+        (SUM(CASE WHEN ss.uptime = 0 THEN TIMESTAMPDIFF(SECOND, ss.dataHora, NOW()) ELSE 0 END) / 
+         NULLIF(SUM(TIMESTAMPDIFF(SECOND, ss.dataHora, NOW())), 0)) * 100, 2
+    ) AS porcentagem_downtime
+FROM 
+    Servidor s
+JOIN 
+    ServidorStatus ss ON s.MacAddress = ss.fkServidor
+GROUP BY 
+    s.MacAddress;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -51,5 +66,5 @@ module.exports = {
     tempoUptime,
     tempoDowntime,
     graficoMediaHoras,
-    graficoMensalDowntime
+    graficoUpDown
 };
