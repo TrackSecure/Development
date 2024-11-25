@@ -214,9 +214,17 @@
                 // Estiliza o botão com base no alerta
                 botao.style.backgroundColor = servidor.temAlerta ? "red" : "green";
 
-                // Define a ação ao clicar no botão
                 botao.addEventListener("click", () => {
-                    console.log(`Servidor selecionado: ${servidor.nomeServidor}`);
+                    console.log(`Servidor selecionado: ${servidor.nome}`);
+
+                    carregarMonitoramento(servidor.MacAddress);
+                    if (intervalosMonitoramento) {
+                        clearTimeout(intervalosMonitoramento);
+                    }
+                    intervalosMonitoramento = setInterval(() => {
+                        carregarMonitoramento(servidor.MacAddress)
+                    }, 3000);
+
                 });
 
                 listaServidores.appendChild(botao);
