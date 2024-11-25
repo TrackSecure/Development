@@ -11,8 +11,12 @@ router.post("/qtdAlertas", function (req, res) {
     gustavoController.qtdAlertas(req, res);
 });
 
-router.get("/listarServidores", function (req, res) {
+router.post("/listarServidores", function (req, res) {
     gustavoController.listarServidores(req, res);
+});
+
+router.get("/listarLinhas", function (req, res) {
+    gustavoController.listarLinhas(req, res);
 });
 
 router.get("/dadosMonitoramento/:MacAddress", function (req, res) {

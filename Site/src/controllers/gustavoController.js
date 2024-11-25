@@ -49,7 +49,11 @@ function qtdAlertas(req, res) {
 }
 
 function listarServidores(req, res) {
-    gustavoModel.listarServidores()
+    var fkEmpresa = req.body.idEmpresa;
+    var linhaSelecionada = req.body.linha;
+    console.log(`linha controller: ${linhaSelecionada}`)
+
+    gustavoModel.listarServidores(fkEmpresa, linhaSelecionada)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -58,8 +62,23 @@ function listarServidores(req, res) {
             }
         })
         .catch((erro) => {
-            console.log(erro);
-            res.status(500).json(erro.sqlMessage);
+            console.error("Erro ao listar servidores:", erro);
+            res.status(500).json({ error: erro.sqlMessage || "Erro interno no servidor" });
+        });
+}
+
+function listarLinhas(req, res) {
+    gustavoModel.listarLinhas()
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhuma linha encontrada!");
+            }
+        })
+        .catch((erro) => {
+            console.error("Erro ao listar linhas:", erro);
+            res.status(500).json({ error: erro.sqlMessage || "Erro interno no servidor" });
         });
 }
 
@@ -82,5 +101,6 @@ module.exports = {
     qtdServidores,
     qtdAlertas,
     listarServidores,
+    listarLinhas,
     dadosMonitoramento
 };

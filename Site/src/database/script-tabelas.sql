@@ -83,7 +83,7 @@ CREATE TABLE Alerta (
 CREATE TABLE Processo (
 id INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-usoMemoria DECIMAL(5,2),
+usoMemoria FLOAT,
 fkServidor CHAR(17),
 FOREIGN KEY (fkServidor) REFERENCES Servidor (MacAddress)
 );

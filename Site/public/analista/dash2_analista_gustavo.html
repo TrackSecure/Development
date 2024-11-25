@@ -12,8 +12,7 @@
 </head>
 <!-- <body onload="validarSessao('Analista de Sistemas', '../dashboard_inicial_gerente.html')"> -->
 
-<body
-    onload="mostrar_nome(), atualizarTotalServidores(), atualizarTotalAlertas(), atualizarGrafico(), carregarServidores()">
+<body onload="iniciarMonitoramento()">
     <div class="dashboard">
         <header>
             <div class="perfil">
@@ -33,19 +32,11 @@
     <div class="paginaDash">
         <div class="menu">
             <div class="container">
-                <p class="Servidor">Selecione uma Linha!</p>
-                <select class="select" id="select_linha">
-                    <option value="0" selected>Todos</option>
-                    <option value="1">Linha Amarela</option>
-                    <option value="2">Linha Vermelha</option>
-                    <option value="3">Linha Verde</option>
-                </select>
-                <p class="Servidor">Selecione um Servidor!</p>
-                <select class="select" id="select_servidor">
-                    <option value="0" selected>Todos</option>
-                    <option value="1">Servidor 1</option>
-                    <option value="2">Servidor 2</option>
-                    <option value="3">Servidor 3</option>
+                <p class="selecionarDash">Selecione uma Dashboard!</p>
+                <select id="select_dash" onchange="selecionarDash()">
+                    <option value="0" selected>Dashboard inicial</option>
+                    <option value="1">Dashboard detalhada</option>
+                    <option value="2">Dashboard de processos</option>
                 </select>
             </div>
             <div class="logo">
@@ -79,7 +70,12 @@
             </div>
             <div class="centro">
                 <div class="esquerda">
-                    <h2>Servidores / Linhas</h2>
+                    <div class="divisao">
+                        <h2>Servidores</h2>
+                        <select class="select" id="select_linha">
+                            <option value="0" selected>Todas</option>
+                        </select>
+                    </div>
                     <div class="servidores">
                         <div id="servidores" class="caixa-esquerda">
 
@@ -106,6 +102,17 @@
 
 <script>
     let intervalosMonitoramento;
+
+    function selecionarDash() {
+        var selecionarDash = select_dash.value
+
+        if (selecionarDash == 1) {
+            window.location = '../analista/dash1_analista_patroni.html'
+        } else if (selecionarDash == 2) {
+            window.location = '../analista/dash3_analista_vitor.html'
+        }
+    }
+
     function atualizarTotalAlertas() {
         // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
         const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
@@ -173,42 +180,80 @@
     }
 
     async function carregarServidores() {
+        const fkEmpresa = sessionStorage.getItem("ID_EMPRESA");
+        const linhaSelecionada = document.getElementById("select_linha").value;
+        console.log(`linhaback: ${linhaSelecionada}`);
+
         try {
-            const response = await fetch("/analistaGustavo/listarServidores");
+            // Faz a requisição para o backend
+            const response = await fetch("/analistaGustavo/listarServidores", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idEmpresa: fkEmpresa, // Corrigido para enviar fkEmpresa
+                    linha: linhaSelecionada
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro ao carregar servidores: ${response.statusText}`);
+            }
+
             const servidores = await response.json();
 
+            // Atualiza a lista de servidores no HTML
             const listaServidores = document.getElementById("servidores");
             listaServidores.innerHTML = ""; // Limpa a lista antes de carregar
 
             servidores.forEach((servidor) => {
                 const botao = document.createElement("button");
-                botao.textContent = servidor.nome; // Nome do servidor
+                botao.textContent = servidor.nomeServidor; // Nome do servidor
 
-                // Adiciona classes de estilo baseado no alerta
-                if (servidor.temAlerta) {
-                    botao.style.backgroundColor = "red";
-                } else {
-                    botao.style.backgroundColor = "green";
-                }
+                // Estiliza o botão com base no alerta
+                botao.style.backgroundColor = servidor.temAlerta ? "red" : "green";
 
-                // Define uma ação ao clicar no botão
+                // Define a ação ao clicar no botão
                 botao.addEventListener("click", () => {
-                    console.log(`Servidor selecionado: ${servidor.nome}`);
-
-                    if (intervalosMonitoramento) {
-                        clearTimeout(intervalosMonitoramento);
-                    }
-                    intervalosMonitoramento = setInterval(() => {
-                        carregarMonitoramento(servidor.MacAddress)
-                    }, 3000);
-
+                    console.log(`Servidor selecionado: ${servidor.nomeServidor}`);
                 });
 
                 listaServidores.appendChild(botao);
             });
         } catch (erro) {
             console.error("Erro ao carregar servidores:", erro);
+
+            const listaServidores = document.getElementById("servidores");
+            listaServidores.innerHTML = `<p style="color: red;">Erro ao carregar servidores: ${erro.message}</p>`;
         }
+    }
+
+    function carregarLinhas() {
+        fetch("/analistaGustavo/listarLinhas", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar linhas: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(linhas => {
+                const selectLinha = document.getElementById("select_linha");
+
+                // Adiciona as novas opções
+                linhas.forEach((linha) => {
+                    const option = document.createElement("option");
+                    option.value = linha.linha;
+                    option.textContent = linha.linha;
+                    selectLinha.appendChild(option);
+                });
+            })
+            .catch(erro => console.error("Erro ao carregar linhas:", erro));
     }
 
     function carregarMonitoramento(MacAddress) {
@@ -257,44 +302,61 @@
                 }
             },
             series: [
-                    {
-                        name: "Uso de CPU (%)",
-                        data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
-                    },
-                    {
-                        name: "Uso de RAM (%)",
-                        data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
-                    },
-                ],
-                xaxis: {
-                    categories: labels, // Labels do eixo X
-                    title: {
-                        text: "Tempo",
-                    },
+                {
+                    name: "Uso de CPU (%)",
+                    data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
                 },
-                yaxis: {
-                    title: {
-                        text: "Uso (%)",
-                    },
+                {
+                    name: "Uso de RAM (%)",
+                    data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
                 },
-                colors: ["#1E90FF", "#32CD32"],
-                stroke: {
-                    curve: "smooth",
+            ],
+            xaxis: {
+                categories: labels, // Labels do eixo X
+                title: {
+                    text: "Tempo",
                 },
-            };
+            },
+            yaxis: {
+                title: {
+                    text: "Uso (%)",
+                },
+            },
+            colors: ["#1E90FF", "#32CD32"],
+            stroke: {
+                curve: "smooth",
+            },
+        };
 
-            if(graficoMonitoramento) {
-                graficoMonitoramento.destroy(); // Destroi o gráfico antigo
-            }
+        if (graficoMonitoramento) {
+            graficoMonitoramento.destroy(); // Destroi o gráfico antigo
+        }
 
         graficoMonitoramento = new ApexCharts(
-                document.getElementById("chart"),
-                options
-            );
+            document.getElementById("chart"),
+            options
+        );
 
-            graficoMonitoramento.render(); // Renderiza o gráfico
+        graficoMonitoramento.render(); // Renderiza o gráfico
 
 
-        }
+    }
+
+    function iniciarMonitoramento() {
+        // Chama as funções inicialmente
+        mostrar_nome();
+        atualizarTotalServidores();
+        atualizarTotalAlertas();
+        atualizarGrafico();
+        carregarServidores();
+        carregarLinhas();
+
+        // Configura para chamar as funções a cada 2 segundos
+        setInterval(() => {
+            atualizarTotalServidores();
+            atualizarTotalAlertas();
+            carregarServidores();
+        }, 3000);
+    }
 
 </script>
