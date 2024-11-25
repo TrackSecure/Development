@@ -140,10 +140,17 @@ function alertaDisco(linha, fkServidor) {
     console.log("ACESSEI O ESTAÇÂO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function alertaDisco():");
 
     var instrucaoSql = `
-        Select R.porcentagemDisco as alertaDisco
-        from Registro R
-        JOIN Estacao E ON E.fkServidor = R.fkServidor
-        WHERE E.linha LIKE '%${linha}%';
+        SELECT 
+        r.porcentagemDisco AS alertaDisco
+        FROM Registro r
+        JOIN Servidor s ON r.fkServidor = s.MacAddress
+        JOIN Estacao e ON e.fkServidor = s.MacAddress
+        WHERE E.linha LIKE '%${linha}%'
+        AND r.dtHora = (
+            SELECT MAX(r2.dtHora)
+            FROM Registro r2
+            WHERE r2.fkServidor = r.fkServidor
+        );
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql + `\n`);
     return database.executar(instrucaoSql);

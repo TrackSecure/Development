@@ -385,8 +385,8 @@
                     },
                 ],
                 chart: {
-                    height: 350,
-                    width: 600,
+                    height: 250,
+                    width: 500,
                     type: 'line',
                     animations: {
                         enabled: true,
@@ -626,10 +626,10 @@
             })
             .then(function (dados) {
                 dados.forEach((dado) => {
-                if(dado.alertaDisco <=50){
+                if(dado.alertaDisco <=70){
                     mensagemDISCO.innerHTML = `Disco normal`;
                 } else {
-                    mensagemDISCO.innerHTML = `<span style="color: red; font-size: 15px;">Disco(s) Acima do esperado</span>`;
+                    mensagemDISCO.innerHTML = `<span style="color: red; font-size: 15px;">ALERTA <br> Disco(s) fora do padrão</span>`;
                 }
                 });
             })

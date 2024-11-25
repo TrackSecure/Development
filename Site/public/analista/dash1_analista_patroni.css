@@ -248,7 +248,7 @@ header {
 .card-1-1{
     display: flex;
     flex-direction: column;
-    background-color: rgb(179, 192, 247);
+    background-color: rgb(195, 206, 255);
     align-items: center;
     justify-content: center;
     width: 35vh;
@@ -259,7 +259,7 @@ header {
 .card-1-2{
     display: flex;
     flex-direction: column;
-    background-color:  rgb(179, 192, 247);
+    background-color:  rgb(195, 206, 255);
     align-items: center;
     justify-content: center;
     width: 35vh;
@@ -280,7 +280,7 @@ header {
 .card-2-1{
     display: flex;
     flex-direction: column;
-    background-color:  rgb(179, 192, 247);
+    background-color:  rgb(195, 206, 255);
     align-items: center;
     justify-content: center;
     width: 35vh;
@@ -291,7 +291,7 @@ header {
 .card-2-2{
     display: flex;
     flex-direction: column;
-    background-color:  rgb(179, 192, 247);;
+    background-color:  rgb(195, 206, 255);
     align-items: center;
     justify-content: center;
     width: 35vh;
@@ -338,6 +338,7 @@ header {
     display: flex;
     flex-direction: row;
     align-items: center;
+    align-self: center;
     justify-content: center;
     font-size: 30px;
     color:#2c90ea
