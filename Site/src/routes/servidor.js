@@ -11,6 +11,10 @@ router.get("/listar/:fkEmpresa", function (req, res) {
     servidorController.listarServidores(req, res);
 })
 
+router.get("/listarCadastro/:fkEmpresa", function (req, res) {
+    servidorController.listarServidoresCadastro(req, res);
+})
+
 router.post("/atualizar", function (req, res) {
     servidorController.atualizar(req, res);
 })

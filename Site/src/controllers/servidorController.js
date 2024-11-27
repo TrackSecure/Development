@@ -59,6 +59,22 @@ function listarServidores(req, res) {
     });
 }
 
+function listarServidoresCadastro(req, res) {
+    var fkEmpresa = req.params.fkEmpresa;
+  
+    servidorModel.listarServidoresCadastro(fkEmpresa).then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar os servidores.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 function atualizar(req, res) {
     var idServidor = req.body.idServer;
     var so = req.body.soServer;
@@ -99,5 +115,6 @@ function atualizar(req, res) {
 module.exports = {
     cadastrar,
     listarServidores,
+    listarServidoresCadastro,
     atualizar
 }

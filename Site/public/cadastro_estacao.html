@@ -79,7 +79,7 @@
     function listarServidores() {
         var fkEmpresa = sessionStorage.ID_EMPRESA;
 
-        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/servidor/listarCadastro/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
             if (response.ok) {
                 response.json().then(function (resposta) {
                     resposta.forEach((servidor) => {

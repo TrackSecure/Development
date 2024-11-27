@@ -19,6 +19,15 @@ function listarServidores(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function listarServidoresCadastro(fkEmpresa) {
+
+    var instrucaoSql = `
+    SELECT DISTINCT(MacAddress), nome FROM Servidor WHERE fkEmpresa = ${fkEmpresa};`;
+  
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function atualizar(idServidor, so, disco, memoria, cpu) {
     console.log("ACESSEI O SERVIDOR MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", idServidor, so, disco, memoria, cpu);
 
@@ -32,5 +41,6 @@ function atualizar(idServidor, so, disco, memoria, cpu) {
 module.exports = {
     cadastrar,
     listarServidores,
+    listarServidoresCadastro,
     atualizar
 };
