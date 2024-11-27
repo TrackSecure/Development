@@ -1,7 +1,9 @@
 var enzoModel = require("../models/enzoModel");
 
 function tempoUptime(req, res) {
-    enzoModel.tempoUptime()
+    var fkServidor = req.params.fkServidor;
+
+    enzoModel.tempoUptime(fkServidor)
         .then(resultado => {
             if (resultado.length > 0) {
                 res.json(resultado);
@@ -10,7 +12,9 @@ function tempoUptime(req, res) {
 }
 
 function tempoDowntime(req, res) {
-    enzoModel.tempoDowntime()
+    var fkServidor = req.params.fkServidor;
+
+    enzoModel.tempoDowntime(fkServidor)
         .then(resultado => {
             if (resultado.length > 0) {
                 res.json(resultado);
@@ -19,7 +23,9 @@ function tempoDowntime(req, res) {
 }
 
 function graficoMediaHoras(req, res) {
-    enzoModel.graficoMediaHoras()
+    var fkServidor = req.params.fkServidor;
+
+    enzoModel.graficoMediaHoras(fkServidor)
         .then(resultado => {
             if (resultado.length > 0) {
                 res.json(resultado);
@@ -28,7 +34,9 @@ function graficoMediaHoras(req, res) {
 }
 
 function graficoUpDown(req, res) {
-    enzoModel.graficoUpDown()
+    var fkServidor = req.params.fkServidor;
+
+    enzoModel.graficoUpDown(fkServidor)
         .then(resultado => {
             if (resultado.length > 0) {
                 res.json(resultado);

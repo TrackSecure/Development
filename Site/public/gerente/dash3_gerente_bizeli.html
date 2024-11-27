@@ -12,7 +12,7 @@
 </head>
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
-<body onload="mostrar_nome()">
+<body onload="mostrar_nome(), listarServidores()">
 
     <div class="pagina">
         <header>
@@ -34,35 +34,37 @@
                 <div class="container">
                     <div class="selectEsquerda">
                         <span>Selecione uma linha</span>
-                        <select class="select_linha">
-                            <option value="0" selected>Azul</option>
-                            <option value="1">Vermelha</option>
-                            <option value="2">Verde</option>
-                            <option value="3">Prata</option>
+                        <select name="linhas" id="select_linha" onchange="listarServidores()">
+                            <option value="Azul">Azul</option>
+                            <option value="Verde">Verde</option>
+                            <option value="Vermelha">Vermelha</option>
+                            <option value="Prata">Prata</option>
                         </select>
 
                         <span>Selecione um servidor</span>
-                        <select class="select_servidor">
-                            <option value="0" selected>Servidor 1</option>
-                            <option value="1">Servidor 2</option>
-                            <option value="2">Servidor 3</option>
-                            <option value="3">Servidor 4</option>
+                        <select id="select_servidor" onchange="atualizarDashboard()">
+
                         </select>
 
-                        <span>Selecione uma Dashboard</span>
-                        <select id="selectDash">
-                            <option value="0" selected>Up e Downtime</option>
+                        <span>Ir para outra Dashboard</span>
+                        <select id="select_dash" onchange="mudarDashboard()">
+                            <option selected>Up e Downtime</option>
+                            <option value="0">Comparação de Problemas</option>
                             <option value="1">Análise Geral</option>
-                            <option value="2">Comparação de Problemas</option>
                         </select>
+
+                        <div class="logo">
+                            <img src="logo.png" alt="logo" class="logo-img">
+                            <a href="index.html" class="logo-txt"><span>Track</span>Secure</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="topo_dash">
-                <div class="titulo_servidor">
+                <!-- <div class="titulo_servidor">
                     <h3>Servidor 1:</h3>
-                </div>
+                </div> -->
                 <div class="cards">
                     <div>
                         <div class="texto_esquerda_dash1">
@@ -118,8 +120,9 @@
     }
 
     graficoMediaHoras()
-
     function graficoMediaHoras() {
+        var fkServidor = select_servidor.value;
+
         const atualizarGrafico = (dados) => {
             const meses = [
                 "Janeiro", "Fevereiro", "Março", "Abril", "Maio",
@@ -173,7 +176,7 @@
         };
 
         const buscarDados = () => {
-            fetch("/gerenteEnzo/graficoMediaHoras", { method: "GET" })
+            fetch(`/gerenteEnzo/graficoMediaHoras/'${fkServidor}'`, { method: "GET" })
                 .then((resposta) => resposta.json())
                 .then(atualizarGrafico)
                 .catch((erro) => console.error("Erro ao buscar dados:", erro));
@@ -187,30 +190,31 @@
 
     graficoUpDown()
     function graficoUpDown() {
+        var fkServidor = select_servidor.value;
         const atualizarGrafico = (dados) => {
 
-            const upTime = dados.map(item => item.porcentagem_uptime)
-            const downTime = dados.map(item => item.porcentagem_downtime)
+            const upTime = dados.map(item => item.Porcentagem_Uptime)
+            const downTime = dados.map(item => item.Porcentagem_Downtime)
 
             var options2 = {
-          series: [upTime, downTime],
-          chart: {
-          width: 380,
-          type: 'pie',
-        },
-        labels: ['Uptime', 'Downtime'],
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }]
-        };
+                series: [upTime, downTime],
+                chart: {
+                    width: 380,
+                    type: 'pie',
+                },
+                labels: ['Uptime', 'Downtime'],
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }]
+            };
 
             if (!window.chartDisco) {
                 window.chartDisco = new ApexCharts(document.querySelector("#grafico2"), options2);
@@ -220,7 +224,7 @@
             }
         };
         const buscarDados = () => {
-            fetch("/gerenteEnzo/graficoUpDown", { method: "GET" })
+            fetch(`/gerenteEnzo/graficoUpDown/'${fkServidor}'`, { method: "GET" })
                 .then((resposta) => resposta.json())
                 .then(atualizarGrafico)
                 .catch((erro) => console.error("Erro ao buscar dados:", erro));
@@ -232,9 +236,10 @@
 
 
     tempoUptime();
-
     function tempoUptime() {
-        fetch("/gerenteEnzo/tempoUptime", {
+        var fkServidor = select_servidor.value;
+
+        fetch(`/gerenteEnzo/tempoUptime/'${fkServidor}'`, {
             method: "GET",
         })
             .then(function (resposta) {
@@ -250,9 +255,10 @@
     }
 
     tempoDowntime();
-
     function tempoDowntime() {
-        fetch("/gerenteEnzo/tempoDowntime", {
+        var fkServidor = select_servidor.value;
+
+        fetch(`/gerenteEnzo/tempoDowntime/'${fkServidor}'`, {
             method: "GET",
         })
             .then(function (resposta) {
@@ -267,21 +273,49 @@
     }
 
 
+    function listarServidores() {
+        var fkEmpresa = sessionStorage.ID_EMPRESA;
+        select_servidor.innerHTML = "";
 
-    document.getElementById("selectDash").addEventListener("change", function () {
-        var value = this.value;
-        var url = "";
+        fetch(`/servidor/listar/${fkEmpresa}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    resposta.forEach((servidor) => {
+                        if (servidor.linha == select_linha.value) {
+                            select_servidor.innerHTML += `<option value='${servidor.MacAddress}'>${servidor.nome}</option>`;
+                        }
+                    });
+                    tempoUptime();
+                    tempoDowntime();
+                    graficoMediaHoras();
+                    graficoUpDown();
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados dos servidores: ${error.message}`);
+            });
+    }
 
-        if (value == "0") {
-            url = "dash3_gerente_bizeli.html";
-        } else if (value == "1") {
-            url = "dash1_gerente_bruna.html";
-        } else if (value == "2") {
-            url = "dash2_gerente_bruno.html";
+
+
+    function mudarDashboard() {
+        var dash = select_dash.value;
+        if (dash == "0") {
+            window.location = "dash2_gerente_bruno.html";
+        } else if (dash == "1") {
+            window.location = "dash1_gerente_bruna.html";
         }
+    }
 
-        window.location.href = url;
-    });
+    function atualizarDashboard() {
+        tempoUptime();
+        tempoDowntime();
+        graficoMediaHoras();
+        graficoUpDown();
+    }
 
 </script>
 
