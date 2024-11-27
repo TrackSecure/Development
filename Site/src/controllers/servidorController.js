@@ -3,6 +3,7 @@ var servidorModel = require("../models/servidorModel");
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var mac_addr = req.body.macServer;
+    var ip = req.body.ipServer;
     var so = req.body.soServer;
     var disco = req.body.discoServer;
     var memoria = req.body.memoriaServer;
@@ -13,6 +14,8 @@ function cadastrar(req, res) {
         res.status(400).send("O nome do servidor está undefined!");
     } else if (mac_addr == undefined) {
         res.status(400).send("O mac address está undefined!");
+    } else if (ip == undefined) {
+        res.status(400).send("O ip está undefined!");
     } else if (so == undefined) {
         res.status(400).send("O Sistema Operacional está undefined!");
     } else if (disco == undefined) {
@@ -25,7 +28,7 @@ function cadastrar(req, res) {
         res.status(400).send("A fkEmpresa está undefined!")
     }
     else {
-        servidorModel.cadastrar(nome, mac_addr, so, disco, memoria, cpu, fkEmpresa)
+        servidorModel.cadastrar(nome, mac_addr, ip, so, disco, memoria, cpu, fkEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
