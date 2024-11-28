@@ -31,7 +31,7 @@
             <div class="container">
                 <h2>Dashboard - Processos</h2>
                 <p class="Servidor">Selecione uma linha</p>
-                <select class="select_linha" id="select_linha" onchange="listarServidores()">
+                <select id="select_linha" onchange="listarServidores()">
                     <option>Azul</option>
                     <option>Vermelha</option>
                     <option>Verde</option>
@@ -145,7 +145,7 @@
                     console.log("Processos retornados:", data);
 
                     // Lista de processos "maliciosos"
-                    const listaMaliciosos = ["a", "b", "c",];
+                    const listaMaliciosos = ["kdevtmpfsi", "jvsio", "mysqlk", "nohup", "rsyncd", "kthreaddi",];
 
                     // Filtra os processos retornados para identificar os maliciosos
                     const processosMaliciosos = data.filter(processo =>
@@ -153,7 +153,7 @@
                     );
 
                     if (processosMaliciosos.length > 0) {
-                        document.getElementById("mensagemProcessos").innerHTML =green
+                        document.getElementById("mensagemProcessos").innerHTML =
                             "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
                     } else {
                         document.getElementById("mensagemProcessos").innerHTML = "<div style='color: #5ecf21;'>Nenhum processo malicioso detectado.</div>";
