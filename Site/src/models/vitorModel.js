@@ -2,16 +2,17 @@ var database = require("../database/config");
 
 function graficoTopProcessos(fkServidor) {
     var instrucaoSql = `
-        SELECT 
-            nome AS nome_processo, 
-            usoMemoria AS uso_memoria
-        FROM 
-            Processo
-        WHERE 
-            fkServidor = ${fkServidor}
-        ORDER BY 
-            usoMemoria DESC
-        LIMIT 5;
+    SELECT 
+        nome AS nome_processo, 
+        usoMemoria AS uso_memoria
+    FROM 
+        Processo
+    WHERE 
+        fkServidor = ${fkServidor}
+        AND dtHora >= NOW() - INTERVAL 1 HOUR
+    ORDER BY 
+        usoMemoria DESC
+    LIMIT 5;
     `;
 
     console.log("Executando a instrução SQL para gráfico de top processos: \n" + instrucaoSql);
@@ -25,7 +26,8 @@ function contarProcessos(fkServidor) {
         FROM 
             Processo
         WHERE 
-            fkServidor = ${fkServidor};
+            fkServidor = ${fkServidor}
+            AND dtHora >= NOW() - INTERVAL 1 HOUR;
     `;
 
     console.log("Executando a instrução SQL para contar processos: \n" + instrucaoSql);
@@ -39,7 +41,9 @@ function contarProcessosAcima(fkServidor) {
         FROM 
             Processo
         WHERE 
-            fkServidor = ${fkServidor} AND usoMemoria > 12;
+            fkServidor = ${fkServidor} 
+            AND usoMemoria > 12
+            AND dtHora >= NOW() - INTERVAL 1 HOUR;
     `;
 
     console.log("Executando a instrução SQL para contar processos acima do esperado: \n" + instrucaoSql);
@@ -53,7 +57,8 @@ function buscarProcessosMaliciosos(fkServidor) {
         FROM 
             Processo
         WHERE 
-            fkServidor = '${fkServidor}';
+            fkServidor = '${fkServidor}'
+            AND dtHora >= NOW() - INTERVAL 1 HOUR;
     `;
 
     console.log("Executando a instrução SQL para buscar todos os processos: \n" + instrucaoSql);

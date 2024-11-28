@@ -54,7 +54,7 @@
         </div>
 
         <div class="conteudo">
-            <h2>Quantidade de processos acima do esperado em Memória RAM - Servidor 1 (p/hora)</h2>
+            <h2>Dashboard de Processos - Servidor(p/hora)</h2>
 
             <div class="informacoes-central">
                 <div class="card-central">
@@ -69,7 +69,7 @@
 
             <div class="graficos-e-processos">
                 <div class="grafico">
-                    <h3>Top 5 - Processos com o maior consumo de RAM (GB) - Servidor 1 (p/hora)</h3>
+                    <h3>Top 5 - Processos com o maior consumo de RAM (%) - Servidor(p/hora)</h3>
                     <div id="chart"></div>
                 </div>
 
@@ -77,7 +77,7 @@
 
                 <div class="processos">
                     <div class="card-processos">
-                        <h2 class="titulo-processos">Possíveis Processos Maliciosos no Servidor 1 (p/hora)</h2>
+                        <h2 class="titulo-processos">Possíveis Processos Maliciosos no Servidor(p/hora)</h2>
                         <div class="mensagemProcessos" id="mensagemProcessos"></div>
                     </div>
                 </div>
@@ -130,9 +130,9 @@
             const selecionarDash = select_dash.value;
 
             if (selecionarDash == 0) {
-                window.location = '../analista/dash1_analista_gustavo.html';
+                window.location = '../analista/dash2_analista_gustavo.html';
             } else if (selecionarDash == 1) {
-                window.location = '../analista/dash3_analista_patroni.html';
+                window.location = '../analista/dash1_analista_patroni.html';
             }
         }
 
@@ -145,7 +145,7 @@
                     console.log("Processos retornados:", data);
 
                     // Lista de processos "maliciosos"
-                    const listaMaliciosos = ["snapd", "cupsd", "thermald",];
+                    const listaMaliciosos = ["a", "b", "c",];
 
                     // Filtra os processos retornados para identificar os maliciosos
                     const processosMaliciosos = data.filter(processo =>
@@ -153,10 +153,10 @@
                     );
 
                     if (processosMaliciosos.length > 0) {
-                        document.getElementById("mensagemProcessos").innerHTML =
+                        document.getElementById("mensagemProcessos").innerHTML =green
                             "Processos detectados: " + processosMaliciosos.map(p => p.nome_processo).join(", ");
                     } else {
-                        document.getElementById("mensagemProcessos").innerHTML = "Nenhum processo malicioso detectado.";
+                        document.getElementById("mensagemProcessos").innerHTML = "<div style='color: #5ecf21;'>Nenhum processo malicioso detectado.</div>";
                     }
                 })
                 .catch((error) => {
@@ -219,7 +219,7 @@
                     height: 250
                 },
                 series: [{
-                    name: 'Uso de Memória (MB)',
+                    name: 'Uso de Memória (%)',
                     data: usosRAM
                 }],
                 xaxis: {
