@@ -141,6 +141,16 @@ header {
     color: #2c90ea;
 }
 
+.selecionar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 500px;
+}
+
 #select_dash {
     margin-top: 2%;
     margin-bottom: 10%;
@@ -282,7 +292,7 @@ header {
 
 .divisao {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 550px;
     justify-content: space-evenly;
     align-items: center;

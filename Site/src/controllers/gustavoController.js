@@ -48,6 +48,30 @@ function qtdAlertas(req, res) {
         });
 }
 
+function servidoresAcima(req, res) {
+    
+    var fkEmpresa = req.body.idEmpresa;
+
+    
+    gustavoModel.servidoresAcima(fkEmpresa)
+        .then(function (resultado) {
+            console.log(`Resultados: ${JSON.stringify(resultado)}`);
+
+            if (resultado.length > 0) {
+                
+                res.json({
+                    servidores_acima: resultado[0].servidores_acima
+                });
+            } else {
+                res.status(404).send("Nenhum alerta encontrado para essa empresa.");
+            }
+        })
+        .catch(function (erro) {
+            console.log("Erro ao obter o total de alertas:", erro.sqlMessage);
+            res.status(500).json({ error: "Erro ao obter o total de alertas" });
+        });
+}
+
 function listarServidores(req, res) {
     var fkEmpresa = req.body.idEmpresa;
     var linhaSelecionada = req.body.linha;
@@ -102,5 +126,6 @@ module.exports = {
     qtdAlertas,
     listarServidores,
     listarLinhas,
-    dadosMonitoramento
+    dadosMonitoramento,
+    servidoresAcima
 };

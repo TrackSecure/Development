@@ -11,6 +11,10 @@ router.post("/qtdAlertas", function (req, res) {
     gustavoController.qtdAlertas(req, res);
 });
 
+router.post("/servidoresAcima", function (req, res) {
+    gustavoController.servidoresAcima(req, res);
+});
+
 router.post("/listarServidores", function (req, res) {
     gustavoController.listarServidores(req, res);
 });

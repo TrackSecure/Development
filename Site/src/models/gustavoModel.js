@@ -20,6 +20,18 @@ function qtdAlertas(fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+function servidoresAcima(fkEmpresa) {
+
+    var instrucaoSql = `
+        SELECT COUNT(*) AS servidores_acima
+        FROM Processo
+        INNER JOIN Servidor ON Processo.fkServidor = Servidor.MacAddress
+        WHERE Servidor.fkEmpresa = ${fkEmpresa} AND Processo.usoMemoria >= 12;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function listarServidores(fkEmpresa, linhaSelecionada) {
     console.log(`linha: ${linhaSelecionada}`);
 
@@ -102,5 +114,6 @@ module.exports = {
     qtdAlertas,
     listarServidores,
     listarLinhas,
-    dadosMonitoramento
+    dadosMonitoramento,
+    servidoresAcima
 };

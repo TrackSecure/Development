@@ -59,7 +59,7 @@
                     <h3 id="total-alertas"></h3>
                 </div>
                 <div class="cardT">
-                    <h3 style="color: red;">10</h3>
+                    <h3 id="servidores-acima"></h3>
                 </div>
             </div>
             <div class="detalhes">
@@ -71,10 +71,13 @@
             <div class="centro">
                 <div class="esquerda">
                     <div class="divisao">
+                        <div class="selecionar">
+                            <h2>Selecione uma Linha:</h2>
+                            <select class="select" id="select_linha">
+                                <option value="0" selected>Todas</option>
+                            </select>
+                        </div>
                         <h2>Servidores</h2>
-                        <select class="select" id="select_linha">
-                            <option value="0" selected>Todas</option>
-                        </select>
                     </div>
                     <div class="servidores">
                         <div id="servidores" class="caixa-esquerda">
@@ -111,6 +114,39 @@
         } else if (selecionarDash == 2) {
             window.location = '../analista/dash3_analista_vitor.html'
         }
+    }
+
+    function servidoresAcimaDoEsperado() {
+        // Obtém o ID da empresa do sessionStorage (certifique-se de que está definido)
+        const fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
+
+        // Faz a requisição para a API
+
+        fetch("/analistaGustavo/servidoresAcima", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ idEmpresa: fkEmpresa })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao obter o total de servidores com processos acima do esperado');
+                }
+                return response.json();
+            })
+            .then(data => {
+                div = document.getElementById("servidores-acima");
+                // Atualiza o conteúdo do HTML com o total de servidores
+                document.getElementById("servidores-acima").textContent = data.servidores_acima;
+
+                if (data.servidores_acima >= 1) {
+                    div.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error("Erro ao buscar o total de servidores com processos acima do esperado:", error);
+            });
     }
 
     function atualizarTotalAlertas() {
@@ -358,12 +394,14 @@
         atualizarGrafico();
         carregarServidores();
         carregarLinhas();
+        servidoresAcimaDoEsperado();
 
         // Configura para chamar as funções a cada 2 segundos
         setInterval(() => {
             atualizarTotalServidores();
             atualizarTotalAlertas();
             carregarServidores();
+            servidoresAcimaDoEsperado();
         }, 3000);
     }
 
