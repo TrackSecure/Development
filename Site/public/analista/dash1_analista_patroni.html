@@ -572,7 +572,7 @@
                     mensagemRAM.innerHTML = `${dado.MinPorcentagemMemoria} | ${dado.MaxPorcentagemMemoria}`;
                 });
             })
-        setInterval(ramMaxMin, 200000);
+     
     }
 
     cpuMaxMin("Azul", "00:00:00:00:00:00");
@@ -591,7 +591,7 @@
                     mensagemCPU.innerHTML = `${dado.MinPorcentagemProcessador} | ${dado.MaxPorcentagemProcessador}`;
                 });
             })
-        setInterval(cpuMaxMin, 200000);
+
     }
 
     pacotesRecebidos("Azul", "00:00:00:00:00:00");
@@ -610,7 +610,7 @@
                     mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
                 });
             })
-        setInterval(pacotesRecebidos, 200000);
+       
     }
 
     alertaDisco("Azul", "00:00:00:00:00:00");
@@ -633,7 +633,7 @@
                 }
                 });
             })
-        setInterval(alertaDisco, 200000);
+        
     }
 
     //##########################################################################################################################
@@ -700,14 +700,17 @@
             frequenciaRamGrafico(linha, fkServidor);
         } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
             frequenciaDiscoGrafico(linha, fkServidor);
-        } else if (document.getElementById("chart4").style.display == "block") {
-            comparacaoCpuRam(linha, fkServidor)
-        } else if (document.getElementById("chart4").style.display == "block") {
-            comparacaoDisco(linha, fkServidor)
-        }
+        } 
+
+        comparacaoDisco(linha, fkServidor)
+        comparacaoCpuRam(linha, fkServidor)
+        ramMaxMin(linha, fkServidor);
+        cpuMaxMin(linha, fkServidor);
+        pacotesRecebidos(linha, fkServidor);
+        alertaDisco(linha, fkServidor);
     }
 
-    setInterval(atualizarGraficoSelecionado, 200000);
+    setInterval(atualizarGraficoSelecionado, 2000);
 
 
 
