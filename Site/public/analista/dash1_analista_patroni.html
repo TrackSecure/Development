@@ -386,7 +386,7 @@
                 ],
                 chart: {
                     height: 250,
-                    width: 500,
+                    width: 600,
                     type: 'line',
                     animations: {
                         enabled: true,
@@ -406,7 +406,7 @@
                         },
                     },
                 },
-                colors: ['#28a745', '#dc3545'],
+                colors: ['#1E40AF', '#60A5FA'],
                 markers: {
                     size: 5,
                     colors: ['#ffffff', '#ffffff'],
@@ -497,42 +497,74 @@
             const dataComparacao = dados.map(item => item.hora).reverse();
 
             var options = {
-                series: [{
-                    name: "CPU",
-                    data: porcentagemProcessador
-                },
-                {
-                    name: "RAM",
-                    data: porcentagemMemoria
-                }
+                series: [
+                    {
+                        name: 'RAM',
+                        type: 'column',
+                        data: porcentagemMemoria,
+                    },
+                    {
+                        name: 'CPU',
+                        type: 'line',
+                        data: porcentagemProcessador,
+                    },
                 ],
                 chart: {
                     width: 600,
                     height: 300,
                     type: 'line',
-                    zoom: {
-                        enabled: false
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'straight'
-                },
-                title: {
-                    align: 'left'
-                },
-                grid: {
-                    row: {
-                        colors: ['#f3f3f3', 'transparent'],
-                        opacity: 0.5
+                    toolbar: {
+                        show: true,
                     },
                 },
-                xaxis: {
-                    categories: dataComparacao,
+                stroke: {
+                    width: [0, 3],
+                    curve: 'smooth',
                 },
-                colors: ['#FF4560', '#00E396']
+                colors: ['#1E40AF', '#60A5FA'],
+                dataLabels: {
+                    enabled: true,
+                    enabledOnSeries: [1],
+                    style: {
+                        colors: ['#60A5FA'],
+                        fontSize: '12px',
+                    },
+                },
+                labels: dataComparacao,
+                xaxis: {
+                    title: {
+                        text: 'Intervalos de Tempo',
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                        },
+                    },
+                    labels: {
+                        style: {
+                            fontSize: '12px',
+                            colors: '#666',
+                        },
+                    },
+                },
+                tooltip: {
+                    shared: true,
+                    intersect: false,
+                    theme: 'light',
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'center',
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    strokeDashArray: 4,
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 5,
+                        columnWidth: '50%',
+                    },
+                },
             };
 
             if (!window.chartComparacao) {
@@ -572,7 +604,7 @@
                     mensagemRAM.innerHTML = `${dado.MinPorcentagemMemoria} | ${dado.MaxPorcentagemMemoria}`;
                 });
             })
-     
+
     }
 
     cpuMaxMin("Azul", "00:00:00:00:00:00");
@@ -610,7 +642,7 @@
                     mensagemPacotes.innerHTML = `${dado.pacotesRecebidos}`;
                 });
             })
-       
+
     }
 
     alertaDisco("Azul", "00:00:00:00:00:00");
@@ -626,14 +658,14 @@
             })
             .then(function (dados) {
                 dados.forEach((dado) => {
-                if(dado.alertaDisco <=70){
-                    mensagemDISCO.innerHTML = `Disco normal`;
-                } else {
-                    mensagemDISCO.innerHTML = `<span style="color: red; font-size: 15px;">ALERTA <br> Disco(s) fora do padrão</span>`;
-                }
+                    if (dado.alertaDisco <= 70) {
+                        mensagemDISCO.innerHTML = `Disco normal`;
+                    } else {
+                        mensagemDISCO.innerHTML = `<span style="color: red; font-size: 15px;">ALERTA <br> Disco(s) fora do padrão</span>`;
+                    }
                 });
             })
-        
+
     }
 
     //##########################################################################################################################
@@ -646,28 +678,73 @@
             const Servidor = dados.map(item => item.Servidor);
 
             const options = {
-                series: [{
-                    name: 'Disco Usado',
-                    data: discoUsado
-                }, {
-                    name: 'Disco Disponivel',
-                    data: discoDisponivel
-                }],
+                series: [
+                    {
+                        name: 'Disco Usado',
+                        data: discoUsado,
+                    },
+                    {
+                        name: 'Disco Disponível',
+                        data: discoDisponivel,
+                    },
+                ],
                 chart: {
                     type: 'bar',
                     width: 350,
                     height: 300,
                     stacked: true,
-                    stackType: '100%'
+                    stackType: '100%',
                 },
+                colors: ['#1E40AF', '#60A5FA'], 
                 xaxis: {
                     categories: Servidor,
+                    title: {
+                        text: 'Servidores',
+                        style: {
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                        },
+                    },
+                    labels: {
+                        style: {
+                            fontSize: '12px',
+                            colors: '#666',
+                        },
+                    },
                 },
                 fill: {
-                    opacity: 1
+                    opacity: 1,
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'center',
+                    labels: {
+                        colors: '#333',
+                        useSeriesColors: true,
+                    },
+                },
+                tooltip: {
+                    shared: true,
+                    intersect: false,
+                    theme: 'light',
+                    y: {
+                        formatter: function (val) {
+                            return val + '%'; 
+                        },
+                    },
+                },
+                grid: {
+                    borderColor: '#e7e7e7',
+                    strokeDashArray: 4,
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        barHeight: '80%',
+                        borderRadius: 5, 
+                    },
                 },
             };
-
             if (!window.chartComparacaoDisco) {
                 window.chartComparacaoDisco = new ApexCharts(document.querySelector("#chart5"), options);
                 window.chartComparacaoDisco.render();
@@ -700,7 +777,7 @@
             frequenciaRamGrafico(linha, fkServidor);
         } else if (selectValue == 2 && document.getElementById("chart3").style.display == "block") {
             frequenciaDiscoGrafico(linha, fkServidor);
-        } 
+        }
 
         comparacaoDisco(linha, fkServidor)
         comparacaoCpuRam(linha, fkServidor)
