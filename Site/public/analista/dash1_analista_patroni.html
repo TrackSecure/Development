@@ -24,8 +24,8 @@
                 </div>
                 <div class="botao">
                     <div class="container">
-                        <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
-                        <button onclick="window.location.href='../analista/dash2_analista_gustavo.html'">Sair</button>
+                        <button onclick="window.location.href='../analista/dash2_analista_gustavo.html'">Início</button>
+                        <button onclick="sair()">Sair</button>
                     </div>
                 </div>
             </header>
@@ -789,7 +789,9 @@
 
     setInterval(atualizarGraficoSelecionado, 2000);
 
-
+    function sair() {
+        window.location = "../index.html"
+    }
 
 
 
