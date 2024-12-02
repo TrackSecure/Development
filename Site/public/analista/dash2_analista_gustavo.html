@@ -47,8 +47,8 @@
 
         <div class="caixaGrafico">
             <div class="titulos_kpi">
-                <h2>Quantidade de Servidores Cadastrados</h2>
-                <h2>Quantidade de Alertas</h2>
+                <h3>Quantidade de Servidores Cadastrados</h3>
+                <h3>Quantidade de Alertas</h3>
                 <h3>Servidores com Processos Acima do Esperado</h3>
             </div>
             <div class="kpis">
@@ -72,12 +72,12 @@
                 <div class="esquerda">
                     <div class="divisao">
                         <div class="selecionar">
-                            <h2>Selecione uma Linha:</h2>
+                            <h3>Selecione uma Linha:</h3>
                             <select class="select" id="select_linha">
                                 <option value="0" selected>Todas</option>
                             </select>
                         </div>
-                        <h2>Servidores</h2>
+                        <h3>Servidores</h3>
                     </div>
                     <div class="servidores">
                         <div id="servidores" class="caixa-esquerda">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="direita">
                     <div class="cima">
-                        <h2>Monitoramento (CPU / RAM)</h2>
+                        <h3>Monitoramento (CPU / RAM)</h3>
                         <button class="botao_detalhes" onclick="window.location = './dash1_analista_patroni.html'">Ver
                             Detalhes</button>
                     </div>
@@ -335,8 +335,8 @@
         const options = {
             chart: {
                 type: "line",
-                height: 350,
-                width: 600,
+                height: 275,
+                width: 500,
                 toolbar: {
                     show: true,
                 },
