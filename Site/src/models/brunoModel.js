@@ -22,7 +22,7 @@ function buscarQtdAlertas(fkServidor, prioridade, mes) {
 function buscarHistoricoAlertas(fkServidor, prioridade) {
 
     var instrucaoSql = `
-    SELECT MONTH(dtHora), descricao, COUNT(*) AS qtdAlerta FROM alerta
+    SELECT MONTH(dtHora), descricao, COUNT(*) AS qtdAlerta FROM Alerta
     WHERE fkServidor = ${fkServidor} AND tipo = '${prioridade}'
     GROUP BY MONTH(dtHora), descricao ORDER BY MONTH(dtHora);
      `;
