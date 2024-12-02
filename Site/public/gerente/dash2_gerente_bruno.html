@@ -296,6 +296,10 @@
             horizontalAlign: 'center',
             fontSize: "15rem"
           },
+          grid: {
+            borderColor: '#111',
+            strokeDashArray: 7,
+          }
           };
   
           chart1 = new ApexCharts(document.getElementById("grafico1"), options);
@@ -411,8 +415,8 @@
           },
           legend: {
             show: false
-          }
-          };
+          },
+        };
 
           chart2 = new ApexCharts(document.getElementById("grafico2"), options2);
           chart2.render();
@@ -494,7 +498,8 @@
             enabled: false
           },
           stroke: {
-            curve: 'straight'
+            curve: 'straight',
+            width: 2.4
           },
           grid: {
             row: {

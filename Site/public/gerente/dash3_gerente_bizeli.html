@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="dash3_gerente_bizeli.css">
     <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
+
 <!-- <body onload="validarSessao('Gerente de Monitoramento de Servidores', '../dashboard_inicial_analista.html')"> -->
 
 <body onload="mostrar_nome(), listarServidores()">
@@ -101,9 +104,9 @@
                     </div>
                     <div>
                         <!-- <div class="texto_grafico2"> -->
-                        <h5>Uptime x Downtime</h5>
+                        <h5>Porcentagem: <br> Uptime x Downtime</h5>
                         <!-- </div> -->
-                        <div id="grafico2"></div>
+                        <canvas id="grafico2"></canvas>
                     </div>
                 </div>
             </div>
@@ -183,58 +186,67 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 20000);
+        setInterval(buscarDados, 5000);
     }
 
 
-
-    graficoUpDown()
     function graficoUpDown() {
-        var fkServidor = select_servidor.value;
-        const atualizarGrafico = (dados) => {
+    const fkServidor = select_servidor.value;
 
-            const upTime = dados.map(item => item.Porcentagem_Uptime)
-            const downTime = dados.map(item => item.Porcentagem_Downtime)
+    const atualizarGrafico = (dados) => {
+        const upTime = dados.map(item => item.Porcentagem_Uptime)[0];
+        const downTime = dados.map(item => item.Porcentagem_Downtime)[0];
 
-            var options2 = {
-                series: [upTime, downTime],
-                chart: {
-                    width: 380,
-                    type: 'pie',
+        const data = {
+            labels: ['Uptime', 'Downtime'],
+            datasets: [{
+                label: 'Status do Servidor',
+                data: [upTime, downTime],
+                backgroundColor: [
+                    '#091e38', 
+                    '#5c93d6'  
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
                 },
-                labels: ['Uptime', 'Downtime'],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 200
-                        },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            };
-
-            if (!window.chartDisco) {
-                window.chartDisco = new ApexCharts(document.querySelector("#grafico2"), options2);
-                window.chartDisco.render();
-            } else {
-                window.chartDisco.updateOptions(options2);
-            }
-        };
-        const buscarDados = () => {
-            fetch(`/gerenteEnzo/graficoUpDown/'${fkServidor}'`, { method: "GET" })
-                .then((resposta) => resposta.json())
-                .then(atualizarGrafico)
-                .catch((erro) => console.error("Erro ao buscar dados:", erro));
+            },
+            animation: false
         };
 
-        buscarDados();
-        setInterval(buscarDados, 2000);
-    }
+        if (!window.chartDisco) {
+            const ctx = document.getElementById('grafico2').getContext('2d');
+            window.chartDisco = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: options
+            });
+        } else {
+            // Atualiza os dados do gráfico
+            window.chartDisco.data = data;
+            window.chartDisco.update();
+        }
+    };
+
+    const buscarDados = () => {
+        fetch(`/gerenteEnzo/graficoUpDown/'${fkServidor}'`, { method: "GET" })
+            .then((resposta) => resposta.json())
+            .then(atualizarGrafico)
+            .catch((erro) => console.error("Erro ao buscar dados:", erro));
+    };
+
+    buscarDados();
+    setInterval(buscarDados, 5000);
+}
 
 
+    
     tempoUptime();
     function tempoUptime() {
         var fkServidor = select_servidor.value;
@@ -251,7 +263,7 @@
                     mensagemUptime.innerHTML = `${dado.Horas_Uptime}`;
                 });
             })
-        setInterval(tempoUptime, 2000000);
+        setInterval(tempoUptime, 5000);
     }
 
     tempoDowntime();
@@ -269,7 +281,7 @@
                     mensagemDowntime.innerHTML = `${dado.Horas_Downtime}`;
                 });
             })
-        setInterval(tempoDowntime, 2000000);
+        setInterval(tempoDowntime, 5000);
     }
 
 
@@ -316,6 +328,54 @@
         graficoMediaHoras();
         graficoUpDown();
     }
+
+
+
+    // graficoUpDown()
+    // function graficoUpDown() {
+    //     var fkServidor = select_servidor.value;
+    //     const atualizarGrafico = (dados) => {
+
+    //         const upTime = dados.map(item => item.Porcentagem_Uptime);
+    //         const downTime = dados.map(item => item.Porcentagem_Downtime);
+
+    //         var options2 = {
+    //             series: [upTime, downTime],
+    //             chart: {
+    //                 width: 380,
+    //                 type: 'pie',
+    //             },
+    //             labels: ['Uptime', 'Downtime'],
+    //             responsive: [{
+    //                 breakpoint: 480,
+    //                 options: {
+    //                     chart: {    
+    //                         width: 200
+    //                     },
+    //                     legend: {
+    //                         position: 'bottom'
+    //                     }
+    //                 }
+    //             }]
+    //         };
+
+    //         if (!window.chartDisco) {
+    //             window.chartDisco = new ApexCharts(document.querySelector("#grafico2"), options2);
+    //             window.chartDisco.render();
+    //         } else {
+    //             window.chartDisco.updateOptions(options2);
+    //         }
+    //     };
+    //     const buscarDados = () => {
+    //         fetch(`/gerenteEnzo/graficoUpDown/'${fkServidor}'`, { method: "GET" })
+    //             .then((resposta) => resposta.json())
+    //             .then(atualizarGrafico)
+    //             .catch((erro) => console.error("Erro ao buscar dados:", erro));
+    //     };
+
+    //     buscarDados();
+    //     setInterval(buscarDados, 2000);
+    // }
 
 </script>
 
