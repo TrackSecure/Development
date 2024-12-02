@@ -186,7 +186,7 @@
         };
 
         buscarDados();
-        setInterval(buscarDados, 20000);
+        setInterval(buscarDados, 5000);
     }
 
 
@@ -242,7 +242,7 @@
     };
 
     buscarDados();
-    setInterval(buscarDados, 2000);
+    setInterval(buscarDados, 5000);
 }
 
 
@@ -263,7 +263,7 @@
                     mensagemUptime.innerHTML = `${dado.Horas_Uptime}`;
                 });
             })
-        setInterval(tempoUptime, 2000000);
+        setInterval(tempoUptime, 5000);
     }
 
     tempoDowntime();
@@ -281,7 +281,7 @@
                     mensagemDowntime.innerHTML = `${dado.Horas_Downtime}`;
                 });
             })
-        setInterval(tempoDowntime, 2000000);
+        setInterval(tempoDowntime, 5000);
     }
 
 
