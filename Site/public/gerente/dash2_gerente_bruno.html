@@ -382,7 +382,7 @@
             chart: {
             type: 'bar',
             height: 340,
-            width: 500
+            width: 500,
           },
           plotOptions: {
             bar: {
@@ -492,7 +492,7 @@
             type: 'line',
             zoom: {
               enabled: false
-            }
+            },
           },
           dataLabels: {
             enabled: false
@@ -576,6 +576,9 @@
       }
 
       function atualizarDashboard() {
+        titulo_bar_chart.innerHTML = `Tempo total de Downtime no ${select_servidor.options[select_servidor.selectedIndex].text}`;
+        titulo_slope_chart.innerHTML = `Gráfico de inclinação do aumento/redução <br> da quantidade de alertas por componente do ${select_servidor.options[select_servidor.selectedIndex].text}`;
+        span_servidor.innerHTML = `${select_servidor.options[select_servidor.selectedIndex].text}`;
         buscarQtdAlertas();
         buscarHistoricoAlertas(); 
         buscarHorasDowntime();
