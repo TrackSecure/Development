@@ -248,7 +248,7 @@ header {
 
 #selectLinha {
     background-color: #dddddd;
-    border: none;
+    border: solid 3px #091e38;
     font-weight: 900;
     color: #2a5792;
     padding: 2%;
@@ -258,7 +258,7 @@ header {
 
 #selectMes {
     background-color: #dddddd;
-    border: none;
+    border: solid 3px #091e38;
     font-weight: 900;
     color: #2a5792;
     padding: 2%;
@@ -530,7 +530,7 @@ header {
 }
 
 #selectRank {
-    border: none;
+    border: solid 3px #091e38;
     padding: 2%;
     margin-bottom: 2%;
     padding-left: 35%;
