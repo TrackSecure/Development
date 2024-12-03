@@ -254,6 +254,7 @@ header {
     width: 35vh;
     height: 15vh;
     border-radius: 30px;
+    border: solid 4px black;
 }
 
 .card-1-2{
@@ -265,6 +266,7 @@ header {
     width: 35vh;
     height: 15vh;
     border-radius: 30px;
+    border: solid 4px black;
 }
 
 .card-2 {
@@ -286,6 +288,7 @@ header {
     width: 35vh;
     height: 15vh;
     border-radius: 30px;
+    border: solid 4px black;
 }
 
 .card-2-2{
@@ -297,6 +300,7 @@ header {
     width: 35vh;
     height: 15vh;
     border-radius: 30px;
+    border: solid 4px black;
 }
 
 .rigth-bottom {
