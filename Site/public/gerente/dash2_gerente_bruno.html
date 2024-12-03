@@ -12,7 +12,7 @@
 </head>
 
 <!-- <body onload="listarServidores(), validarSessao('Gerente de Monitoramento de Servidores', 'dashboard_inicial_analista,html')"> -->
-<body onload="mostrar_nome(), listarServidores()">
+<body onload="listar_meses(), mostrar_nome(), listarServidores()">
     <div class="pagina">
         <header>
             <div class="perfil">
@@ -69,16 +69,6 @@
                     </select>
                     por componente (<span id="span_servidor"></span>) em relação a
                     <select name="" id="select_mes" onchange="atualizarDashboard()">
-                        <option value="01">Janeiro</option>
-                        <option value="02">Fevereiro</option>
-                        <option value="03">Março</option>
-                        <option value="04">Abril</option>
-                        <option value="05">Maio</option>
-                        <option value="06">Junho</option>
-                        <option value="07">Julho</option>
-                        <option value="08">Agosto</option>
-                        <option value="09">Setembro</option>
-                        <option selected value="10">Outubro</option>
                     </select>
                     </span>
                 </div>
@@ -143,7 +133,23 @@
     var slope_mostrado = true;
     var historico_mostrado = false;
 
-    var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro"];
+    var meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    var numero_meses = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    var mes_atual = new Date().getMonth();
+    var lista_meses = [];
+
+    function listar_meses() {
+      select_mes.innerHTML = '';
+      for (var i = 0; i < mes_atual; i++) {
+        if (i == mes_atual-1) {
+          select_mes.innerHTML += `<option selected value="${numero_meses[i]}">${meses[i]}</option>`;
+        } else {
+          select_mes.innerHTML += `<option value="${numero_meses[i]}">${meses[i]}</option>`;
+        }
+        lista_meses.push(meses[i].substring(0, 3));
+      }
+      lista_meses.push(meses[mes_atual].substring(0, 3));
+    }
 
     function mostrar_nome() {
         var nome = sessionStorage.NOME_USUARIO;
@@ -248,7 +254,7 @@
                   y: alertasCpuMesAnterior,
                 },
                 {
-                  x: 'Novembro',
+                  x: meses[mes_atual],
                   y: alertasCpuMesRecente,
                 },
               ],
@@ -261,7 +267,7 @@
                   y: alertasRamMesAnterior,
                 },
                 {
-                  x: 'Novembro',
+                  x: meses[mes_atual],
                   y: alertasRamMesRecente,
                 },
               ],
@@ -274,7 +280,7 @@
                   y: alertasDiscoMesAnterior,
                 },
                 {
-                  x: 'Novembro',
+                  x: meses[mes_atual],
                   y: alertasDiscoMesRecente,
                 },
               ],
@@ -317,7 +323,7 @@
                 y: alertasCpuMesAnterior,
               },
               {
-                x: 'Novembro',
+                x: meses[mes_atual],
                 y: alertasCpuMesRecente,
               },
             ],
@@ -330,7 +336,7 @@
                 y: alertasRamMesAnterior,
               },
               {
-                x: 'Novembro',
+                x: meses[mes_atual],
                 y: alertasRamMesRecente,
               },
             ],
@@ -343,7 +349,7 @@
                 y: alertasDiscoMesAnterior,
               },
               {
-                x: 'Novembro',
+                x: meses[mes_atual],
                 y: alertasDiscoMesRecente,
               },
             ],
@@ -397,7 +403,7 @@
           colors: ['#72bbc5', '#194554'
           ],
           xaxis: {
-            categories: [meses[Number(select_mes.value)-1], 'Novembro'
+            categories: [meses[Number(select_mes.value)-1], meses[mes_atual]
             ],
             title: {
               text: "Horas"
@@ -431,7 +437,7 @@
               data: [downtimeMesAnterior, downtimeMesRecente]
           }],
           xaxis: {
-            categories: [meses[Number(select_mes.value)-1], 'Novembro'
+            categories: [meses[Number(select_mes.value)-1], meses[mes_atual]
             ]
           }
         })
@@ -508,7 +514,7 @@
             },
           },
           xaxis: {
-            categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov'],
+            categories: lista_meses,
             title: {
               text: "Meses"
             }

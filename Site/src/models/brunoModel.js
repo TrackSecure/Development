@@ -9,11 +9,11 @@ function buscarQtdAlertas(fkServidor, prioridade, mes) {
     UNION ALL
     SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'Disco%' AND tipo = '${prioridade}' AND dtHora LIKE '%-${mes}-%' AND fkServidor = ${fkServidor}
     UNION ALL
-    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'CPU%' AND tipo = '${prioridade}' AND dtHora LIKE '%-11-%' AND fkServidor = ${fkServidor}
+    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'CPU%' AND tipo = '${prioridade}' AND MONTH(dtHora) = month(current_timestamp()) AND fkServidor = ${fkServidor}
     UNION ALL
-    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'Ram%' AND tipo = '${prioridade}' AND dtHora LIKE '%-11-%' AND fkServidor = ${fkServidor}
+    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'Ram%' AND tipo = '${prioridade}' AND MONTH(dtHora) = month(current_timestamp()) AND fkServidor = ${fkServidor}
     UNION ALL
-    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'Disco%' AND tipo = '${prioridade}' AND dtHora LIKE '%-11-%' AND fkServidor = ${fkServidor};`
+    SELECT count(*) AS qtdAlertas FROM Alerta WHERE descricao LIKE 'Disco%' AND tipo = '${prioridade}' AND MONTH(dtHora) = month(current_timestamp()) AND fkServidor = ${fkServidor};`
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -39,7 +39,7 @@ function buscarHorasDowntime(fkServidor, mes) {
     AS Horas_Downtime
     UNION ALL
     SELECT 10 *
-    (ROUND((SELECT COUNT(*) FROM ServidorStatus WHERE  uptime = 0 AND fkServidor = ${fkServidor} AND dataHora LIKE '%-11-%') / 60, 2)) 
+    (ROUND((SELECT COUNT(*) FROM ServidorStatus WHERE  uptime = 0 AND fkServidor = ${fkServidor} AND MONTH(dataHora) = month(current_timestamp())) / 60, 2)) 
     AS Horas_Downtime;
     `;
 
