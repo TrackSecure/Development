@@ -96,13 +96,21 @@ function listarLinhas() {
 function dadosMonitoramento(MacAddress) {
     var instrucaoSql = `
         SELECT 
-            porcentagemProcessador, porcentagemMemoria, dtHora
+            Registro.porcentagemProcessador, 
+            Registro.porcentagemMemoria, 
+            Registro.dtHora, 
+            Servidor.nome
         FROM 
             Registro
+        INNER JOIN 
+            Servidor 
+        ON 
+            Registro.fkServidor = Servidor.MacAddress
         WHERE 
-            fkServidor = '${MacAddress}'
+            Registro.fkServidor = '${MacAddress}'
         ORDER BY 
-            dtHora desc LIMIT 10; -- Retorna os últimos 10 registros
+            Registro.dtHora DESC 
+        LIMIT 10
     `;
     console.log(instrucaoSql);
     return database.executar(instrucaoSql);

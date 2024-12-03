@@ -315,6 +315,19 @@ header {
     height: 400px;  
 }
 
+#chart {
+    height: 275px;
+    width: 500px;
+}
+
+.mensagem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2c90ea;
+    margin-top: 15%;
+}
+
 .cima {
     display: flex;
     flex-direction: row;

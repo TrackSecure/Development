@@ -22,7 +22,7 @@
             </div>
             <div class="botao">
                 <div class="container">
-                    <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button>
+                    <!-- <button onclick="window.location = '../dashboard_inicial_analista.html'">Início</button> -->
                     <button onclick="sair()">Sair</button>
                 </div>
             </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="detalhes">
                 <div class="ver_detalhes">
-                    <button class="botao_detalhes" onclick="window.location = './dash3_analista_vitor'">Ver
+                    <button class="botao_detalhes" onclick="window.location = './dash3_analista_vitor.html'">Ver
                         Detalhes</button>
                 </div>
             </div>
@@ -91,7 +91,11 @@
                         <button class="botao_detalhes" onclick="window.location = './dash1_analista_patroni.html'">Ver
                             Detalhes</button>
                     </div>
-                    <div id="chart"></div>
+                    <div id="chart">
+                        <div id="mensagem" class="mensagem">
+                            <h1>Selecione um Servidor!</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,6 +109,10 @@
 
 <script>
     let intervalosMonitoramento;
+
+    function sair() {
+        window.location = "../index.html"
+    }
 
     function selecionarDash() {
         var selecionarDash = select_dash.value
@@ -251,6 +259,10 @@
                 botao.style.backgroundColor = servidor.temAlerta ? "red" : "green";
 
                 botao.addEventListener("click", () => {
+                    const mensagem = document.getElementById("mensagem"); // Seleciona o elemento
+                    if (mensagem) {
+                        mensagem.style.display = "none";
+                    }
                     console.log(`Servidor selecionado: ${servidor.nome}`);
 
                     carregarMonitoramento(servidor.MacAddress);
@@ -259,6 +271,7 @@
                     }
                     intervalosMonitoramento = setInterval(() => {
                         carregarMonitoramento(servidor.MacAddress)
+
                     }, 3000);
 
                 });
@@ -315,12 +328,13 @@
                 });
                 const dadosCPU = dados.map((dado) => dado.porcentagemProcessador);
                 const dadosRAM = dados.map((dado) => dado.porcentagemMemoria);
+                const nome = dados.map((dado) => dado.nome);
 
-                if (labels.length === 0 || dadosCPU.length === 0 || dadosRAM.length === 0) {
+                if (labels.length === 0 || dadosCPU.length === 0 || dadosRAM.length === 0 || nome.length === 0) {
                     throw new Error("Os dados para o gráfico estão incorretos ou vazios.");
                 }
 
-                atualizarGrafico(labels, dadosCPU, dadosRAM);
+                atualizarGrafico(labels, dadosCPU, dadosRAM, nome);
 
 
             })
@@ -330,7 +344,7 @@
 
     let graficoMonitoramento; // Variável global para o gráfico
 
-    function atualizarGrafico(labels, dadosCPU, dadosRAM) {
+    function atualizarGrafico(labels, dadosCPU, dadosRAM, nome) {
 
         const options = {
             chart: {
@@ -345,63 +359,71 @@
 
                 }
             },
+            title: {
+                text: nome[0], // O título do gráfico
+                align: 'center',          // Alinhamento do título ('left', 'center', 'right')
+                style: {
+                    fontSize: '20px',       // Tamanho da fonte
+                    fontWeight: 'bold',     // Peso da fonte
+                    color: '#333' 
+                } 
+            }, 
             series: [
-                {
-                    name: "Uso de CPU (%)",
-                    data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
-                },
-                {
-                    name: "Uso de RAM (%)",
-                    data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
-                },
-            ],
-            xaxis: {
-                categories: labels, // Labels do eixo X
-                title: {
-                    text: "Tempo",
-                },
-            },
-            yaxis: {
-                title: {
-                    text: "Uso (%)",
-                },
-            },
-            colors: ["#1E90FF", "#32CD32"],
-            stroke: {
-                curve: "smooth",
-            },
-        };
+                        {
+                            name: "Uso de CPU (%)",
+                            data: dadosCPU, // Certifique-se de que 'dadosCPU' é um array
+                        },
+                        {
+                            name: "Uso de RAM (%)",
+                            data: dadosRAM, // Certifique-se de que 'dadosRAM' é um array
+                        },
+                    ],
+                    xaxis: {
+                        categories: labels, // Labels do eixo X
+                        title: {
+                            text: "Tempo",
+                        },
+                    },
+                    yaxis: {
+                        title: {
+                            text: "Uso (%)",
+                        },
+                    },
+                    colors: ["#1E90FF", "#32CD32"],
+                    stroke: {
+                        curve: "smooth",
+                    },
+                };
 
-        if (graficoMonitoramento) {
-            graficoMonitoramento.destroy(); // Destroi o gráfico antigo
-        }
+                if(graficoMonitoramento) {
+                    graficoMonitoramento.destroy(); // Destroi o gráfico antigo
+                }
 
         graficoMonitoramento = new ApexCharts(
-            document.getElementById("chart"),
-            options
-        );
+                    document.getElementById("chart"),
+                    options
+                );
 
-        graficoMonitoramento.render(); // Renderiza o gráfico
+                graficoMonitoramento.render(); // Renderiza o gráfico
 
 
-    }
+            }
 
     function iniciarMonitoramento() {
-        // Chama as funções inicialmente
-        mostrar_nome();
+                // Chama as funções inicialmente
+                mostrar_nome();
         atualizarTotalServidores();
         atualizarTotalAlertas();
-        atualizarGrafico();
+        servidoresAcimaDoEsperado();
         carregarServidores();
         carregarLinhas();
-        servidoresAcimaDoEsperado();
 
         // Configura para chamar as funções a cada 2 segundos
         setInterval(() => {
             atualizarTotalServidores();
             atualizarTotalAlertas();
-            carregarServidores();
             servidoresAcimaDoEsperado();
+            carregarServidores();
         }, 3000);
     }
 
