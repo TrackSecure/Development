@@ -236,17 +236,20 @@ header {
 .card_ok{
     color: #0c294b;
     margin-left: 117px;
+    border: 3px solid #0c294b;
 }
 
 .card_critico{
     color: #0c294b;
     /* border: 0.2rem solid rgb(190, 63, 63); */
     margin-left: 70px;
+    border: 3px solid #0c294b;
 }
 
 .card_atencao{
     color: #0c294b;
     margin-left: 67px;
+    border: 3px solid #0c294b;
 }
 
 .graficos{
